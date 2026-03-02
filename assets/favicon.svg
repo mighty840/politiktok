@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <!-- Simplified capitol + play -->
+  <path d="M32 12 C32 12 20 20 18 28 L18 34 L22 34 L22 32 C22 28 27 22 32 20 C37 22 42 28 42 32 L42 34 L46 34 L46 28 C44 20 32 12 32 12Z" fill="white" opacity="0.95"/>
+  <circle cx="32" cy="13" r="2.5" fill="white" opacity="0.95"/>
+  <rect x="21" y="34" width="5" height="10" rx="1" fill="white" opacity="0.9"/>
+  <rect x="29.5" y="34" width="5" height="10" rx="1" fill="white" opacity="0.9"/>
+  <rect x="38" y="34" width="5" height="10" rx="1" fill="white" opacity="0.9"/>
+  <rect x="18" y="44" width="28" height="3" rx="1" fill="white" opacity="0.9"/>
+  <!-- Small play icon -->
+  <circle cx="48" cy="50" r="7" fill="#ec4899"/>
+  <polygon points="46,46 46,54 52,50" fill="white"/>
+</svg>

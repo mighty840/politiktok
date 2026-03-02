@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f472b6"/>
+      <stop offset="100%" style="stop-color:#ec4899"/>
+    </linearGradient>
+  </defs>
+  <!-- Rounded square background -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="url(#bg)"/>
+  <!-- Capitol dome silhouette -->
+  <path d="M256 100 C256 100 180 160 160 220 L160 280 L200 280 L200 260 C200 220 228 180 256 160 C284 180 312 220 312 260 L312 280 L352 280 L352 220 C332 160 256 100 256 100Z" fill="white" opacity="0.95"/>
+  <!-- Dome top -->
+  <circle cx="256" cy="108" r="16" fill="white" opacity="0.95"/>
+  <!-- Pillars -->
+  <rect x="180" y="280" width="28" height="80" rx="4" fill="white" opacity="0.9"/>
+  <rect x="228" y="280" width="28" height="80" rx="4" fill="white" opacity="0.9"/>
+  <rect x="256" y="280" width="28" height="80" rx="4" fill="white" opacity="0.9"/>
+  <rect x="304" y="280" width="28" height="80" rx="4" fill="white" opacity="0.9"/>
+  <!-- Base -->
+  <rect x="160" y="356" width="192" height="16" rx="4" fill="white" opacity="0.9"/>
+  <!-- Play button (TikTok-style) -->
+  <g transform="translate(300, 360)">
+    <circle cx="40" cy="40" r="40" fill="url(#accent)"/>
+    <polygon points="30,20 30,60 60,40" fill="white"/>
+  </g>
+  <!-- AI sparkle dots -->
+  <circle cx="120" cy="160" r="6" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="400" cy="140" r="8" fill="#34d399" opacity="0.8"/>
+  <circle cx="140" cy="400" r="5" fill="#60a5fa" opacity="0.8"/>
+  <circle cx="380" cy="380" r="7" fill="#fbbf24" opacity="0.8"/>
+</svg>

@@ -1,0 +1,15 @@
+[book]
+title = "PolitikTok Documentation"
+authors = ["PolitikTok Contributors"]
+language = "en"
+multilingual = false
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/mighty840/politiktok"
+edit-url-template = "https://github.com/mighty840/politiktok/edit/main/docs/{path}"

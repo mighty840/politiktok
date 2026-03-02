@@ -1,0 +1,98 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: politiktok-postgres
+    environment:
+      POSTGRES_USER: politiktok
+      POSTGRES_PASSWORD: politiktok
+      POSTGRES_DB: politiktok
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - politiktok-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U politiktok"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: politiktok-qdrant
+    ports:
+      - "6335:6333"
+      - "6336:6334"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    networks:
+      - politiktok-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:6333/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ollama:
+    image: ollama/ollama
+    container_name: politiktok-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - politiktok-net
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: politiktok-searxng
+    ports:
+      - "8889:8080"
+    volumes:
+      - searxng-data:/etc/searxng
+    networks:
+      - politiktok-net
+    environment:
+      SEARXNG_BASE_URL: "http://localhost:8888/"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: politiktok-keycloak
+    command: start-dev --import-realm
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/politiktok
+      KC_DB_USERNAME: politiktok
+      KC_DB_PASSWORD: politiktok
+      KC_HOSTNAME: localhost
+      KC_HTTP_PORT: 8080
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    networks:
+      - politiktok-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
+  qdrant-data:
+  ollama-data:
+  searxng-data:
+  keycloak-data:
+
+networks:
+  politiktok-net:
+    driver: bridge
