@@ -26,4 +26,4 @@ All AI features use an OpenAI-compatible API interface, which works with Ollama,
 
 ## Getting Started
 
-Head to the [Installation](./getting-started/installation.md) guide to set up your development environment.
+Head to the [Installation](/guide/installation) guide to set up your development environment.

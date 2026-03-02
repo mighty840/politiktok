@@ -82,7 +82,7 @@ Copy the example environment file and adjust as needed:
 cp .env.example .env
 ```
 
-The defaults in `.env.example` are configured for the Docker Compose setup and should work out of the box for local development. See [Configuration](./configuration.md) for details on every variable.
+The defaults in `.env.example` are configured for the Docker Compose setup and should work out of the box for local development. See [Configuration](/configuration/environment-variables) for details on every variable.
 
 ## Run Database Migrations
 

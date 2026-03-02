@@ -36,7 +36,7 @@ ollama pull llama3.1:8b
 dx serve --port 9000
 ```
 
-Open [http://localhost:9000](http://localhost:9000) in your browser.
+Open `http://localhost:9000` in your browser.
 
 ## 6. Default Credentials
 

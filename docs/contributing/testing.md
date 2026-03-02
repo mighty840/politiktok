@@ -46,7 +46,7 @@ mod server_tests {
 
 ## CI Integration
 
-The CI pipeline runs both server and web test suites. See the [CI/CD](./ci-cd.md) page for details on the GitHub Actions workflow.
+The CI pipeline runs both server and web test suites. See the [CI/CD](/deployment/ci-cd) page for details on the GitHub Actions workflow.
 
 ## Writing Good Tests
 

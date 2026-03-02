@@ -12,7 +12,7 @@ Thank you for your interest in contributing to PolitikTok. This guide covers the
    cd politiktok
    ```
 
-3. **Set up** the development environment following the [Installation](../getting-started/installation.md) guide.
+3. **Set up** the development environment following the [Installation](/guide/installation) guide.
 4. **Create a branch** for your work:
 
    ```bash
