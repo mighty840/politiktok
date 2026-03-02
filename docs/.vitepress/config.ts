@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'PolitikTok',
   description: 'AI-powered campaign intelligence platform — documentation',
+  base: '/politiktok/',
 
   themeConfig: {
     siteTitle: 'PolitikTok',
