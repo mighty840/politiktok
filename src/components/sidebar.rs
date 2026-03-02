@@ -259,13 +259,39 @@ pub fn Sidebar(#[props(default = false)] open: bool, on_nav: EventHandler<()>) -
         aside {
             class: "sidebar sidebar-glass fixed top-0 left-0 z-40 h-screen w-64 overflow-y-auto transition-transform duration-200 {visibility_class}",
 
-            // Brand header with gradient logo
+            // Brand header with Nexus logo
             div { class: "sidebar-header",
-                // Logo icon — gradient rounded square with "PT"
-                div {
-                    class: "flex items-center justify-center w-9 h-9 rounded-lg text-white text-sm font-bold flex-shrink-0",
-                    style: "background: linear-gradient(135deg, #6366f1, #8b5cf6);",
-                    "PT"
+                // Logo icon — The Nexus: neural network + capitol dome
+                svg {
+                    class: "flex-shrink-0",
+                    width: "36",
+                    height: "36",
+                    view_box: "0 0 120 120",
+                    fill: "none",
+                    xmlns: "http://www.w3.org/2000/svg",
+                    // Background
+                    rect { width: "120", height: "120", rx: "26", fill: "#1e1b4b" }
+                    // Dome arcs
+                    path { d: "M30 82 Q60 20 90 82", stroke: "#6366f1", stroke_width: "2.5", fill: "none", opacity: "0.3" }
+                    path { d: "M38 78 Q60 30 82 78", stroke: "#6366f1", stroke_width: "2", fill: "none", opacity: "0.2" }
+                    // Connection lines
+                    line { x1: "60", y1: "38", x2: "40", y2: "62", stroke: "#6366f1", stroke_width: "1.5", opacity: "0.5" }
+                    line { x1: "60", y1: "38", x2: "80", y2: "62", stroke: "#6366f1", stroke_width: "1.5", opacity: "0.5" }
+                    line { x1: "40", y1: "62", x2: "60", y2: "76", stroke: "#6366f1", stroke_width: "1.5", opacity: "0.4" }
+                    line { x1: "80", y1: "62", x2: "60", y2: "76", stroke: "#6366f1", stroke_width: "1.5", opacity: "0.4" }
+                    line { x1: "40", y1: "62", x2: "80", y2: "62", stroke: "#6366f1", stroke_width: "1.2", opacity: "0.25" }
+                    line { x1: "60", y1: "38", x2: "60", y2: "76", stroke: "#6366f1", stroke_width: "1.2", opacity: "0.25" }
+                    // Nodes
+                    circle { cx: "60", cy: "38", r: "6", fill: "#6366f1" }
+                    circle { cx: "60", cy: "38", r: "3", fill: "#c7d2fe" }
+                    circle { cx: "40", cy: "62", r: "4.5", fill: "#6366f1", opacity: "0.9" }
+                    circle { cx: "40", cy: "62", r: "2", fill: "#c7d2fe" }
+                    circle { cx: "80", cy: "62", r: "4.5", fill: "#6366f1", opacity: "0.9" }
+                    circle { cx: "80", cy: "62", r: "2", fill: "#c7d2fe" }
+                    circle { cx: "60", cy: "76", r: "4", fill: "#6366f1", opacity: "0.8" }
+                    circle { cx: "60", cy: "76", r: "1.8", fill: "#c7d2fe" }
+                    // Base
+                    line { x1: "28", y1: "84", x2: "92", y2: "84", stroke: "#6366f1", stroke_width: "2.5", stroke_linecap: "round" }
                 }
                 h1 { class: "text-lg font-bold",
                     style: "background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;",

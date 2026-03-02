@@ -4,6 +4,9 @@ layout: home
 hero:
   name: PolitikTok
   text: AI-Powered Campaign Intelligence
+  image:
+    src: /logo.svg
+    alt: PolitikTok Logo
   tagline: Self-hosted platform with 26 AI modules for political campaign operations. Your data never leaves your infrastructure.
   actions:
     - theme: brand

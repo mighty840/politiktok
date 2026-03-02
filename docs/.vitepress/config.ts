@@ -5,8 +5,13 @@ export default defineConfig({
   description: 'AI-powered campaign intelligence platform — documentation',
   base: '/politiktok/',
 
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/politiktok/favicon.svg' }],
+  ],
+
   themeConfig: {
     siteTitle: 'PolitikTok',
+    logo: '/logo.svg',
 
     nav: [
       { text: 'Guide', link: '/guide/introduction' },
