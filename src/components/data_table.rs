@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-/// Sortable, filterable data table using DaisyUI table classes.
+/// Sortable, filterable data table with glassmorphism styling.
 #[component]
 pub fn DataTable(
     headers: Vec<String>,
@@ -37,63 +37,69 @@ pub fn DataTable(
     let clickable = on_row_click.is_some();
 
     rsx! {
-        div { class: "overflow-x-auto",
+        div { class: "glass-card rounded-xl overflow-hidden",
             // Filter input
-            div { class: "mb-3",
+            div { class: "p-4 border-b border-slate-700/50",
                 input {
                     r#type: "text",
-                    class: "input input-bordered input-sm w-full max-w-xs",
+                    class: "w-full max-w-xs px-3 py-2 text-sm bg-slate-800/50 border border-slate-700 rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors",
                     placeholder: "Filter...",
                     value: "{filter_text}",
                     oninput: move |evt: Event<FormData>| filter_text.set(evt.value()),
                 }
             }
 
-            table { class: "table table-sm table-zebra w-full",
-                thead {
-                    tr {
-                        for (i, header) in headers.iter().enumerate() {
-                            {
-                                let header = header.clone();
-                                let indicator = match *sort_col.read() {
-                                    Some(c) if c == i && *sort_asc.read() => " ▲",
-                                    Some(c) if c == i => " ▼",
-                                    _ => "",
-                                };
-                                rsx! {
-                                    th {
-                                        class: "cursor-pointer select-none hover:bg-base-200",
-                                        onclick: move |_| {
-                                            if *sort_col.read() == Some(i) {
-                                                sort_asc.toggle();
-                                            } else {
-                                                sort_col.set(Some(i));
-                                                sort_asc.set(true);
-                                            }
-                                        },
-                                        "{header}{indicator}"
+            div { class: "overflow-x-auto",
+                table { class: "table table-sm w-full",
+                    thead {
+                        tr { class: "bg-slate-800/50",
+                            for (i, header) in headers.iter().enumerate() {
+                                {
+                                    let header = header.clone();
+                                    let indicator = match *sort_col.read() {
+                                        Some(c) if c == i && *sort_asc.read() => " \u{25B2}",
+                                        Some(c) if c == i => " \u{25BC}",
+                                        _ => "",
+                                    };
+                                    rsx! {
+                                        th {
+                                            class: "cursor-pointer select-none text-slate-400 text-xs uppercase tracking-wider font-semibold px-4 py-3 hover:text-slate-200 transition-colors",
+                                            onclick: move |_| {
+                                                if *sort_col.read() == Some(i) {
+                                                    sort_asc.toggle();
+                                                } else {
+                                                    sort_col.set(Some(i));
+                                                    sort_asc.set(true);
+                                                }
+                                            },
+                                            "{header}{indicator}"
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                tbody {
-                    for (original_idx, row) in &filtered {
-                        {
-                            let idx = *original_idx;
-                            let row_class = if clickable { "cursor-pointer hover:bg-base-200" } else { "" };
-                            let handler = on_row_click.clone();
-                            rsx! {
-                                tr {
-                                    class: "{row_class}",
-                                    onclick: move |_| {
-                                        if let Some(h) = &handler {
-                                            h.call(idx);
+                    tbody {
+                        for (original_idx, row) in &filtered {
+                            {
+                                let idx = *original_idx;
+                                let row_class = if clickable {
+                                    "cursor-pointer hover:bg-indigo-500/5 border-b border-slate-800/50 transition-colors"
+                                } else {
+                                    "border-b border-slate-800/50"
+                                };
+                                let handler = on_row_click.clone();
+                                rsx! {
+                                    tr {
+                                        class: "{row_class}",
+                                        onclick: move |_| {
+                                            if let Some(h) = &handler {
+                                                h.call(idx);
+                                            }
+                                        },
+                                        for cell in row.iter() {
+                                            td { class: "px-4 py-3 text-sm text-slate-300", "{cell}" }
                                         }
-                                    },
-                                    for cell in row.iter() {
-                                        td { "{cell}" }
                                     }
                                 }
                             }
@@ -103,7 +109,7 @@ pub fn DataTable(
             }
 
             if filtered.is_empty() {
-                p { class: "text-center text-base-content/50 py-4", "No results found." }
+                p { class: "text-center text-slate-500 py-8", "No results found." }
             }
         }
     }

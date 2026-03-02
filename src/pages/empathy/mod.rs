@@ -102,11 +102,11 @@ pub fn EmpathyPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Audience Empathy Simulator" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Simulate how different audience segments would perceive and react to your policy proposals. Select personas, enter your policy text, and see reactions from diverse perspectives."
                 }
             }
@@ -142,7 +142,7 @@ pub fn EmpathyPage() -> Element {
                 div { class: "w-full lg:w-1/3 space-y-4",
 
                     // Policy text card
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Policy Text" }
                             div { class: "form-control",
@@ -158,7 +158,7 @@ pub fn EmpathyPage() -> Element {
                     }
 
                     // Persona selection card
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Select Personas" }
 
@@ -181,7 +181,7 @@ pub fn EmpathyPage() -> Element {
                                                 }
                                                 span { class: "label-text font-medium", "Select All" }
                                             }
-                                            span { class: "text-sm text-base-content/50",
+                                            span { class: "text-sm text-slate-500",
                                                 "{selected_ids.read().len()} / {all_personas.len()} selected"
                                             }
                                         }
@@ -196,7 +196,7 @@ pub fn EmpathyPage() -> Element {
                                                     let is_checked = selected_ids.read().contains(&id);
                                                     let id_for_toggle = id.clone();
                                                     rsx! {
-                                                        label { class: "flex items-start gap-3 cursor-pointer p-2 rounded-lg hover:bg-base-200 transition-colors",
+                                                        label { class: "flex items-start gap-3 cursor-pointer p-2 rounded-lg hover:bg-slate-700/30 transition-colors",
                                                             input {
                                                                 r#type: "checkbox",
                                                                 class: "checkbox checkbox-primary checkbox-sm mt-0.5",
@@ -205,7 +205,7 @@ pub fn EmpathyPage() -> Element {
                                                             }
                                                             div {
                                                                 div { class: "font-medium text-sm", "{persona.name}" }
-                                                                div { class: "text-xs text-base-content/50", "{persona.demographic}" }
+                                                                div { class: "text-xs text-slate-500", "{persona.demographic}" }
                                                             }
                                                         }
                                                     }
@@ -250,11 +250,11 @@ pub fn EmpathyPage() -> Element {
                 div { class: "w-full lg:w-2/3 space-y-4",
 
                     if *is_simulating.read() {
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center space-y-4",
                                     LoadingSpinner {}
-                                    p { class: "text-base-content/60", "Simulating persona reactions..." }
+                                    p { class: "text-slate-400", "Simulating persona reactions..." }
                                     p { class: "text-sm text-base-content/40", "This may take a moment as each persona is evaluated individually." }
                                 }
                             }
@@ -275,11 +275,11 @@ pub fn EmpathyPage() -> Element {
                         }
                     } else {
                         // Empty state
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
                                     div { class: "text-6xl mb-4 opacity-20", "🎭" }
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No simulation results yet"
                                     }
                                     p { class: "text-sm text-base-content/40",
@@ -303,12 +303,12 @@ fn AggregateSummaryCard(
     reaction_count: usize,
 ) -> Element {
     rsx! {
-        div { class: "card bg-base-100 shadow-sm border-l-4 border-primary",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border border-l-4 border-primary",
+            div { class: "p-6",
                 div { class: "flex flex-wrap items-center justify-between gap-2 mb-3",
                     h2 { class: "card-title text-lg", "Simulation Summary" }
                     div { class: "flex items-center gap-2",
-                        span { class: "text-sm text-base-content/60", "Overall:" }
+                        span { class: "text-sm text-slate-400", "Overall:" }
                         span {
                             class: sentiment_badge_class(&aggregate_sentiment),
                             "{sentiment_label(&aggregate_sentiment)}"
@@ -316,7 +316,7 @@ fn AggregateSummaryCard(
                     }
                 }
 
-                div { class: "text-sm text-base-content/70 mb-3",
+                div { class: "text-sm text-slate-400 mb-3",
                     "{reaction_count} persona(s) evaluated"
                 }
 
@@ -352,13 +352,13 @@ fn PersonaReactionCard(reaction: PersonaReaction) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 // Header: persona name + sentiment badge
                 div { class: "flex flex-wrap items-center justify-between gap-2 mb-3",
                     div {
                         h3 { class: "font-bold text-base", "{reaction.persona.name}" }
-                        p { class: "text-xs text-base-content/50", "{reaction.persona.demographic}" }
+                        p { class: "text-xs text-slate-500", "{reaction.persona.demographic}" }
                     }
                     span {
                         class: sentiment_badge_class(&reaction.sentiment),
@@ -367,14 +367,14 @@ fn PersonaReactionCard(reaction: PersonaReaction) -> Element {
                 }
 
                 // Reaction text
-                div { class: "bg-base-200 rounded-lg p-3 mb-4",
+                div { class: "bg-slate-800/30 rounded-lg p-3 mb-4",
                     p { class: "text-sm italic leading-relaxed", "\"{reaction.reaction}\"" }
                 }
 
                 // Key concerns
                 if !reaction.key_concerns.is_empty() {
                     div { class: "mb-4",
-                        h4 { class: "text-xs font-semibold uppercase tracking-wide text-base-content/60 mb-2",
+                        h4 { class: "text-xs font-semibold uppercase tracking-wide text-slate-400 mb-2",
                             "Key Concerns"
                         }
                         div { class: "flex flex-wrap gap-2",
@@ -388,7 +388,7 @@ fn PersonaReactionCard(reaction: PersonaReaction) -> Element {
                 // Persuasion score as progress bar
                 div {
                     div { class: "flex justify-between items-center mb-1",
-                        h4 { class: "text-xs font-semibold uppercase tracking-wide text-base-content/60",
+                        h4 { class: "text-xs font-semibold uppercase tracking-wide text-slate-400",
                             "Persuasion Score"
                         }
                         span { class: "text-sm font-mono font-bold", "{score_pct}%" }

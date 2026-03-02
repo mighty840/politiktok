@@ -93,11 +93,11 @@ pub fn DisinfoPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Header
             div {
                 h1 { class: "text-3xl font-bold", "Disinformation Watch" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Detect disinformation indicators in content and generate strategic counter-messaging."
                 }
             }
@@ -130,7 +130,7 @@ pub fn DisinfoPage() -> Element {
             div { class: "flex flex-col lg:flex-row gap-6",
                 // Left: Input
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Content to Analyze" }
 
@@ -150,7 +150,7 @@ pub fn DisinfoPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Source Context" }
-                                    span { class: "label-text-alt text-base-content/50", "Optional" }
+                                    span { class: "label-text-alt text-slate-500", "Optional" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -179,26 +179,26 @@ pub fn DisinfoPage() -> Element {
                 // Right: Results
                 div { class: "w-full lg:w-2/3",
                     if *is_analyzing.read() {
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center space-y-4",
                                     LoadingSpinner {}
-                                    p { class: "text-base-content/60", "Scanning for disinformation indicators..." }
+                                    p { class: "text-slate-400", "Scanning for disinformation indicators..." }
                                 }
                             }
                         }
                     } else if let Some(result) = analysis_result() {
                         div { class: "space-y-4",
                             // Risk level card
-                            div { class: "card bg-base-100 shadow-sm",
-                                div { class: "card-body",
+                            div { class: "glass-card gradient-border",
+                                div { class: "p-6",
                                     div { class: "flex items-center justify-between",
                                         h3 { class: "card-title text-lg", "Risk Assessment" }
                                         span { class: risk_badge(&result.risk_level),
                                             "{result.risk_level} risk"
                                         }
                                     }
-                                    div { class: "mt-3 bg-base-200 rounded-lg p-4",
+                                    div { class: "mt-3 bg-slate-800/30 rounded-lg p-4",
                                         p { class: "font-medium mb-1", "Recommended Response" }
                                         p { class: "text-sm", "{result.recommended_response}" }
                                     }
@@ -207,8 +207,8 @@ pub fn DisinfoPage() -> Element {
 
                             // Indicators list
                             if !result.indicators.is_empty() {
-                                div { class: "card bg-base-100 shadow-sm",
-                                    div { class: "card-body",
+                                div { class: "glass-card gradient-border",
+                                    div { class: "p-6",
                                         h3 { class: "card-title text-lg",
                                             "Indicators ({result.indicators.len()})"
                                         }
@@ -222,7 +222,7 @@ pub fn DisinfoPage() -> Element {
                             }
 
                             // Counter-response generation
-                            div { class: "card bg-base-100 shadow-sm",
+                            div { class: "glass-card gradient-border",
                                 div { class: "card-body space-y-4",
                                     h3 { class: "card-title text-lg", "Generate Counter-Messaging" }
 
@@ -286,10 +286,10 @@ pub fn DisinfoPage() -> Element {
                             }
                         }
                     } else {
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No analysis yet"
                                     }
                                     p { class: "text-sm text-base-content/40",
@@ -310,10 +310,10 @@ fn IndicatorCard(indicator: DisinfoIndicator) -> Element {
     let confidence_pct = (indicator.confidence * 100.0) as u32;
 
     rsx! {
-        div { class: "bg-base-200 rounded-lg p-3",
+        div { class: "bg-slate-800/30 rounded-lg p-3",
             div { class: "flex items-center justify-between mb-1",
                 span { class: "badge badge-outline badge-sm", "{indicator.indicator_type}" }
-                span { class: "text-xs text-base-content/60", "{confidence_pct}% confidence" }
+                span { class: "text-xs text-slate-400", "{confidence_pct}% confidence" }
             }
             p { class: "text-sm mb-2", "{indicator.description}" }
             progress {

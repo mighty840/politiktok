@@ -54,11 +54,11 @@ pub fn CallIntelPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Call Intelligence" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Analyze constituent call transcripts to extract sentiment, key issues, action items, and satisfaction scores."
                 }
             }
@@ -91,7 +91,7 @@ pub fn CallIntelPage() -> Element {
 
                 // Left: Input
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Call Transcript" }
 
@@ -125,15 +125,15 @@ pub fn CallIntelPage() -> Element {
 
                 // Right: Results
                 div { class: "w-full lg:w-2/3",
-                    div { class: "card bg-base-100 shadow-sm min-h-[400px]",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border min-h-[400px]",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg mb-2", "Analysis Results" }
 
                             if *is_analyzing.read() {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center space-y-4",
                                         LoadingSpinner {}
-                                        p { class: "text-base-content/60", "Analyzing call transcript..." }
+                                        p { class: "text-slate-400", "Analyzing call transcript..." }
                                     }
                                 }
                             } else if let Some(result) = analysis() {
@@ -141,7 +141,7 @@ pub fn CallIntelPage() -> Element {
                                     // Summary
                                     div {
                                         h3 { class: "font-semibold text-base mb-2", "Summary" }
-                                        p { class: "text-base-content/80 bg-base-200 rounded-lg p-4",
+                                        p { class: "text-base-content/80 bg-slate-800/30 rounded-lg p-4",
                                             "{result.summary}"
                                         }
                                     }
@@ -174,7 +174,7 @@ pub fn CallIntelPage() -> Element {
                                     div {
                                         h3 { class: "font-semibold text-base mb-2", "Key Issues" }
                                         if result.key_issues.is_empty() {
-                                            p { class: "text-base-content/50 text-sm", "No key issues identified." }
+                                            p { class: "text-slate-500 text-sm", "No key issues identified." }
                                         } else {
                                             ul { class: "list-disc list-inside space-y-1",
                                                 for issue in result.key_issues.iter() {
@@ -188,7 +188,7 @@ pub fn CallIntelPage() -> Element {
                                     div {
                                         h3 { class: "font-semibold text-base mb-2", "Action Items" }
                                         if result.action_items.is_empty() {
-                                            p { class: "text-base-content/50 text-sm", "No action items identified." }
+                                            p { class: "text-slate-500 text-sm", "No action items identified." }
                                         } else {
                                             div { class: "space-y-2",
                                                 for item in result.action_items.iter() {
@@ -207,7 +207,7 @@ pub fn CallIntelPage() -> Element {
                             } else {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center",
-                                        p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                        p { class: "text-lg font-medium text-slate-500 mb-2",
                                             "No analysis yet"
                                         }
                                         p { class: "text-sm text-base-content/40",

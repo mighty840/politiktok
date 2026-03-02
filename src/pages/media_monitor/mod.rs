@@ -103,11 +103,11 @@ pub fn MediaMonitorPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Header
             div {
                 h1 { class: "text-3xl font-bold", "Media Monitor" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Analyze media coverage for bias, key claims, and tone. Compare how different sources cover the same topic."
                 }
             }
@@ -155,7 +155,7 @@ pub fn MediaMonitorPage() -> Element {
                 div { class: "flex flex-col lg:flex-row gap-6",
                     // Input
                     div { class: "w-full lg:w-1/3",
-                        div { class: "card bg-base-100 shadow-sm",
+                        div { class: "glass-card gradient-border",
                             div { class: "card-body space-y-4",
                                 h2 { class: "card-title text-lg", "Input" }
 
@@ -203,26 +203,26 @@ pub fn MediaMonitorPage() -> Element {
                     // Results
                     div { class: "w-full lg:w-2/3",
                         if *is_analyzing.read() {
-                            div { class: "card bg-base-100 shadow-sm min-h-[300px]",
+                            div { class: "glass-card gradient-border min-h-[300px]",
                                 div { class: "card-body flex items-center justify-center",
                                     div { class: "text-center space-y-4",
                                         LoadingSpinner {}
-                                        p { class: "text-base-content/60", "Analyzing media coverage..." }
+                                        p { class: "text-slate-400", "Analyzing media coverage..." }
                                     }
                                 }
                             }
                         } else if let Some(result) = analysis_result() {
                             div { class: "space-y-4",
                                 // Summary card
-                                div { class: "card bg-base-100 shadow-sm",
-                                    div { class: "card-body",
+                                div { class: "glass-card gradient-border",
+                                    div { class: "p-6",
                                         div { class: "flex items-center gap-3 mb-3",
                                             h3 { class: "card-title text-lg", "{result.source}" }
                                             span { class: tone_badge(&result.coverage_tone),
                                                 "{result.coverage_tone}"
                                             }
                                         }
-                                        div { class: "bg-base-200 rounded-lg p-4",
+                                        div { class: "bg-slate-800/30 rounded-lg p-4",
                                             p { class: "font-medium mb-1", "Bias Assessment" }
                                             p { class: "text-sm", "{result.bias_assessment}" }
                                         }
@@ -231,8 +231,8 @@ pub fn MediaMonitorPage() -> Element {
 
                                 // Key claims
                                 if !result.key_claims.is_empty() {
-                                    div { class: "card bg-base-100 shadow-sm",
-                                        div { class: "card-body",
+                                    div { class: "glass-card gradient-border",
+                                        div { class: "p-6",
                                             h3 { class: "card-title text-lg", "Key Claims" }
                                             ul { class: "list-disc list-inside space-y-1",
                                                 for claim in result.key_claims.iter() {
@@ -245,8 +245,8 @@ pub fn MediaMonitorPage() -> Element {
 
                                 // Fact-check notes
                                 if !result.fact_check_notes.is_empty() {
-                                    div { class: "card bg-base-100 shadow-sm",
-                                        div { class: "card-body",
+                                    div { class: "glass-card gradient-border",
+                                        div { class: "p-6",
                                             h3 { class: "card-title text-lg", "Fact-Check Notes" }
                                             div { class: "space-y-2",
                                                 for note in result.fact_check_notes.iter() {
@@ -260,9 +260,9 @@ pub fn MediaMonitorPage() -> Element {
                                 }
                             }
                         } else {
-                            div { class: "card bg-base-100 shadow-sm min-h-[300px]",
+                            div { class: "glass-card gradient-border min-h-[300px]",
                                 div { class: "card-body flex items-center justify-center",
-                                    p { class: "text-base-content/50",
+                                    p { class: "text-slate-500",
                                         "Paste an article and click Analyze to see bias assessment, key claims, and fact-check notes."
                                     }
                                 }
@@ -275,7 +275,7 @@ pub fn MediaMonitorPage() -> Element {
             // Coverage Comparison section
             if active_section() == "compare" {
                 div { class: "space-y-4",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Compare Coverage" }
 
@@ -354,15 +354,15 @@ pub fn MediaMonitorPage() -> Element {
                         div { class: "flex items-center justify-center py-8",
                             div { class: "text-center space-y-4",
                                 LoadingSpinner {}
-                                p { class: "text-base-content/60", "Comparing coverage across sources..." }
+                                p { class: "text-slate-400", "Comparing coverage across sources..." }
                             }
                         }
                     } else if let Some(comparison) = comparison_result() {
                         // Overall assessment
-                        div { class: "card bg-base-100 shadow-sm",
-                            div { class: "card-body",
+                        div { class: "glass-card gradient-border",
+                            div { class: "p-6",
                                 h3 { class: "card-title text-lg", "Coverage Comparison: {comparison.topic}" }
-                                div { class: "bg-base-200 rounded-lg p-4 mb-3",
+                                div { class: "bg-slate-800/30 rounded-lg p-4 mb-3",
                                     p { class: "text-sm", "{comparison.overall_assessment}" }
                                 }
                                 div { class: "badge badge-outline", "Bias spectrum: {comparison.bias_spectrum}" }
@@ -372,20 +372,20 @@ pub fn MediaMonitorPage() -> Element {
                         // Per-source cards
                         div { class: "grid grid-cols-1 md:grid-cols-2 gap-4",
                             for sa in comparison.source_analyses.iter() {
-                                div { class: "card bg-base-100 shadow-sm border border-base-300",
-                                    div { class: "card-body",
+                                div { class: "glass-card gradient-border border border-base-300",
+                                    div { class: "p-6",
                                         div { class: "flex items-center gap-2 mb-2",
                                             h4 { class: "font-semibold", "{sa.source}" }
                                             span { class: tone_badge(&sa.tone), "{sa.tone}" }
                                         }
                                         div { class: "text-sm space-y-2",
                                             div {
-                                                p { class: "font-medium text-xs text-base-content/60", "Framing" }
+                                                p { class: "font-medium text-xs text-slate-400", "Framing" }
                                                 p { "{sa.framing}" }
                                             }
                                             if !sa.key_omissions.is_empty() {
                                                 div {
-                                                    p { class: "font-medium text-xs text-base-content/60", "Key Omissions" }
+                                                    p { class: "font-medium text-xs text-slate-400", "Key Omissions" }
                                                     ul { class: "list-disc list-inside text-xs",
                                                         for omission in sa.key_omissions.iter() {
                                                             li { "{omission}" }

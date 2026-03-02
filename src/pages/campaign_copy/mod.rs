@@ -196,11 +196,11 @@ pub fn CampaignCopyPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Campaign Copy Generator" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Generate targeted campaign messaging with AI-assisted content creation for emails, social posts, press releases, speeches, and blog posts."
                 }
             }
@@ -234,7 +234,7 @@ pub fn CampaignCopyPage() -> Element {
 
                 // Left: Input Form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Input" }
 
@@ -256,7 +256,7 @@ pub fn CampaignCopyPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Key Messages" }
-                                    span { class: "label-text-alt text-base-content/50", "One per line" }
+                                    span { class: "label-text-alt text-slate-500", "One per line" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -342,21 +342,21 @@ pub fn CampaignCopyPage() -> Element {
 
                 // Right: Output Panel
                 div { class: "w-full lg:w-2/3",
-                    div { class: "card bg-base-100 shadow-sm min-h-[400px]",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border min-h-[400px]",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg mb-2", "Generated Copy" }
 
                             if *is_generating.read() {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center space-y-4",
                                         LoadingSpinner {}
-                                        p { class: "text-base-content/60", "Generating campaign copy..." }
+                                        p { class: "text-slate-400", "Generating campaign copy..." }
                                     }
                                 }
                             } else if let Some(job) = copy_job() {
                                 if job.results.is_empty() {
                                     div { class: "flex-1 flex items-center justify-center py-12",
-                                        p { class: "text-base-content/50", "No results were generated." }
+                                        p { class: "text-slate-500", "No results were generated." }
                                     }
                                 } else {
                                     // Tabs
@@ -400,7 +400,7 @@ pub fn CampaignCopyPage() -> Element {
                                             }
                                         } else {
                                             rsx! {
-                                                p { class: "text-base-content/50", "Select a tab to view generated content." }
+                                                p { class: "text-slate-500", "Select a tab to view generated content." }
                                             }
                                         }
                                     }
@@ -410,7 +410,7 @@ pub fn CampaignCopyPage() -> Element {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center",
                                         div { class: "text-6xl mb-4 opacity-20", "📝" }
-                                        p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                        p { class: "text-lg font-medium text-slate-500 mb-2",
                                             "No results yet"
                                         }
                                         p { class: "text-sm text-base-content/40",
@@ -440,7 +440,7 @@ fn OutputCard(
     rsx! {
         div { class: "space-y-4",
             // Content display
-            div { class: "bg-base-200 rounded-lg p-4 overflow-auto max-h-[500px]",
+            div { class: "bg-slate-800/30 rounded-lg p-4 overflow-auto max-h-[500px]",
                 pre { class: "whitespace-pre-wrap text-sm font-sans leading-relaxed",
                     "{result.content}"
                 }

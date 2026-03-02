@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-/// CSS-only horizontal bar chart. No JavaScript charting library required.
+/// CSS-only horizontal bar chart with gradient fill bars.
 ///
 /// Each entry in `data` is a `(label, value)` tuple. Bars are scaled relative
 /// to the maximum value in the dataset.
@@ -27,14 +27,14 @@ pub fn BarChart(
                     let val_str = format!("{value:.1}");
                     rsx! {
                         div { class: "flex items-center gap-2",
-                            span { class: "text-xs w-24 text-right truncate", "{label}" }
-                            div { class: "flex-1 bg-base-200 rounded-full h-5 overflow-hidden",
+                            span { class: "text-xs w-24 text-right truncate text-slate-400", "{label}" }
+                            div { class: "flex-1 bg-slate-800/50 rounded-full h-5 overflow-hidden",
                                 div {
-                                    class: "bg-primary h-full rounded-full transition-all duration-300",
-                                    style: "width: {pct_str}%;",
+                                    class: "h-full rounded-full transition-all duration-300",
+                                    style: "width: {pct_str}%; background: linear-gradient(90deg, #6366f1, #8b5cf6);",
                                 }
                             }
-                            span { class: "text-xs w-12 tabular-nums", "{val_str}" }
+                            span { class: "text-xs w-12 tabular-nums text-slate-400", "{val_str}" }
                         }
                     }
                 }

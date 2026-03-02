@@ -10,9 +10,9 @@ pub fn PageHeader(
     rsx! {
         div { class: "flex flex-col gap-1 mb-6 sm:flex-row sm:items-center sm:justify-between",
             div {
-                h1 { class: "text-2xl font-bold", "{title}" }
+                h1 { class: "text-2xl font-bold text-slate-100", "{title}" }
                 if let Some(sub) = &subtitle {
-                    p { class: "text-sm text-base-content/60 mt-1", "{sub}" }
+                    p { class: "text-sm text-slate-400 mt-1", "{sub}" }
                 }
             }
             if let Some(act) = actions {

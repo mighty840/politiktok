@@ -1,5 +1,6 @@
 /* ==========================================================
-   PolitikTok — Application Styles
+   PolitikTok — Application Styles (Revamped)
+   Premium SaaS aesthetic: glassmorphism, gradients, animations
    ========================================================== */
 
 /* ----------------------------------------------------------
@@ -7,23 +8,29 @@
    ---------------------------------------------------------- */
 
 [data-theme="politiktok-dark"] {
-    --color-bg-primary:    #0f172a;
-    --color-bg-secondary:  #1e293b;
-    --color-bg-tertiary:   #334155;
+    --color-bg-primary:    #0b0f1a;
+    --color-bg-secondary:  #111827;
+    --color-bg-tertiary:   #1e293b;
     --color-bg-sidebar:    rgba(15, 23, 42, 0.85);
     --color-text-primary:  #e2e8f0;
     --color-text-secondary:#94a3b8;
     --color-text-muted:    #64748b;
-    --color-border:        #334155;
-    --color-accent:        #3b9af6;
-    --color-accent-hover:  #60b8fa;
+    --color-border:        rgba(148, 163, 184, 0.12);
+    --color-accent:        #6366f1;
+    --color-accent-hover:  #818cf8;
     --color-success:       #22c55e;
     --color-warning:       #f59e0b;
     --color-error:         #ef4444;
     --color-overlay:       rgba(0, 0, 0, 0.6);
+    --color-rose:          #f43f5e;
     --shadow-sm:           0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md:           0 4px 12px rgba(0, 0, 0, 0.4);
     --shadow-lg:           0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-glow:         0 0 20px rgba(99, 102, 241, 0.15);
+    --glass-bg:            rgba(30, 41, 59, 0.5);
+    --glass-border:        rgba(148, 163, 184, 0.12);
+    --gradient-primary:    linear-gradient(135deg, #6366f1, #8b5cf6, #7c3aed);
+    --gradient-text:       linear-gradient(135deg, #818cf8, #c084fc);
 }
 
 /* ----------------------------------------------------------
@@ -31,23 +38,29 @@
    ---------------------------------------------------------- */
 
 [data-theme="politiktok-light"] {
-    --color-bg-primary:    #ffffff;
-    --color-bg-secondary:  #f8fafc;
+    --color-bg-primary:    #f8fafc;
+    --color-bg-secondary:  #ffffff;
     --color-bg-tertiary:   #e2e8f0;
     --color-bg-sidebar:    rgba(255, 255, 255, 0.85);
     --color-text-primary:  #1e293b;
     --color-text-secondary:#475569;
     --color-text-muted:    #94a3b8;
-    --color-border:        #e2e8f0;
-    --color-accent:        #1d65d8;
-    --color-accent-hover:  #257ceb;
+    --color-border:        rgba(148, 163, 184, 0.2);
+    --color-accent:        #4f46e5;
+    --color-accent-hover:  #6366f1;
     --color-success:       #16a34a;
     --color-warning:       #d97706;
     --color-error:         #dc2626;
     --color-overlay:       rgba(0, 0, 0, 0.3);
+    --color-rose:          #e11d48;
     --shadow-sm:           0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md:           0 4px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg:           0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-glow:         0 0 20px rgba(99, 102, 241, 0.08);
+    --glass-bg:            rgba(255, 255, 255, 0.6);
+    --glass-border:        rgba(148, 163, 184, 0.2);
+    --gradient-primary:    linear-gradient(135deg, #4f46e5, #7c3aed, #6d28d9);
+    --gradient-text:       linear-gradient(135deg, #4f46e5, #7c3aed);
 }
 
 /* ----------------------------------------------------------
@@ -65,11 +78,172 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     background-color: var(--color-bg-primary);
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* ----------------------------------------------------------
+   Glass Card — Core utility
+   ---------------------------------------------------------- */
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass-card:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+/* ----------------------------------------------------------
+   Gradient Border — Pseudo-element effect
+   ---------------------------------------------------------- */
+
+.gradient-border {
+    position: relative;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(139,92,246,0.1), rgba(99,102,241,0.3));
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gradient-border:hover::before {
+    opacity: 1;
+}
+
+/* ----------------------------------------------------------
+   Animated Gradient Background — Hero sections
+   ---------------------------------------------------------- */
+
+.animated-gradient-bg {
+    background: linear-gradient(-45deg, #0b0f1a, #1e1b4b, #0f172a, #312e81);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+[data-theme="politiktok-light"] .animated-gradient-bg {
+    background: linear-gradient(-45deg, #eef2ff, #e0e7ff, #f5f3ff, #ede9fe);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+}
+
+/* ----------------------------------------------------------
+   Stagger Enter — Cascading entrance for grids
+   ---------------------------------------------------------- */
+
+.stagger-enter > * {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.stagger-enter > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-enter > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-enter > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-enter > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-enter > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-enter > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-enter > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-enter > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger-enter > *:nth-child(9) { animation-delay: 0.45s; }
+.stagger-enter > *:nth-child(n+10) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----------------------------------------------------------
+   Skeleton Shimmer — Loading placeholders
+   ---------------------------------------------------------- */
+
+.skeleton-shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--color-bg-tertiary) 25%,
+        rgba(148, 163, 184, 0.15) 50%,
+        var(--color-bg-tertiary) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+    border-radius: 0.5rem;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ----------------------------------------------------------
+   Button Scale — Hover/active feedback
+   ---------------------------------------------------------- */
+
+.btn-scale {
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-scale:hover {
+    transform: scale(1.02);
+}
+
+.btn-scale:active {
+    transform: scale(0.98);
+}
+
+/* ----------------------------------------------------------
+   Sidebar Glass — Frosted sidebar
+   ---------------------------------------------------------- */
+
+.sidebar-glass {
+    background: var(--color-bg-sidebar);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
+}
+
+/* ----------------------------------------------------------
+   Modal Blur Backdrop
+   ---------------------------------------------------------- */
+
+.modal-blur-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ----------------------------------------------------------
@@ -95,9 +269,9 @@ body {
     display: flex;
     flex-direction: column;
     background: var(--color-bg-sidebar);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-right: 1px solid var(--color-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--glass-border);
     z-index: 40;
     transition: transform 0.25s ease;
     overflow-y: auto;
@@ -105,7 +279,7 @@ body {
 
 .sidebar-header {
     padding: 1.25rem 1rem;
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -115,7 +289,10 @@ body {
     font-size: 1.125rem;
     font-weight: 700;
     margin: 0;
-    color: var(--color-accent);
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     letter-spacing: -0.01em;
 }
 
@@ -139,16 +316,22 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     transition: background-color 0.15s ease, color 0.15s ease;
+    border-left: 3px solid transparent;
 }
 
 .sidebar-link:hover {
-    background-color: var(--color-bg-tertiary);
+    background-color: rgba(255, 255, 255, 0.05);
     color: var(--color-text-primary);
 }
 
+[data-theme="politiktok-light"] .sidebar-link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
 .sidebar-link.active {
-    background-color: var(--color-accent);
-    color: #ffffff;
+    border-left-color: var(--color-accent);
+    background-color: rgba(99, 102, 241, 0.1);
+    color: var(--color-accent);
 }
 
 .sidebar-link .icon {
@@ -173,12 +356,53 @@ body {
 
 .sidebar-footer {
     padding: 0.75rem 1rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--glass-border);
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 0.8125rem;
     color: var(--color-text-secondary);
+}
+
+/* Collapsible nav group */
+.nav-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0.75rem 0.375rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-group-header:hover .sidebar-section-label {
+    color: var(--color-text-secondary);
+}
+
+.nav-group-chevron {
+    width: 1rem;
+    height: 1rem;
+    color: var(--color-text-muted);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.nav-group-chevron.open {
+    transform: rotate(180deg);
+}
+
+.nav-group-items {
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.25s ease;
+}
+
+.nav-group-items.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.nav-group-items.expanded {
+    max-height: 500px;
+    opacity: 1;
 }
 
 /* ----------------------------------------------------------
@@ -218,7 +442,7 @@ body {
 .loading-spinner {
     width: 2.5rem;
     height: 2.5rem;
-    border: 3px solid var(--color-border);
+    border: 3px solid var(--glass-border);
     border-top-color: var(--color-accent);
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
@@ -258,7 +482,7 @@ body {
 }
 
 /* ----------------------------------------------------------
-   Admin Shell
+   Admin Shell — Pill-style tabs
    ---------------------------------------------------------- */
 
 .admin-shell {
@@ -270,9 +494,9 @@ body {
 
 .admin-nav {
     display: flex;
-    gap: 0.25rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-border);
+    gap: 0.375rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--glass-border);
     overflow-x: auto;
     flex-wrap: nowrap;
     -webkit-overflow-scrolling: touch;
@@ -281,8 +505,8 @@ body {
 .admin-nav-link {
     display: inline-flex;
     align-items: center;
-    padding: 0.375rem 0.75rem;
-    border-radius: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-text-secondary);
@@ -292,12 +516,16 @@ body {
 }
 
 .admin-nav-link:hover {
-    background-color: var(--color-bg-tertiary);
+    background-color: rgba(255, 255, 255, 0.05);
     color: var(--color-text-primary);
 }
 
+[data-theme="politiktok-light"] .admin-nav-link:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
 .admin-nav-link.active {
-    background-color: var(--color-accent);
+    background: var(--gradient-primary);
     color: #ffffff;
 }
 
@@ -317,9 +545,11 @@ body {
     z-index: 50;
     width: 2.5rem;
     height: 2.5rem;
-    border: 1px solid var(--color-border);
-    border-radius: 0.5rem;
-    background: var(--color-bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 0.75rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: var(--color-text-primary);
     font-size: 1.25rem;
     cursor: pointer;
@@ -342,6 +572,8 @@ body {
     inset: 0;
     z-index: 30;
     background: var(--color-overlay);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 }
 
 /* ----------------------------------------------------------
@@ -399,4 +631,44 @@ body {
         padding: 0.375rem 0.5rem;
         font-size: 0.75rem;
     }
+}
+
+/* ----------------------------------------------------------
+   Utility: Animate classes for Tailwind
+   ---------------------------------------------------------- */
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.4s ease-out forwards;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }

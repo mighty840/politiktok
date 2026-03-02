@@ -73,11 +73,11 @@ pub fn FundraisingPage() -> Element {
     });
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Fundraising Intelligence" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Optimize donation strategies with donor management, engagement tracking, and AI-powered solicitations."
                 }
             }
@@ -129,13 +129,13 @@ pub fn FundraisingPage() -> Element {
             }
 
             // Donor table
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body p-0",
                     div { class: "overflow-x-auto",
                         {
                             match &*donors_resource.read() {
                                 Some(donors) if donors.is_empty() => rsx! {
-                                    div { class: "p-8 text-center text-base-content/60",
+                                    div { class: "p-8 text-center text-slate-400",
                                         "No donors found. Add your first donor to get started."
                                     }
                                 },
@@ -180,7 +180,7 @@ pub fn FundraisingPage() -> Element {
                                                                         value: "{score_pct}",
                                                                         max: "100",
                                                                     }
-                                                                    span { class: "text-xs text-base-content/70",
+                                                                    span { class: "text-xs text-slate-400",
                                                                         "{score_pct}%"
                                                                     }
                                                                 }
@@ -239,8 +239,8 @@ pub fn FundraisingPage() -> Element {
                     let detail_donor_id = donor.id.clone();
 
                     rsx! {
-                        div { class: "card bg-base-100 shadow-sm",
-                            div { class: "card-body",
+                        div { class: "glass-card gradient-border",
+                            div { class: "p-6",
                                 div { class: "flex items-center justify-between mb-4",
                                     h2 { class: "card-title",
                                         {donor.encrypted_name.as_deref().unwrap_or("Unknown Donor")}
@@ -253,17 +253,17 @@ pub fn FundraisingPage() -> Element {
                                 }
 
                                 div { class: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6",
-                                    div { class: "stat bg-base-200 rounded-lg",
+                                    div { class: "stat bg-slate-800/30 rounded-lg",
                                         div { class: "stat-title", "Email" }
                                         div { class: "stat-value text-sm",
                                             {donor.encrypted_email.as_deref().unwrap_or("N/A")}
                                         }
                                     }
-                                    div { class: "stat bg-base-200 rounded-lg",
+                                    div { class: "stat bg-slate-800/30 rounded-lg",
                                         div { class: "stat-title", "Total Donated" }
                                         div { class: "stat-value text-lg", "${donated:.2}" }
                                     }
-                                    div { class: "stat bg-base-200 rounded-lg",
+                                    div { class: "stat bg-slate-800/30 rounded-lg",
                                         div { class: "stat-title", "Engagement Score" }
                                         div { class: "stat-value text-lg", "{score_pct}%" }
                                     }
@@ -359,7 +359,7 @@ pub fn FundraisingPage() -> Element {
 
                                 // Solicitation result
                                 if let Some(email_body) = solicitation_result() {
-                                    div { class: "mt-4 p-4 bg-base-200 rounded-lg",
+                                    div { class: "mt-4 p-4 bg-slate-800/30 rounded-lg",
                                         h4 { class: "font-semibold mb-2", "Generated Solicitation" }
                                         pre { class: "whitespace-pre-wrap text-sm", "{email_body}" }
                                     }
@@ -584,8 +584,8 @@ fn SummaryCards(summary: FundraisingSummary) -> Element {
 
         // Top donors
         if !summary.top_donors.is_empty() {
-            div { class: "card bg-base-100 shadow-sm",
-                div { class: "card-body",
+            div { class: "glass-card gradient-border",
+                div { class: "p-6",
                     h3 { class: "card-title text-lg", "Top Donors" }
                     div { class: "overflow-x-auto",
                         table { class: "table table-sm",

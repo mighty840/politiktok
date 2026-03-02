@@ -39,7 +39,7 @@ pub fn AccountabilityPage() -> Element {
     rsx! {
         div { class: "p-6 max-w-7xl mx-auto",
             h1 { class: "text-3xl font-bold mb-2", "Manifesto Accountability Engine" }
-            p { class: "text-base-content/70 mb-6",
+            p { class: "text-slate-400 mb-6",
                 "Track campaign promises, extract commitments from manifestos, and evaluate evidence of fulfillment."
             }
 
@@ -94,7 +94,7 @@ pub fn AccountabilityPage() -> Element {
             }
 
             // Commitments table
-            div { class: "card bg-base-100 shadow-sm mb-6",
+            div { class: "glass-card gradient-border mb-6",
                 div { class: "card-body p-0",
                     h2 { class: "text-lg font-semibold px-6 pt-4 pb-2", "Commitments" }
                     div { class: "overflow-x-auto",
@@ -112,7 +112,7 @@ pub fn AccountabilityPage() -> Element {
                             tbody {
                                 if commitments().unwrap_or_default().is_empty() {
                                     tr {
-                                        td { colspan: "6", class: "text-center text-base-content/50 py-8",
+                                        td { colspan: "6", class: "text-center text-slate-500 py-8",
                                             "No commitments found. Extract commitments from a manifesto to get started."
                                         }
                                     }
@@ -260,8 +260,8 @@ fn ExtractCommitmentsSection(on_extracted: EventHandler) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm mb-6",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border mb-6",
+            div { class: "p-6",
                 div { class: "flex items-center justify-between",
                     h2 { class: "card-title text-lg", "Extract Commitments" }
                     button {
@@ -344,8 +344,8 @@ fn CommitmentDetail(
     });
 
     rsx! {
-        div { class: "card bg-base-100 shadow-lg border border-base-300 mb-6",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border border border-base-300 mb-6",
+            div { class: "p-6",
                 div { class: "flex items-start justify-between mb-4",
                     h2 { class: "card-title text-lg", "Commitment Detail" }
                     button {
@@ -378,7 +378,7 @@ fn CommitmentDetail(
                         h3 { class: "font-semibold mb-3", "Evidence ({evidence.len()})" }
 
                         if evidence.is_empty() {
-                            p { class: "text-base-content/50 text-sm mb-4",
+                            p { class: "text-slate-500 text-sm mb-4",
                                 "No evidence has been submitted for this commitment yet."
                             }
                         }
@@ -430,11 +430,11 @@ fn EvidenceCard(evidence: Evidence) -> Element {
     let confidence_pct = (evidence.confidence * 100.0) as i32;
 
     rsx! {
-        div { class: "card card-compact bg-base-200",
-            div { class: "card-body",
+        div { class: "card card-compact bg-slate-800/30",
+            div { class: "p-6",
                 div { class: "flex items-center gap-2 mb-1",
                     span { class: "{badge_class} badge-sm", "{label}" }
-                    span { class: "text-xs text-base-content/60",
+                    span { class: "text-xs text-slate-400",
                         "Confidence: {confidence_pct}%"
                     }
                     if let Some(ref created) = evidence.created_at {

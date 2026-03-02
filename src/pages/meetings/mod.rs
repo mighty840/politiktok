@@ -48,11 +48,11 @@ pub fn MeetingsPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Meeting Summarizer" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Summarize campaign meetings with AI-powered extraction of key decisions and action items."
                 }
             }
@@ -73,7 +73,7 @@ pub fn MeetingsPage() -> Element {
 
                 // Left: Input Form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Meeting Details" }
 
@@ -95,7 +95,7 @@ pub fn MeetingsPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Transcript" }
-                                    span { class: "label-text-alt text-base-content/50", "Paste full meeting transcript" }
+                                    span { class: "label-text-alt text-slate-500", "Paste full meeting transcript" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -110,7 +110,7 @@ pub fn MeetingsPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Attendees" }
-                                    span { class: "label-text-alt text-base-content/50", "One per line" }
+                                    span { class: "label-text-alt text-slate-500", "One per line" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -141,11 +141,11 @@ pub fn MeetingsPage() -> Element {
                 div { class: "w-full lg:w-2/3 space-y-4",
                     if let Some(summary) = summary_result() {
                         // Summary Card
-                        div { class: "card bg-base-100 shadow-sm",
-                            div { class: "card-body",
+                        div { class: "glass-card gradient-border",
+                            div { class: "p-6",
                                 div { class: "flex items-center justify-between mb-2",
                                     h2 { class: "card-title text-lg", "{summary.title}" }
-                                    span { class: "text-sm text-base-content/50", "{summary.created_at}" }
+                                    span { class: "text-sm text-slate-500", "{summary.created_at}" }
                                 }
 
                                 if !summary.attendees.is_empty() {
@@ -156,7 +156,7 @@ pub fn MeetingsPage() -> Element {
                                     }
                                 }
 
-                                div { class: "bg-base-200 rounded-lg p-4",
+                                div { class: "bg-slate-800/30 rounded-lg p-4",
                                     p { class: "text-sm whitespace-pre-wrap leading-relaxed",
                                         "{summary.summary}"
                                     }
@@ -166,8 +166,8 @@ pub fn MeetingsPage() -> Element {
 
                         // Key Decisions
                         if !summary.key_decisions.is_empty() {
-                            div { class: "card bg-base-100 shadow-sm",
-                                div { class: "card-body",
+                            div { class: "glass-card gradient-border",
+                                div { class: "p-6",
                                     h3 { class: "card-title text-base", "Key Decisions" }
                                     ul { class: "space-y-2 mt-2",
                                         for (idx, decision) in summary.key_decisions.iter().enumerate() {
@@ -185,8 +185,8 @@ pub fn MeetingsPage() -> Element {
 
                         // Action Items Table
                         if !summary.action_items.is_empty() {
-                            div { class: "card bg-base-100 shadow-sm",
-                                div { class: "card-body",
+                            div { class: "glass-card gradient-border",
+                                div { class: "p-6",
                                     h3 { class: "card-title text-base", "Action Items" }
                                     div { class: "overflow-x-auto mt-2",
                                         table { class: "table table-sm",
@@ -210,10 +210,10 @@ pub fn MeetingsPage() -> Element {
                         }
                     } else {
                         // No results yet
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No summary yet"
                                     }
                                     p { class: "text-sm text-base-content/40",
@@ -252,7 +252,7 @@ fn ActionItemRow(item: ActionItem) -> Element {
             td {
                 span { class: "badge badge-ghost badge-sm", "{item.assignee}" }
             }
-            td { class: "text-sm text-base-content/70", "{item.deadline}" }
+            td { class: "text-sm text-slate-400", "{item.deadline}" }
             td {
                 span { class: "{status_class}", "{status_label}" }
             }

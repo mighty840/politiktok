@@ -120,11 +120,11 @@ pub fn NarrativePage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Narrative Contagion Model" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Analyze how political narratives spread, predict viral potential, and develop counter-messaging strategies."
                 }
             }
@@ -154,10 +154,10 @@ pub fn NarrativePage() -> Element {
             }
 
             // Input section
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Input Text" }
-                    p { class: "text-sm text-base-content/60",
+                    p { class: "text-sm text-slate-400",
                         "Paste a news article, social media post, speech excerpt, or any political text to analyze."
                     }
                     textarea {
@@ -201,10 +201,10 @@ pub fn NarrativePage() -> Element {
                 }
 
                 // Spread prediction section
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-4",
                         h2 { class: "card-title text-lg", "Spread Prediction" }
-                        p { class: "text-sm text-base-content/60", "{result.spread_prediction}" }
+                        p { class: "text-sm text-slate-400", "{result.spread_prediction}" }
 
                         div { class: "divider", "Deep Dive" }
 
@@ -251,7 +251,7 @@ pub fn NarrativePage() -> Element {
                         }
 
                         if let Some(prediction) = spread_result() {
-                            div { class: "bg-base-200 rounded-lg p-4 mt-2",
+                            div { class: "bg-slate-800/30 rounded-lg p-4 mt-2",
                                 pre { class: "whitespace-pre-wrap text-sm font-sans leading-relaxed",
                                     "{prediction}"
                                 }
@@ -261,7 +261,7 @@ pub fn NarrativePage() -> Element {
                 }
 
                 // Counter-narrative section
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-4",
                         h2 { class: "card-title text-lg", "Counter-Narrative Suggestions" }
 
@@ -297,7 +297,7 @@ pub fn NarrativePage() -> Element {
                         if let Some(ref suggestions) = counter_results() {
                             div { class: "space-y-2 mt-2",
                                 for (idx, suggestion) in suggestions.iter().enumerate() {
-                                    div { class: "flex gap-3 items-start bg-base-200 rounded-lg p-3",
+                                    div { class: "flex gap-3 items-start bg-slate-800/30 rounded-lg p-3",
                                         span { class: "badge badge-primary badge-sm mt-0.5",
                                             "{idx + 1}"
                                         }
@@ -311,8 +311,8 @@ pub fn NarrativePage() -> Element {
 
                 // Recommended responses from initial analysis
                 if !result.recommended_responses.is_empty() {
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Recommended Responses" }
                             ul { class: "list-disc list-inside space-y-1",
                                 for response in result.recommended_responses.iter() {
@@ -340,19 +340,19 @@ fn NarrativeCard(narrative: Narrative) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm border border-base-300",
+        div { class: "glass-card gradient-border border border-base-300",
             div { class: "card-body space-y-3",
                 h3 { class: "card-title text-base", "{narrative.theme}" }
 
                 div { class: "space-y-1",
-                    p { class: "text-xs font-semibold text-base-content/50 uppercase tracking-wide",
+                    p { class: "text-xs font-semibold text-slate-500 uppercase tracking-wide",
                         "Framing"
                     }
                     p { class: "text-sm", "{narrative.framing}" }
                 }
 
                 div { class: "space-y-1",
-                    p { class: "text-xs font-semibold text-base-content/50 uppercase tracking-wide",
+                    p { class: "text-xs font-semibold text-slate-500 uppercase tracking-wide",
                         "Target Audience"
                     }
                     p { class: "text-sm", "{narrative.target_audience}" }
@@ -360,7 +360,7 @@ fn NarrativeCard(narrative: Narrative) -> Element {
 
                 div { class: "space-y-1",
                     div { class: "flex items-center justify-between",
-                        p { class: "text-xs font-semibold text-base-content/50 uppercase tracking-wide",
+                        p { class: "text-xs font-semibold text-slate-500 uppercase tracking-wide",
                             "Virality Score"
                         }
                         span { class: "text-sm font-mono", "{virality_pct}%" }
@@ -374,7 +374,7 @@ fn NarrativeCard(narrative: Narrative) -> Element {
 
                 if !narrative.emotional_triggers.is_empty() {
                     div { class: "space-y-1",
-                        p { class: "text-xs font-semibold text-base-content/50 uppercase tracking-wide",
+                        p { class: "text-xs font-semibold text-slate-500 uppercase tracking-wide",
                             "Emotional Triggers"
                         }
                         div { class: "flex flex-wrap gap-1",

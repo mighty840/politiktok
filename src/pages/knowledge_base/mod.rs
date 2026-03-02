@@ -94,17 +94,17 @@ pub fn KnowledgeBasePage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Knowledge Base" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "AI-powered Q&A over your campaign's internal documents. Ask questions and manage knowledge base documents."
                 }
             }
 
             // Q&A Section
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Ask a Question" }
 
@@ -165,7 +165,7 @@ pub fn KnowledgeBasePage() -> Element {
                         }
                     } else if !*is_asking.read() {
                         div { class: "text-center py-8",
-                            p { class: "text-base-content/50",
+                            p { class: "text-slate-500",
                                 "Ask a question to search the knowledge base."
                             }
                         }
@@ -180,7 +180,7 @@ pub fn KnowledgeBasePage() -> Element {
 
                 // Left: Ingest Form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Add Document" }
 
@@ -257,8 +257,8 @@ pub fn KnowledgeBasePage() -> Element {
 
                 // Right: Document List
                 div { class: "w-full lg:w-2/3",
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             div { class: "flex items-center justify-between mb-4",
                                 h2 { class: "card-title text-lg", "Documents" }
                                 select {
@@ -279,7 +279,7 @@ pub fn KnowledgeBasePage() -> Element {
                                 if docs.is_empty() {
                                     rsx! {
                                         div { class: "text-center py-8",
-                                            p { class: "text-base-content/50",
+                                            p { class: "text-slate-500",
                                                 "No documents in the knowledge base yet. Add a document to get started."
                                             }
                                         }
@@ -344,7 +344,7 @@ fn AnswerCard(answer: KBAnswer) -> Element {
             div { class: "flex items-center justify-between text-xs",
                 div { class: "flex flex-wrap gap-1",
                     if !answer.sources.is_empty() {
-                        span { class: "text-base-content/50 mr-1", "Sources:" }
+                        span { class: "text-slate-500 mr-1", "Sources:" }
                         for source in answer.sources.iter() {
                             span { class: "badge badge-ghost badge-xs", "{source}" }
                         }
@@ -365,7 +365,7 @@ fn DocumentRow(document: KBDocument) -> Element {
             td {
                 span { class: "badge badge-ghost badge-sm", "{document.category}" }
             }
-            td { class: "text-sm text-base-content/60", "{document.created_at}" }
+            td { class: "text-sm text-slate-400", "{document.created_at}" }
         }
     }
 }

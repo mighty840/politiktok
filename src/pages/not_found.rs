@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 pub fn NotFoundPage(segments: Vec<String>) -> Element {
     let path = segments.join("/");
     rsx! {
-        div { class: "hero min-h-screen bg-base-200",
+        div { class: "hero min-h-screen bg-slate-800/30",
             div { class: "hero-content text-center",
                 div { class: "max-w-md",
                     h1 { class: "text-5xl font-bold", "404" }

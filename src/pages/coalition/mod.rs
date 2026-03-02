@@ -77,11 +77,11 @@ pub fn CoalitionPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Coalition Tension Detector" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Analyze how policies affect political coalitions and identify emerging tensions between constituent groups."
                 }
             }
@@ -114,10 +114,10 @@ pub fn CoalitionPage() -> Element {
             div { class: "flex flex-col lg:flex-row gap-6",
                 // Left: Policy text input
                 div { class: "w-full lg:w-1/2",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Policy Text" }
-                            p { class: "text-sm text-base-content/60",
+                            p { class: "text-sm text-slate-400",
                                 "Enter a policy proposal, legislative text, or platform position to analyze."
                             }
                             textarea {
@@ -133,7 +133,7 @@ pub fn CoalitionPage() -> Element {
 
                 // Right: Segment selection
                 div { class: "w-full lg:w-1/2",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             div { class: "flex items-center justify-between",
                                 h2 { class: "card-title text-lg", "Coalition Segments" }
@@ -163,7 +163,7 @@ pub fn CoalitionPage() -> Element {
                                                         .any(|s| s.name == segment.name);
                                                     let seg_for_toggle = segment.clone();
                                                     rsx! {
-                                                        label { class: "flex items-start gap-3 cursor-pointer p-2 rounded-lg hover:bg-base-200 transition-colors",
+                                                        label { class: "flex items-start gap-3 cursor-pointer p-2 rounded-lg hover:bg-slate-700/30 transition-colors",
                                                             input {
                                                                 r#type: "checkbox",
                                                                 class: "checkbox checkbox-primary checkbox-sm mt-0.5",
@@ -172,7 +172,7 @@ pub fn CoalitionPage() -> Element {
                                                             }
                                                             div {
                                                                 p { class: "font-medium text-sm", "{segment.name}" }
-                                                                p { class: "text-xs text-base-content/50", "{segment.description}" }
+                                                                p { class: "text-xs text-slate-500", "{segment.description}" }
                                                                 div { class: "flex flex-wrap gap-1 mt-1",
                                                                     for priority in segment.key_priorities.iter() {
                                                                         span { class: "badge badge-ghost badge-xs", "{priority}" }
@@ -220,7 +220,7 @@ pub fn CoalitionPage() -> Element {
                 StressScoreGauge { score: result.overall_stress_score }
 
                 // Tension list
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-4",
                         h2 { class: "card-title text-lg",
                             "Detected Tensions"
@@ -228,7 +228,7 @@ pub fn CoalitionPage() -> Element {
                         }
 
                         if result.tensions.is_empty() {
-                            p { class: "text-base-content/60 py-4",
+                            p { class: "text-slate-400 py-4",
                                 "No significant tensions detected between the selected segments."
                             }
                         } else {
@@ -243,8 +243,8 @@ pub fn CoalitionPage() -> Element {
 
                 // Recommendations
                 if !result.recommendations.is_empty() {
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Recommendations" }
                             div { class: "space-y-2 mt-2",
                                 for (idx, rec) in result.recommendations.iter().enumerate() {
@@ -279,8 +279,8 @@ fn StressScoreGauge(score: f64) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 div { class: "flex items-center justify-between mb-2",
                     h2 { class: "card-title text-lg", "Overall Coalition Stress" }
                     div { class: "flex items-center gap-2",
@@ -293,7 +293,7 @@ fn StressScoreGauge(score: f64) -> Element {
                     value: "{pct}",
                     max: "100",
                 }
-                p { class: "text-xs text-base-content/50 mt-1",
+                p { class: "text-xs text-slate-500 mt-1",
                     "0% = no strain on coalition, 100% = coalition breaking point"
                 }
             }
@@ -321,7 +321,7 @@ fn TensionCard(tension: Tension) -> Element {
                 span { class: "{severity_badge} badge-sm ml-auto", "{tension.severity}" }
             }
             p { class: "text-sm font-semibold text-base-content/80", "{tension.issue}" }
-            p { class: "text-sm text-base-content/60", "{tension.explanation}" }
+            p { class: "text-sm text-slate-400", "{tension.explanation}" }
         }
     }
 }

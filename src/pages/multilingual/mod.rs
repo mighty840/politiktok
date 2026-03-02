@@ -135,17 +135,17 @@ pub fn MultilingualPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Multilingual Outreach" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Translate and culturally adapt campaign materials for multilingual communities while preserving tone and intent."
                 }
             }
 
             // ---- Translation Section ----
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Translate Content" }
 
@@ -209,7 +209,7 @@ pub fn MultilingualPage() -> Element {
                     div { class: "form-control",
                         label { class: "label",
                             span { class: "label-text font-medium", "Context" }
-                            span { class: "label-text-alt text-base-content/50", "Optional" }
+                            span { class: "label-text-alt text-slate-500", "Optional" }
                         }
                         input {
                             class: "input input-bordered w-full",
@@ -238,14 +238,14 @@ pub fn MultilingualPage() -> Element {
                         div { class: "flex items-center justify-center py-8",
                             div { class: "text-center space-y-4",
                                 LoadingSpinner {}
-                                p { class: "text-base-content/60", "Translating content..." }
+                                p { class: "text-slate-400", "Translating content..." }
                             }
                         }
                     } else if let Some(result) = translation_result() {
                         div { class: "space-y-4 mt-4",
                             // Translated text card
-                            div { class: "card bg-base-200",
-                                div { class: "card-body",
+                            div { class: "card bg-slate-800/30",
+                                div { class: "p-6",
                                     div { class: "flex items-center justify-between mb-2",
                                         h3 { class: "font-semibold",
                                             "{result.source_language} → {result.target_language}"
@@ -286,10 +286,10 @@ pub fn MultilingualPage() -> Element {
             }
 
             // ---- Adapt Messaging Section ----
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Adapt Messaging" }
-                    p { class: "text-base-content/60 text-sm",
+                    p { class: "text-slate-400 text-sm",
                         "Culturally adapt messaging beyond translation — adjust framing, references, and tone for a specific cultural audience."
                     }
 
@@ -369,14 +369,14 @@ pub fn MultilingualPage() -> Element {
                         div { class: "flex items-center justify-center py-8",
                             div { class: "text-center space-y-4",
                                 LoadingSpinner {}
-                                p { class: "text-base-content/60", "Adapting messaging..." }
+                                p { class: "text-slate-400", "Adapting messaging..." }
                             }
                         }
                     } else if let Some(result) = adapt_result() {
                         div { class: "space-y-4 mt-4",
                             // Adapted text card
-                            div { class: "card bg-base-200",
-                                div { class: "card-body",
+                            div { class: "card bg-slate-800/30",
+                                div { class: "p-6",
                                     div { class: "flex items-center gap-2 mb-2",
                                         h3 { class: "font-semibold", "Adapted for: {result.target_culture}" }
                                         span { class: "badge badge-outline badge-sm", "{result.tone}" }

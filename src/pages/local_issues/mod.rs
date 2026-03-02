@@ -98,11 +98,11 @@ pub fn LocalIssuesPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Hyper-Local Issue Mapping" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Identify neighborhood-level issues and generate actionable talking points for your campaign."
                 }
             }
@@ -136,7 +136,7 @@ pub fn LocalIssuesPage() -> Element {
 
                 // Left: Input Form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Area Analysis" }
 
@@ -158,7 +158,7 @@ pub fn LocalIssuesPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Demographics" }
-                                    span { class: "label-text-alt text-base-content/50", "Optional" }
+                                    span { class: "label-text-alt text-slate-500", "Optional" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -173,7 +173,7 @@ pub fn LocalIssuesPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Recent Local News" }
-                                    span { class: "label-text-alt text-base-content/50", "Optional" }
+                                    span { class: "label-text-alt text-slate-500", "Optional" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -204,11 +204,11 @@ pub fn LocalIssuesPage() -> Element {
                 div { class: "w-full lg:w-2/3 space-y-4",
 
                     if *is_analyzing.read() {
-                        div { class: "card bg-base-100 shadow-sm",
+                        div { class: "glass-card gradient-border",
                             div { class: "card-body flex items-center justify-center py-12",
                                 div { class: "text-center space-y-4",
                                     LoadingSpinner {}
-                                    p { class: "text-base-content/60", "Analyzing local issues..." }
+                                    p { class: "text-slate-400", "Analyzing local issues..." }
                                 }
                             }
                         }
@@ -216,8 +216,8 @@ pub fn LocalIssuesPage() -> Element {
 
                         // Priority summary
                         if !rpt.overall_priorities.is_empty() {
-                            div { class: "card bg-base-100 shadow-sm",
-                                div { class: "card-body",
+                            div { class: "glass-card gradient-border",
+                                div { class: "p-6",
                                     h2 { class: "card-title text-lg mb-3", "Priority Summary" }
                                     ol { class: "list-decimal list-inside space-y-1",
                                         for priority in &rpt.overall_priorities {
@@ -230,9 +230,9 @@ pub fn LocalIssuesPage() -> Element {
 
                         // Issue cards
                         if rpt.issues.is_empty() {
-                            div { class: "card bg-base-100 shadow-sm",
-                                div { class: "card-body",
-                                    p { class: "text-base-content/50", "No issues were identified." }
+                            div { class: "glass-card gradient-border",
+                                div { class: "p-6",
+                                    p { class: "text-slate-500", "No issues were identified." }
                                 }
                             }
                         } else {
@@ -243,7 +243,7 @@ pub fn LocalIssuesPage() -> Element {
                                     let is_expanded = expanded_issue() == Some(title.clone());
 
                                     rsx! {
-                                        div { class: "card bg-base-100 shadow-sm",
+                                        div { class: "glass-card gradient-border",
                                             div { class: "card-body space-y-3",
                                                 // Title and severity
                                                 div { class: "flex items-start justify-between gap-2",
@@ -260,7 +260,7 @@ pub fn LocalIssuesPage() -> Element {
                                                 // Affected demographics
                                                 if !issue.affected_demographics.is_empty() {
                                                     div {
-                                                        span { class: "text-xs font-medium text-base-content/60 mr-2",
+                                                        span { class: "text-xs font-medium text-slate-400 mr-2",
                                                             "Affected groups:"
                                                         }
                                                         div { class: "inline-flex flex-wrap gap-1",
@@ -299,7 +299,7 @@ pub fn LocalIssuesPage() -> Element {
                                                     if *is_loading_points.read() {
                                                         div { class: "flex items-center gap-2 py-2",
                                                             span { class: "loading loading-spinner loading-sm" }
-                                                            span { class: "text-sm text-base-content/60",
+                                                            span { class: "text-sm text-slate-400",
                                                                 "Generating detailed talking points..."
                                                             }
                                                         }
@@ -308,7 +308,7 @@ pub fn LocalIssuesPage() -> Element {
                                                             span { class: "text-sm", "{err}" }
                                                         }
                                                     } else if let Some(ref tp) = talking_points_result() {
-                                                        div { class: "bg-base-200 rounded-lg p-4 space-y-2",
+                                                        div { class: "bg-slate-800/30 rounded-lg p-4 space-y-2",
                                                             h4 { class: "font-medium text-sm mb-2",
                                                                 "Detailed Talking Points"
                                                             }
@@ -330,10 +330,10 @@ pub fn LocalIssuesPage() -> Element {
                         }
                     } else {
                         // No results yet
-                        div { class: "card bg-base-100 shadow-sm min-h-[300px]",
+                        div { class: "glass-card gradient-border min-h-[300px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No analysis yet"
                                     }
                                     p { class: "text-sm text-base-content/40",

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-/// Status badge with color variants.
+/// Pill-shaped status badge with color variants.
 ///
 /// `variant` must be one of: "active", "inactive", "error", "warning".
 #[component]
@@ -9,13 +9,15 @@ pub fn Badge(
     #[props(default = "active".to_string())] variant: String,
 ) -> Element {
     let badge_class = match variant.as_str() {
-        "inactive" => "badge badge-ghost",
-        "error" => "badge badge-error",
-        "warning" => "badge badge-warning",
-        _ => "badge badge-success",
+        "inactive" => "bg-slate-500/10 text-slate-400",
+        "error" => "bg-red-500/10 text-red-400",
+        "warning" => "bg-amber-500/10 text-amber-400",
+        _ => "bg-emerald-500/10 text-emerald-400",
     };
 
     rsx! {
-        span { class: "{badge_class}", "{label}" }
+        span { class: "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {badge_class}",
+            "{label}"
+        }
     }
 }

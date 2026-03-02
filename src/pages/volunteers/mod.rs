@@ -52,12 +52,12 @@ pub fn VolunteersPage() -> Element {
     });
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4",
                 div {
                     h1 { class: "text-3xl font-bold", "Volunteer Management" }
-                    p { class: "text-base-content/70",
+                    p { class: "text-slate-400",
                         "Match and coordinate campaign volunteers with AI-driven task assignment."
                     }
                 }
@@ -142,13 +142,13 @@ fn VolunteerTable(volunteers: Resource<Vec<VolunteerSummary>>) -> Element {
     let data = volunteers.read();
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 match data.as_ref() {
                     None => rsx! { LoadingSpinner {} },
                     Some(items) if items.is_empty() => {
                         rsx! {
-                            p { class: "text-base-content/60 py-4", "No volunteers found." }
+                            p { class: "text-slate-400 py-4", "No volunteers found." }
                         }
                     }
                     Some(items) => {
@@ -185,8 +185,8 @@ fn AtRiskTable(volunteers: Resource<Vec<VolunteerSummary>>) -> Element {
     let data = volunteers.read();
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm border border-warning/30",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border border border-warning/30",
+            div { class: "p-6",
                 div { class: "flex items-center gap-2 mb-4",
                     span { class: "text-warning text-lg", "!" }
                     h3 { class: "text-lg font-semibold text-warning", "At-Risk Volunteers (Churn Score > 0.7)" }
@@ -196,7 +196,7 @@ fn AtRiskTable(volunteers: Resource<Vec<VolunteerSummary>>) -> Element {
                     None => rsx! { LoadingSpinner {} },
                     Some(items) if items.is_empty() => {
                         rsx! {
-                            p { class: "text-base-content/60 py-4", "No at-risk volunteers detected." }
+                            p { class: "text-slate-400 py-4", "No at-risk volunteers detected." }
                         }
                     }
                     Some(items) => {
@@ -520,7 +520,7 @@ pub fn VolunteerDetailPage(id: String) -> Element {
     let data = volunteer_resource.read();
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Back link
             div {
                 Link {
@@ -537,14 +537,14 @@ pub fn VolunteerDetailPage(id: String) -> Element {
                 },
                 Some(Some(vol)) => rsx! {
                     // Header card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4",
                                 div {
                                     h1 { class: "text-2xl font-bold", "{vol.name}" }
-                                    p { class: "text-base-content/70", "{vol.email}" }
+                                    p { class: "text-slate-400", "{vol.email}" }
                                     if let Some(ref phone) = vol.phone {
-                                        p { class: "text-base-content/60 text-sm", "{phone}" }
+                                        p { class: "text-slate-400 text-sm", "{phone}" }
                                     }
                                 }
                                 div { class: "flex items-center gap-2",
@@ -573,15 +573,15 @@ pub fn VolunteerDetailPage(id: String) -> Element {
                     }
 
                     // Skills and tags
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Skills" }
                             div { class: "flex flex-wrap gap-2 mt-2",
                                 for skill in vol.skills.iter() {
                                     span { class: "badge badge-primary badge-outline", "{skill}" }
                                 }
                                 if vol.skills.is_empty() {
-                                    span { class: "text-base-content/50 text-sm", "No skills listed" }
+                                    span { class: "text-slate-500 text-sm", "No skills listed" }
                                 }
                             }
                             if !vol.tags.is_empty() {
@@ -597,8 +597,8 @@ pub fn VolunteerDetailPage(id: String) -> Element {
 
                     // Bio
                     if vol.bio.is_some() {
-                        div { class: "card bg-base-100 shadow-sm",
-                            div { class: "card-body",
+                        div { class: "glass-card gradient-border",
+                            div { class: "p-6",
                                 h2 { class: "card-title text-lg", "Bio" }
                                 p { class: "text-base-content/80 mt-2 whitespace-pre-wrap",
                                     "{vol.bio.as_deref().unwrap_or(\"\")}"
@@ -608,10 +608,10 @@ pub fn VolunteerDetailPage(id: String) -> Element {
                     }
 
                     // Draft message section
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Draft Message" }
-                            p { class: "text-base-content/60 text-sm mb-3",
+                            p { class: "text-slate-400 text-sm mb-3",
                                 "Generate an AI-drafted message for this volunteer."
                             }
                             div { class: "flex flex-wrap items-end gap-3",
@@ -646,8 +646,8 @@ pub fn VolunteerDetailPage(id: String) -> Element {
                             }
 
                             if let Some(msg) = generated_message() {
-                                div { class: "card bg-base-200 mt-4",
-                                    div { class: "card-body",
+                                div { class: "card bg-slate-800/30 mt-4",
+                                    div { class: "p-6",
                                         p { class: "whitespace-pre-wrap text-sm", "{msg}" }
                                     }
                                 }
@@ -656,13 +656,13 @@ pub fn VolunteerDetailPage(id: String) -> Element {
                     }
 
                     // Metadata
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Details" }
                             div { class: "grid grid-cols-2 gap-2 text-sm mt-2",
-                                span { class: "text-base-content/60", "Created" }
+                                span { class: "text-slate-400", "Created" }
                                 span { "{vol.created_at.as_deref().unwrap_or(\"--\")}" }
-                                span { class: "text-base-content/60", "Last Active" }
+                                span { class: "text-slate-400", "Last Active" }
                                 span { "{vol.last_active.as_deref().unwrap_or(\"--\")}" }
                             }
                         }
@@ -700,12 +700,12 @@ pub fn TasksPage() -> Element {
     });
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4",
                 div {
                     h1 { class: "text-3xl font-bold", "Tasks" }
-                    p { class: "text-base-content/70",
+                    p { class: "text-slate-400",
                         "View and manage campaign tasks and volunteer assignments."
                     }
                 }
@@ -740,15 +740,15 @@ pub fn TasksPage() -> Element {
             }
 
             // Tasks table
-            div { class: "card bg-base-100 shadow-sm",
-                div { class: "card-body",
+            div { class: "glass-card gradient-border",
+                div { class: "p-6",
                     {
                         let data = tasks_resource.read();
                         match data.as_ref() {
                             None => rsx! { LoadingSpinner {} },
                             Some(items) if items.is_empty() => {
                                 rsx! {
-                                    p { class: "text-base-content/60 py-4", "No tasks found." }
+                                    p { class: "text-slate-400 py-4", "No tasks found." }
                                 }
                             }
                             Some(items) => {
@@ -1040,7 +1040,7 @@ pub fn TaskDetailPage(id: String) -> Element {
     let data = task_resource.read();
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Back link
             div {
                 Link {
@@ -1057,13 +1057,13 @@ pub fn TaskDetailPage(id: String) -> Element {
                 },
                 Some(Some(task)) => rsx! {
                     // Task header card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4",
                                 div {
                                     h1 { class: "text-2xl font-bold", "{task.title}" }
                                     if !task.description.is_empty() {
-                                        p { class: "text-base-content/70 mt-1", "{task.description}" }
+                                        p { class: "text-slate-400 mt-1", "{task.description}" }
                                     }
                                 }
                                 {
@@ -1081,23 +1081,23 @@ pub fn TaskDetailPage(id: String) -> Element {
                             // Task details grid
                             div { class: "grid grid-cols-2 md:grid-cols-4 gap-4 mt-4",
                                 div {
-                                    span { class: "text-xs text-base-content/50 block", "Start Date" }
+                                    span { class: "text-xs text-slate-500 block", "Start Date" }
                                     span { class: "text-sm font-medium",
                                         "{task.date_start.as_deref().unwrap_or(\"--\")}"
                                     }
                                 }
                                 div {
-                                    span { class: "text-xs text-base-content/50 block", "End Date" }
+                                    span { class: "text-xs text-slate-500 block", "End Date" }
                                     span { class: "text-sm font-medium",
                                         "{task.date_end.as_deref().unwrap_or(\"--\")}"
                                     }
                                 }
                                 div {
-                                    span { class: "text-xs text-base-content/50 block", "Max Volunteers" }
+                                    span { class: "text-xs text-slate-500 block", "Max Volunteers" }
                                     span { class: "text-sm font-medium", "{task.max_volunteers}" }
                                 }
                                 div {
-                                    span { class: "text-xs text-base-content/50 block", "Created" }
+                                    span { class: "text-xs text-slate-500 block", "Created" }
                                     span { class: "text-sm font-medium",
                                         "{task.created_at.as_deref().unwrap_or(\"--\")}"
                                     }
@@ -1107,7 +1107,7 @@ pub fn TaskDetailPage(id: String) -> Element {
                             // Required skills
                             if !task.required_skills.is_empty() {
                                 div { class: "mt-4",
-                                    span { class: "text-xs text-base-content/50 block mb-1", "Required Skills" }
+                                    span { class: "text-xs text-slate-500 block mb-1", "Required Skills" }
                                     div { class: "flex flex-wrap gap-2",
                                         for skill in task.required_skills.iter() {
                                             span { class: "badge badge-primary badge-outline", "{skill}" }
@@ -1119,8 +1119,8 @@ pub fn TaskDetailPage(id: String) -> Element {
                     }
 
                     // Find matches section
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             div { class: "flex items-center justify-between",
                                 h2 { class: "card-title text-lg", "Volunteer Matching" }
                                 button {
@@ -1210,7 +1210,7 @@ pub fn TaskDetailPage(id: String) -> Element {
                                     }
                                 }
                             } else if !*is_matching.read() && match_error().is_none() {
-                                p { class: "text-base-content/50 text-sm mt-4",
+                                p { class: "text-slate-500 text-sm mt-4",
                                     "Click \"Find Matches\" to discover the best-fit volunteers for this task."
                                 }
                             }

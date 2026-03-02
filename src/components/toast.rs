@@ -45,22 +45,22 @@ pub fn ToastProvider(children: Element) -> Element {
     rsx! {
         {children}
 
-        div { class: "toast toast-end toast-bottom z-50",
+        div { class: "fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm",
             for toast in state.toasts.read().iter() {
                 {
-                    let alert_class = match toast.variant.as_str() {
-                        "error" => "alert alert-error",
-                        "warning" => "alert alert-warning",
-                        "success" => "alert alert-success",
-                        _ => "alert alert-info",
+                    let border_color = match toast.variant.as_str() {
+                        "error" => "border-l-red-500",
+                        "warning" => "border-l-amber-500",
+                        "success" => "border-l-emerald-500",
+                        _ => "border-l-indigo-500",
                     };
                     let id = toast.id;
                     let mut state = state;
                     rsx! {
                         div {
-                            class: "{alert_class} shadow-lg cursor-pointer",
+                            class: "glass-card animate-slide-in-right cursor-pointer px-4 py-3 border-l-4 {border_color}",
                             onclick: move |_| state.dismiss(id),
-                            span { "{toast.message}" }
+                            span { class: "text-sm text-slate-200", "{toast.message}" }
                         }
                     }
                 }

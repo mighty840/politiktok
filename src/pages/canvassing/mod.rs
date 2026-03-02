@@ -93,18 +93,18 @@ pub fn CanvassingPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Canvassing Script Generator" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Generate dynamic door-to-door canvassing scripts tailored to voter segments and local issues."
                 }
             }
 
             // Script generation form
-            div { class: "card bg-base-100 shadow-sm",
-                div { class: "card-body",
+            div { class: "glass-card gradient-border",
+                div { class: "p-6",
                     h2 { class: "card-title text-lg mb-4", "Generate New Script" }
 
                     div { class: "grid grid-cols-1 md:grid-cols-2 gap-4",
@@ -143,7 +143,7 @@ pub fn CanvassingPage() -> Element {
                         div { class: "form-control w-full",
                             label { class: "label",
                                 span { class: "label-text font-medium", "Local Issues" }
-                                span { class: "label-text-alt text-base-content/50", "One per line" }
+                                span { class: "label-text-alt text-slate-500", "One per line" }
                             }
                             textarea {
                                 class: "textarea textarea-bordered w-full",
@@ -158,7 +158,7 @@ pub fn CanvassingPage() -> Element {
                         div { class: "form-control w-full",
                             label { class: "label",
                                 span { class: "label-text font-medium", "Key Asks" }
-                                span { class: "label-text-alt text-base-content/50", "One per line" }
+                                span { class: "label-text-alt text-slate-500", "One per line" }
                             }
                             textarea {
                                 class: "textarea textarea-bordered w-full",
@@ -222,8 +222,8 @@ fn ScriptViewer(
     copy_status: Option<String>,
 ) -> Element {
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 // Header with metadata and copy button
                 div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4",
                     div {
@@ -302,7 +302,7 @@ fn ScriptSectionCard(section: ScriptSection, default_open: bool) -> Element {
     let type_label = section_type_label(&section.section_type);
 
     rsx! {
-        div { class: "collapse collapse-arrow bg-base-200 rounded-lg",
+        div { class: "collapse collapse-arrow bg-slate-800/30 rounded-lg",
             input {
                 r#type: "checkbox",
                 checked: *is_open.read(),
@@ -321,7 +321,7 @@ fn ScriptSectionCard(section: ScriptSection, default_open: bool) -> Element {
                 // Talking points
                 if !section.talking_points.is_empty() {
                     div { class: "mt-3",
-                        h4 { class: "text-sm font-semibold text-base-content/70 mb-1",
+                        h4 { class: "text-sm font-semibold text-slate-400 mb-1",
                             "Talking Points"
                         }
                         ul { class: "list-disc list-inside space-y-1",

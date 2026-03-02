@@ -7,10 +7,76 @@ const MAIN_CSS: Asset = asset!("/assets/main.css");
 #[component]
 pub fn App() -> Element {
     rsx! {
+        // Google Fonts — Inter (300-900)
+        document::Link {
+            rel: "preconnect",
+            href: "https://fonts.googleapis.com",
+        }
+        document::Link {
+            rel: "preconnect",
+            href: "https://fonts.gstatic.com",
+            crossorigin: "anonymous",
+        }
+        document::Link {
+            rel: "stylesheet",
+            href: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap",
+        }
+
         // Tailwind CSS 3 CDN + DaisyUI 4 plugin
         document::Script { src: "https://cdn.tailwindcss.com" }
         document::Script {
-            "tailwind.config = {{ plugins: [], theme: {{ extend: {{}} }} }};"
+            r#"tailwind.config = {{
+                theme: {{
+                    extend: {{
+                        fontFamily: {{
+                            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        }},
+                        colors: {{
+                            indigo: {{
+                                400: '#818cf8',
+                                500: '#6366f1',
+                                600: '#4f46e5',
+                                700: '#4338ca',
+                            }},
+                            rose: {{
+                                400: '#fb7185',
+                                500: '#f43f5e',
+                                600: '#e11d48',
+                            }},
+                        }},
+                        animation: {{
+                            'fade-in': 'fadeIn 0.5s ease-out forwards',
+                            'slide-up': 'slideUp 0.5s ease-out forwards',
+                            'slide-in-right': 'slideInRight 0.4s ease-out forwards',
+                            'scale-in': 'scaleIn 0.3s ease-out forwards',
+                            'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+                        }},
+                        keyframes: {{
+                            fadeIn: {{
+                                '0%': {{ opacity: '0' }},
+                                '100%': {{ opacity: '1' }},
+                            }},
+                            slideUp: {{
+                                '0%': {{ opacity: '0', transform: 'translateY(20px)' }},
+                                '100%': {{ opacity: '1', transform: 'translateY(0)' }},
+                            }},
+                            slideInRight: {{
+                                '0%': {{ opacity: '0', transform: 'translateX(100%)' }},
+                                '100%': {{ opacity: '1', transform: 'translateX(0)' }},
+                            }},
+                            scaleIn: {{
+                                '0%': {{ opacity: '0', transform: 'scale(0.95)' }},
+                                '100%': {{ opacity: '1', transform: 'scale(1)' }},
+                            }},
+                            pulseSoft: {{
+                                '0%, 100%': {{ opacity: '1' }},
+                                '50%': {{ opacity: '0.7' }},
+                            }},
+                        }},
+                    }},
+                }},
+                plugins: [],
+            }};"#
         }
         document::Link {
             rel: "stylesheet",
@@ -19,8 +85,13 @@ pub fn App() -> Element {
 
         document::Stylesheet { href: MAIN_CSS }
 
-        // Set DaisyUI dark theme
-        document::Script { "document.documentElement.setAttribute('data-theme', 'dark');" }
+        // Theme init: read from localStorage, default to politiktok-dark
+        document::Script {
+            r#"(function() {{
+                var t = localStorage.getItem('politiktok-theme') || 'politiktok-dark';
+                document.documentElement.setAttribute('data-theme', t);
+            }})();"#
+        }
 
         Router::<Route> {}
     }
@@ -194,6 +265,9 @@ fn AppShell() -> Element {
 
     match auth_snapshot {
         Some(Ok(ref info)) if info.authenticated => {
+            // Provide auth info as context for child components (e.g. Sidebar)
+            use_context_provider(|| Signal::new(info.clone()));
+
             rsx! {
                 div { class: "app-shell",
                     // Mobile hamburger
@@ -247,7 +321,7 @@ fn AppShell() -> Element {
     }
 }
 
-/// Admin shell layout — additional nav for admin pages.
+/// Admin shell layout — pill-style tab navigation for admin pages.
 #[component]
 fn AdminShell() -> Element {
     rsx! {

@@ -8,10 +8,7 @@ enum FeedbackState {
     Disliked,
 }
 
-/// Thumbs up / thumbs down feedback widget.
-///
-/// Records user feedback for a specific module and resource via a server
-/// function.
+/// Thumbs up / thumbs down feedback widget with ring active states.
 #[component]
 pub fn FeedbackWidget(module_id: String, resource_id: String) -> Element {
     let mut state = use_signal(|| FeedbackState::Neutral);
@@ -19,13 +16,13 @@ pub fn FeedbackWidget(module_id: String, resource_id: String) -> Element {
     let resource_id = use_signal(|| resource_id);
 
     let thumb_up_class = match *state.read() {
-        FeedbackState::Liked => "btn btn-sm btn-success",
-        _ => "btn btn-sm btn-ghost",
+        FeedbackState::Liked => "w-8 h-8 flex items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/30",
+        _ => "w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-700/50 hover:text-slate-300 transition-colors",
     };
 
     let thumb_down_class = match *state.read() {
-        FeedbackState::Disliked => "btn btn-sm btn-error",
-        _ => "btn btn-sm btn-ghost",
+        FeedbackState::Disliked => "w-8 h-8 flex items-center justify-center rounded-lg bg-red-500/10 text-red-400 ring-1 ring-red-500/30",
+        _ => "w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-700/50 hover:text-slate-300 transition-colors",
     };
 
     rsx! {
@@ -47,7 +44,6 @@ pub fn FeedbackWidget(module_id: String, resource_id: String) -> Element {
                         let _ = record_feedback(mid, rid, liked, true).await;
                     });
                 },
-                // Thumbs up unicode
                 "\u{1F44D}"
             }
             button {
@@ -67,7 +63,6 @@ pub fn FeedbackWidget(module_id: String, resource_id: String) -> Element {
                         let _ = record_feedback(mid, rid, false, disliked).await;
                     });
                 },
-                // Thumbs down unicode
                 "\u{1F44E}"
             }
         }

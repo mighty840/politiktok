@@ -1,16 +1,16 @@
 use dioxus::prelude::*;
 
-/// Centered loading spinner using DaisyUI.
+/// Centered loading spinner with indigo color.
 #[component]
 pub fn LoadingSpinner() -> Element {
     rsx! {
         div { class: "flex items-center justify-center p-8",
-            span { class: "loading loading-spinner loading-lg text-primary" }
+            div { class: "loading-spinner" }
         }
     }
 }
 
-/// Skeleton placeholder for content that is still loading.
+/// Skeleton placeholder with shimmer animation.
 #[component]
 pub fn Skeleton(
     #[props(default = "100%".to_string())] width: String,
@@ -18,7 +18,7 @@ pub fn Skeleton(
 ) -> Element {
     rsx! {
         div {
-            class: "skeleton",
+            class: "skeleton-shimmer",
             style: "width: {width}; height: {height};",
         }
     }

@@ -10,24 +10,24 @@ pub fn TextInput(
     #[props(default = None)] error: Option<String>,
 ) -> Element {
     let has_error = error.is_some();
-    let input_class = if has_error {
-        "input input-bordered input-error w-full"
+    let border_class = if has_error {
+        "border-red-500 focus:border-red-500"
     } else {
-        "input input-bordered w-full"
+        "border-slate-700 focus:border-indigo-500"
     };
 
     rsx! {
         fieldset { class: "fieldset mb-3",
-            label { class: "fieldset-legend text-sm font-medium", "{label}" }
+            label { class: "fieldset-legend text-sm font-medium text-slate-300", "{label}" }
             input {
                 r#type: "text",
-                class: "{input_class}",
+                class: "w-full px-3 py-2.5 bg-slate-800/50 {border_class} border rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-colors",
                 placeholder: "{placeholder}",
                 value: "{value}",
                 oninput: move |evt: Event<FormData>| on_change.call(evt.value()),
             }
             if let Some(err) = &error {
-                p { class: "text-error text-xs mt-1", "{err}" }
+                p { class: "text-red-400 text-xs mt-1", "{err}" }
             }
         }
     }
@@ -43,9 +43,9 @@ pub fn SelectInput(
 ) -> Element {
     rsx! {
         fieldset { class: "fieldset mb-3",
-            label { class: "fieldset-legend text-sm font-medium", "{label}" }
+            label { class: "fieldset-legend text-sm font-medium text-slate-300", "{label}" }
             select {
-                class: "select select-bordered w-full",
+                class: "w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-xl text-slate-200 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-colors",
                 value: "{value}",
                 onchange: move |evt: Event<FormData>| on_change.call(evt.value()),
                 for (val, display) in &options {
@@ -66,9 +66,9 @@ pub fn TextArea(
 ) -> Element {
     rsx! {
         fieldset { class: "fieldset mb-3",
-            label { class: "fieldset-legend text-sm font-medium", "{label}" }
+            label { class: "fieldset-legend text-sm font-medium text-slate-300", "{label}" }
             textarea {
-                class: "textarea textarea-bordered w-full",
+                class: "w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-xl text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-colors",
                 rows: "{rows}",
                 value: "{value}",
                 oninput: move |evt: Event<FormData>| on_change.call(evt.value()),

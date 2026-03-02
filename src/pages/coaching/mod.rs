@@ -154,12 +154,12 @@ pub fn CoachingPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div { class: "flex items-center justify-between",
                 div {
                     h1 { class: "text-3xl font-bold", "Coaching & Debate Prep" }
-                    p { class: "text-base-content/70",
+                    p { class: "text-slate-400",
                         "AI-powered debate preparation with simulated opponents, response coaching, and performance feedback."
                     }
                 }
@@ -187,7 +187,7 @@ pub fn CoachingPage() -> Element {
             if session().is_none() {
                 // Setup form
                 div { class: "max-w-2xl mx-auto",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Session Setup" }
 
@@ -224,7 +224,7 @@ pub fn CoachingPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Topics" }
-                                    span { class: "label-text-alt text-base-content/50", "One per line" }
+                                    span { class: "label-text-alt text-slate-500", "One per line" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -270,11 +270,11 @@ pub fn CoachingPage() -> Element {
                 div { class: "flex flex-col lg:flex-row gap-6",
                     // Chat area
                     div { class: if feedback().is_some() { "w-full lg:w-1/2" } else { "w-full lg:w-2/3 mx-auto" },
-                        div { class: "card bg-base-100 shadow-sm",
+                        div { class: "glass-card gradient-border",
                             div { class: "card-body p-0",
                                 // Session info bar
                                 if let Some(ref sess) = *session.read() {
-                                    div { class: "flex items-center gap-2 px-4 py-2 border-b border-base-300 bg-base-200 rounded-t-2xl",
+                                    div { class: "flex items-center gap-2 px-4 py-2 border-b border-base-300 bg-slate-800/30 rounded-t-2xl",
                                         span { class: "badge badge-primary badge-sm",
                                             {match sess.mode.as_str() {
                                                 "journalist" => "Press Interview",
@@ -292,7 +292,7 @@ pub fn CoachingPage() -> Element {
                                             }}
                                         }
                                         if !sess.topics.is_empty() {
-                                            span { class: "text-xs text-base-content/50 truncate",
+                                            span { class: "text-xs text-slate-500 truncate",
                                                 {sess.topics.join(", ")}
                                             }
                                         }
@@ -327,7 +327,7 @@ pub fn CoachingPage() -> Element {
                                                 };
                                                 rsx! {
                                                     div { key: "{idx}", class: "{chat_class}",
-                                                        div { class: "chat-header text-xs text-base-content/50 mb-1",
+                                                        div { class: "chat-header text-xs text-slate-500 mb-1",
                                                             "{label}"
                                                         }
                                                         div { class: "{bubble_class}",
@@ -431,7 +431,7 @@ fn FeedbackCard(feedback: CoachingFeedback) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
+        div { class: "glass-card gradient-border",
             div { class: "card-body space-y-4",
                 h2 { class: "card-title text-lg", "Performance Report" }
 
@@ -440,7 +440,7 @@ fn FeedbackCard(feedback: CoachingFeedback) -> Element {
                     div { class: "text-5xl font-bold {score_color}",
                         "{score:.0}"
                     }
-                    p { class: "text-sm text-base-content/60 mt-1", "out of 100" }
+                    p { class: "text-sm text-slate-400 mt-1", "out of 100" }
                     progress {
                         class: "progress {progress_color} w-56 mx-auto mt-2",
                         value: "{score}",

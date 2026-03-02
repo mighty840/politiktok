@@ -120,11 +120,11 @@ pub fn RegulatoryPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Header
             div {
                 h1 { class: "text-3xl font-bold", "Regulatory Monitor" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Track regulatory changes, analyze their impact, and generate executive briefs."
                 }
             }
@@ -217,9 +217,9 @@ pub fn RegulatoryPage() -> Element {
                         LoadingSpinner {}
                     }
                 } else if updates().is_empty() {
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body text-center",
-                            p { class: "text-base-content/50", "No regulatory updates found. Click \"Load Updates\" to fetch from the database." }
+                            p { class: "text-slate-500", "No regulatory updates found. Click \"Load Updates\" to fetch from the database." }
                         }
                     }
                 } else {
@@ -259,7 +259,7 @@ pub fn RegulatoryPage() -> Element {
                                                 td { class: "text-sm",
                                                     "{update.source_name.as_deref().unwrap_or(\"-\")}"
                                                 }
-                                                td { class: "text-sm text-base-content/60", "{update.created_at}" }
+                                                td { class: "text-sm text-slate-400", "{update.created_at}" }
                                             }
                                         }
                                     }
@@ -274,12 +274,12 @@ pub fn RegulatoryPage() -> Element {
                     div { class: "flex items-center justify-center py-8",
                         div { class: "text-center space-y-4",
                             LoadingSpinner {}
-                            p { class: "text-base-content/60", "Generating regulatory brief..." }
+                            p { class: "text-slate-400", "Generating regulatory brief..." }
                         }
                     }
                 } else if let Some(brief) = brief_result() {
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h3 { class: "card-title text-lg", "Regulatory Brief" }
                             div { class: "badge badge-outline mb-3",
                                 "{brief.updates.len()} updates covered"
@@ -296,7 +296,7 @@ pub fn RegulatoryPage() -> Element {
 
             // Impact Analysis section
             if active_section() == "analyze" {
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-4",
                         h2 { class: "card-title text-lg", "Regulatory Impact Analysis" }
 
@@ -316,7 +316,7 @@ pub fn RegulatoryPage() -> Element {
                         div { class: "form-control",
                             label { class: "label",
                                 span { class: "label-text font-medium", "Context" }
-                                span { class: "label-text-alt text-base-content/50", "Optional" }
+                                span { class: "label-text-alt text-slate-500", "Optional" }
                             }
                             textarea {
                                 class: "textarea textarea-bordered w-full",
@@ -345,22 +345,22 @@ pub fn RegulatoryPage() -> Element {
                     div { class: "flex items-center justify-center py-8",
                         div { class: "text-center space-y-4",
                             LoadingSpinner {}
-                            p { class: "text-base-content/60", "Analyzing regulatory impact..." }
+                            p { class: "text-slate-400", "Analyzing regulatory impact..." }
                         }
                     }
                 } else if let Some(result) = impact_result() {
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-3",
                             h3 { class: "card-title text-lg", "Impact Analysis Result" }
                             div { class: "flex gap-2",
                                 span { class: urgency_badge(&result.urgency), "{result.urgency}" }
                             }
-                            div { class: "bg-base-200 rounded-lg p-4",
+                            div { class: "bg-slate-800/30 rounded-lg p-4",
                                 p { class: "font-medium mb-1", "Summary" }
                                 p { class: "text-sm", "{result.summary}" }
                             }
                             if let Some(ref assessment) = result.impact_assessment {
-                                div { class: "bg-base-200 rounded-lg p-4",
+                                div { class: "bg-slate-800/30 rounded-lg p-4",
                                     p { class: "font-medium mb-1", "Impact Assessment" }
                                     pre { class: "whitespace-pre-wrap text-sm font-sans", "{assessment}" }
                                 }

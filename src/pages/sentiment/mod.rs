@@ -69,18 +69,18 @@ pub fn SentimentDashboardPage() -> Element {
     });
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div { class: "flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4",
                 div {
                     h1 { class: "text-3xl font-bold", "Sentiment Monitor" }
-                    p { class: "text-base-content/70",
+                    p { class: "text-slate-400",
                         "Real-time public sentiment tracking across social media and community forums."
                     }
                 }
                 div { class: "flex items-center gap-2",
                     span { class: "loading loading-dots loading-xs text-primary" }
-                    span { class: "text-xs text-base-content/50", "Auto-refreshing" }
+                    span { class: "text-xs text-slate-500", "Auto-refreshing" }
                 }
             }
 
@@ -307,8 +307,8 @@ fn SentimentBarChart(summaries: Resource<Vec<SentimentSummary>>) -> Element {
         .collect();
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 h2 { class: "card-title text-lg", "Sentiment Distribution by Topic" }
                 BarChart { data: chart_data, height: "300px".to_string() }
             }
@@ -329,15 +329,15 @@ fn PostFeed(
     let data = posts.read();
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 h2 { class: "card-title text-lg", "Recent Posts" }
 
                 match data.as_ref() {
                     None => rsx! { LoadingSpinner {} },
                     Some(items) if items.is_empty() => {
                         rsx! {
-                            p { class: "text-base-content/60 py-4", "No posts match the current filters." }
+                            p { class: "text-slate-400 py-4", "No posts match the current filters." }
                         }
                     }
                     Some(items) => {
@@ -436,15 +436,15 @@ fn SpikeLogSection(spikes: Resource<Vec<SentimentSpike>>) -> Element {
     let data = spikes.read();
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 h2 { class: "card-title text-lg", "Spike Log" }
 
                 match data.as_ref() {
                     None => rsx! { LoadingSpinner {} },
                     Some(items) if items.is_empty() => {
                         rsx! {
-                            p { class: "text-base-content/60 py-4", "No sentiment spikes detected." }
+                            p { class: "text-slate-400 py-4", "No sentiment spikes detected." }
                         }
                     }
                     Some(items) => {

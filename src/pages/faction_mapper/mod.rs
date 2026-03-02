@@ -79,11 +79,11 @@ pub fn FactionMapperPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Header
             div {
                 h1 { class: "text-3xl font-bold", "Faction Mapper" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Map internal party factions, identify alliances and conflicts, and analyze consensus on policy proposals."
                 }
             }
@@ -113,7 +113,7 @@ pub fn FactionMapperPage() -> Element {
             }
 
             // Input section
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Faction Analysis Input" }
 
@@ -133,7 +133,7 @@ pub fn FactionMapperPage() -> Element {
                     div { class: "form-control",
                         label { class: "label",
                             span { class: "label-text font-medium", "Known Figures" }
-                            span { class: "label-text-alt text-base-content/50", "One per line" }
+                            span { class: "label-text-alt text-slate-500", "One per line" }
                         }
                         textarea {
                             class: "textarea textarea-bordered w-full",
@@ -163,7 +163,7 @@ pub fn FactionMapperPage() -> Element {
                 div { class: "flex items-center justify-center py-12",
                     div { class: "text-center space-y-4",
                         LoadingSpinner {}
-                        p { class: "text-base-content/60", "Mapping internal factions..." }
+                        p { class: "text-slate-400", "Mapping internal factions..." }
                     }
                 }
             } else if let Some(result) = analysis() {
@@ -179,14 +179,14 @@ pub fn FactionMapperPage() -> Element {
 
                 // Alliances
                 if !result.alliances.is_empty() {
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h3 { class: "card-title text-lg", "Alliances" }
                             div { class: "space-y-2",
                                 for (a, b) in result.alliances.iter() {
                                     div { class: "flex items-center gap-2",
                                         span { class: "badge badge-success badge-outline", "{a}" }
-                                        span { class: "text-base-content/50", "---" }
+                                        span { class: "text-slate-500", "---" }
                                         span { class: "badge badge-success badge-outline", "{b}" }
                                     }
                                 }
@@ -197,16 +197,16 @@ pub fn FactionMapperPage() -> Element {
 
                 // Conflicts
                 if !result.conflicts.is_empty() {
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h3 { class: "card-title text-lg", "Conflicts" }
                             div { class: "space-y-2",
                                 for (a, b, issue) in result.conflicts.iter() {
                                     div { class: "flex items-center gap-2 flex-wrap",
                                         span { class: "badge badge-error badge-outline", "{a}" }
-                                        span { class: "text-base-content/50", "vs" }
+                                        span { class: "text-slate-500", "vs" }
                                         span { class: "badge badge-error badge-outline", "{b}" }
-                                        span { class: "text-sm text-base-content/70 italic", "on {issue}" }
+                                        span { class: "text-sm text-slate-400 italic", "on {issue}" }
                                     }
                                 }
                             }
@@ -215,10 +215,10 @@ pub fn FactionMapperPage() -> Element {
                 }
 
                 // Consensus mapping section
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-4",
                         h3 { class: "card-title text-lg", "Consensus Mapping" }
-                        p { class: "text-base-content/70 text-sm",
+                        p { class: "text-slate-400 text-sm",
                             "Test how the identified factions would respond to a specific policy proposal."
                         }
 
@@ -253,7 +253,7 @@ pub fn FactionMapperPage() -> Element {
                             }
                         } else if let Some(cons) = consensus() {
                             div { class: "space-y-3",
-                                div { class: "bg-base-200 rounded-lg p-4",
+                                div { class: "bg-slate-800/30 rounded-lg p-4",
                                     p { class: "font-medium mb-2", "Strategic Analysis" }
                                     p { class: "text-sm text-base-content/80", "{cons.analysis}" }
                                 }
@@ -264,7 +264,7 @@ pub fn FactionMapperPage() -> Element {
                                             div { class: "badge badge-success badge-sm mr-1 mb-1", "{s}" }
                                         }
                                         if cons.supporters.is_empty() {
-                                            p { class: "text-xs text-base-content/50", "None identified" }
+                                            p { class: "text-xs text-slate-500", "None identified" }
                                         }
                                     }
                                     div { class: "bg-error/10 rounded-lg p-3 border border-error/20",
@@ -273,7 +273,7 @@ pub fn FactionMapperPage() -> Element {
                                             div { class: "badge badge-error badge-sm mr-1 mb-1", "{o}" }
                                         }
                                         if cons.opponents.is_empty() {
-                                            p { class: "text-xs text-base-content/50", "None identified" }
+                                            p { class: "text-xs text-slate-500", "None identified" }
                                         }
                                     }
                                     div { class: "bg-warning/10 rounded-lg p-3 border border-warning/20",
@@ -282,7 +282,7 @@ pub fn FactionMapperPage() -> Element {
                                             div { class: "badge badge-warning badge-sm mr-1 mb-1", "{sw}" }
                                         }
                                         if cons.swing_factions.is_empty() {
-                                            p { class: "text-xs text-base-content/50", "None identified" }
+                                            p { class: "text-xs text-slate-500", "None identified" }
                                         }
                                     }
                                 }
@@ -307,10 +307,10 @@ fn FactionCard(faction: Faction) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm border border-base-300",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border border border-base-300",
+            div { class: "p-6",
                 h4 { class: "card-title text-base", "{faction.name}" }
-                p { class: "text-sm text-base-content/70 italic", "{faction.ideology}" }
+                p { class: "text-sm text-slate-400 italic", "{faction.ideology}" }
 
                 // Influence score
                 div { class: "mt-2",
@@ -328,7 +328,7 @@ fn FactionCard(faction: Faction) -> Element {
                 // Key figures
                 if !faction.key_figures.is_empty() {
                     div { class: "mt-2",
-                        p { class: "text-xs font-medium text-base-content/60 mb-1", "Key Figures" }
+                        p { class: "text-xs font-medium text-slate-400 mb-1", "Key Figures" }
                         div { class: "flex flex-wrap gap-1",
                             for figure in faction.key_figures.iter() {
                                 span { class: "badge badge-outline badge-sm", "{figure}" }
@@ -340,8 +340,8 @@ fn FactionCard(faction: Faction) -> Element {
                 // Positions
                 if !faction.positions.is_empty() {
                     div { class: "mt-2",
-                        p { class: "text-xs font-medium text-base-content/60 mb-1", "Positions" }
-                        ul { class: "list-disc list-inside text-xs text-base-content/70 space-y-0.5",
+                        p { class: "text-xs font-medium text-slate-400 mb-1", "Positions" }
+                        ul { class: "list-disc list-inside text-xs text-slate-400 space-y-0.5",
                             for pos in faction.positions.iter() {
                                 li { "{pos}" }
                             }

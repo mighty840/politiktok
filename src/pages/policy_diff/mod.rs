@@ -63,11 +63,11 @@ pub fn PolicyDiffPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Header
             div {
                 h1 { class: "text-3xl font-bold", "Policy Diff" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Compare two policy documents side-by-side to identify changes, additions, and removals with significance ratings."
                 }
             }
@@ -99,7 +99,7 @@ pub fn PolicyDiffPage() -> Element {
             // Input: two side-by-side textareas
             div { class: "grid grid-cols-1 lg:grid-cols-2 gap-4",
                 // Document A
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-3",
                         div { class: "form-control",
                             label { class: "label",
@@ -129,7 +129,7 @@ pub fn PolicyDiffPage() -> Element {
                 }
 
                 // Document B
-                div { class: "card bg-base-100 shadow-sm",
+                div { class: "glass-card gradient-border",
                     div { class: "card-body space-y-3",
                         div { class: "form-control",
                             label { class: "label",
@@ -179,13 +179,13 @@ pub fn PolicyDiffPage() -> Element {
                 div { class: "flex items-center justify-center py-12",
                     div { class: "text-center space-y-4",
                         LoadingSpinner {}
-                        p { class: "text-base-content/60", "Analyzing policy differences..." }
+                        p { class: "text-slate-400", "Analyzing policy differences..." }
                     }
                 }
             } else if let Some(diff) = diff_result() {
                 // Summary card
-                div { class: "card bg-base-100 shadow-sm",
-                    div { class: "card-body",
+                div { class: "glass-card gradient-border",
+                    div { class: "p-6",
                         h2 { class: "card-title text-lg",
                             "Summary: {diff.doc_a_title} vs {diff.doc_b_title}"
                         }
@@ -212,8 +212,8 @@ pub fn PolicyDiffPage() -> Element {
 #[component]
 fn DiffChangeCard(index: usize, change: DiffChange) -> Element {
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
-            div { class: "card-body",
+        div { class: "glass-card gradient-border",
+            div { class: "p-6",
                 div { class: "flex items-center gap-2 mb-2",
                     span { class: "font-medium text-base-content/80", "#{index + 1}" }
                     span { class: "font-semibold", "{change.section}" }

@@ -1,16 +1,19 @@
 use dioxus::prelude::*;
 
-/// Generic card wrapper with optional title and custom CSS class.
+/// Generic card wrapper with glassmorphism and gradient border.
 #[component]
 pub fn Card(
     title: String,
     children: Element,
     #[props(default = String::new())] class: String,
+    #[props(default = false)] compact: bool,
 ) -> Element {
+    let padding = if compact { "p-4" } else { "p-6" };
+
     rsx! {
-        div { class: "card bg-base-100 shadow-sm {class}",
-            div { class: "card-body",
-                h2 { class: "card-title", "{title}" }
+        div { class: "glass-card gradient-border {class}",
+            div { class: "{padding}",
+                h2 { class: "text-lg font-semibold text-slate-100 mb-4", "{title}" }
                 {children}
             }
         }

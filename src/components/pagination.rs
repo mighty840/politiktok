@@ -12,10 +12,10 @@ pub fn Pagination(
     }
 
     rsx! {
-        div { class: "join mt-4 flex justify-center",
+        div { class: "flex items-center justify-center gap-1 mt-4",
             // Previous
             button {
-                class: "join-item btn btn-sm",
+                class: "px-3 py-1.5 text-sm rounded-lg bg-slate-800/50 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
                 disabled: current_page == 1,
                 onclick: {
                     let on_page_change = on_page_change.clone();
@@ -31,11 +31,15 @@ pub fn Pagination(
             // Page numbers
             for page in 1..=total_pages {
                 {
-                    let active = if page == current_page { " btn-active" } else { "" };
+                    let (bg, text) = if page == current_page {
+                        ("bg-indigo-500", "text-white")
+                    } else {
+                        ("bg-slate-800/50", "text-slate-400")
+                    };
                     let on_page_change = on_page_change.clone();
                     rsx! {
                         button {
-                            class: "join-item btn btn-sm{active}",
+                            class: "w-8 h-8 text-sm rounded-lg {bg} {text} hover:bg-indigo-500/80 hover:text-white transition-colors",
                             onclick: move |_| on_page_change.call(page),
                             "{page}"
                         }
@@ -45,7 +49,7 @@ pub fn Pagination(
 
             // Next
             button {
-                class: "join-item btn btn-sm",
+                class: "px-3 py-1.5 text-sm rounded-lg bg-slate-800/50 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
                 disabled: current_page == total_pages,
                 onclick: move |_| {
                     if current_page < total_pages {

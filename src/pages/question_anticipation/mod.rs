@@ -105,11 +105,11 @@ pub fn QuestionAnticipationPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Question Anticipation" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Predict likely voter questions for upcoming events and prepare responses with AI-generated suggested answers."
                 }
             }
@@ -142,7 +142,7 @@ pub fn QuestionAnticipationPage() -> Element {
 
                 // Left: Input Form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Event Details" }
 
@@ -179,7 +179,7 @@ pub fn QuestionAnticipationPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Hot Topics" }
-                                    span { class: "label-text-alt text-base-content/50", "Optional" }
+                                    span { class: "label-text-alt text-slate-500", "Optional" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -209,21 +209,21 @@ pub fn QuestionAnticipationPage() -> Element {
                 // Right: Results
                 div { class: "w-full lg:w-2/3 space-y-6",
                     // Questions card
-                    div { class: "card bg-base-100 shadow-sm min-h-[400px]",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border min-h-[400px]",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg mb-2", "Anticipated Questions" }
 
                             if *is_generating.read() {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center space-y-4",
                                         LoadingSpinner {}
-                                        p { class: "text-base-content/60", "Generating anticipated questions..." }
+                                        p { class: "text-slate-400", "Generating anticipated questions..." }
                                     }
                                 }
                             } else if let Some(rpt) = report() {
                                 if rpt.questions.is_empty() {
                                     div { class: "flex-1 flex items-center justify-center py-12",
-                                        p { class: "text-base-content/50", "No questions were generated." }
+                                        p { class: "text-slate-500", "No questions were generated." }
                                     }
                                 } else {
                                     div { class: "space-y-4",
@@ -235,7 +235,7 @@ pub fn QuestionAnticipationPage() -> Element {
                                                     div { class: "border border-base-300 rounded-lg",
                                                         // Question header
                                                         div {
-                                                            class: "flex items-start gap-3 p-4 cursor-pointer hover:bg-base-200/50 transition-colors",
+                                                            class: "flex items-start gap-3 p-4 cursor-pointer hover:bg-slate-700/30 transition-colors",
                                                             onclick: move |_| toggle_expanded(idx),
 
                                                             // Number
@@ -267,7 +267,7 @@ pub fn QuestionAnticipationPage() -> Element {
 
                                                         // Collapsible content
                                                         if is_open {
-                                                            div { class: "border-t border-base-300 p-4 space-y-3 bg-base-200/30",
+                                                            div { class: "border-t border-base-300 p-4 space-y-3 bg-slate-800/30",
                                                                 div {
                                                                     h4 { class: "font-semibold text-sm text-primary mb-1",
                                                                         "Suggested Answer"
@@ -280,7 +280,7 @@ pub fn QuestionAnticipationPage() -> Element {
                                                                     h4 { class: "font-semibold text-sm text-secondary mb-1",
                                                                         "Preparation Notes"
                                                                     }
-                                                                    p { class: "text-base-content/70 text-sm italic",
+                                                                    p { class: "text-slate-400 text-sm italic",
                                                                         "{q_clone.preparation_notes}"
                                                                     }
                                                                 }
@@ -310,7 +310,7 @@ pub fn QuestionAnticipationPage() -> Element {
                             } else {
                                 div { class: "flex-1 flex items-center justify-center py-12",
                                     div { class: "text-center",
-                                        p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                        p { class: "text-lg font-medium text-slate-500 mb-2",
                                             "No questions yet"
                                         }
                                         p { class: "text-sm text-base-content/40",
@@ -324,10 +324,10 @@ pub fn QuestionAnticipationPage() -> Element {
 
                     // Checklist card (shown when generated)
                     if let Some(cl) = checklist() {
-                        div { class: "card bg-base-100 shadow-sm",
-                            div { class: "card-body",
+                        div { class: "glass-card gradient-border",
+                            div { class: "p-6",
                                 h2 { class: "card-title text-lg mb-2", "Preparation Checklist" }
-                                div { class: "bg-base-200 rounded-lg p-4 overflow-auto max-h-[400px]",
+                                div { class: "bg-slate-800/30 rounded-lg p-4 overflow-auto max-h-[400px]",
                                     pre { class: "whitespace-pre-wrap text-sm font-sans leading-relaxed",
                                         "{cl}"
                                     }

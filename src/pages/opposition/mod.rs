@@ -28,7 +28,7 @@ pub fn OppositionPage() -> Element {
             div { class: "flex items-center justify-between mb-6",
                 div {
                     h1 { class: "text-3xl font-bold", "Opposition Research" }
-                    p { class: "text-base-content/70 mt-1",
+                    p { class: "text-slate-400 mt-1",
                         "Track opponents, analyze policy positions, and prepare debate briefings."
                     }
                 }
@@ -43,12 +43,12 @@ pub fn OppositionPage() -> Element {
             match &*opponents.read() {
                 None => rsx! { LoadingSpinner {} },
                 Some(list) if list.is_empty() => rsx! {
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body items-center text-center py-16",
-                            h3 { class: "text-lg font-semibold text-base-content/60",
+                            h3 { class: "text-lg font-semibold text-slate-400",
                                 "No opponents added yet"
                             }
-                            p { class: "text-base-content/50 mt-1",
+                            p { class: "text-slate-500 mt-1",
                                 "Add an opponent to begin tracking their positions and generating briefings."
                             }
                             button {
@@ -95,8 +95,8 @@ fn OpponentCard(opponent: Opponent) -> Element {
     rsx! {
         Link {
             to: Route::OpponentDetailPage { id },
-            class: "card bg-base-100 shadow-sm hover:shadow-md transition-shadow cursor-pointer",
-            div { class: "card-body",
+            class: "glass-card gradient-border hover:shadow-md transition-shadow cursor-pointer",
+            div { class: "p-6",
                 div { class: "flex items-start justify-between",
                     h3 { class: "card-title text-lg", "{opponent.name}" }
                     if let Some(ref party) = opponent.party {
@@ -104,10 +104,10 @@ fn OpponentCard(opponent: Opponent) -> Element {
                     }
                 }
                 if let Some(ref district) = opponent.district {
-                    p { class: "text-sm text-base-content/60", "{district}" }
+                    p { class: "text-sm text-slate-400", "{district}" }
                 }
                 if let Some(ref bio) = opponent.bio {
-                    p { class: "text-sm text-base-content/70 mt-2 line-clamp-3", "{bio}" }
+                    p { class: "text-sm text-slate-400 mt-2 line-clamp-3", "{bio}" }
                 }
                 div { class: "flex items-center gap-2 mt-3",
                     span { class: "badge badge-ghost badge-sm",
@@ -220,7 +220,7 @@ fn AddOpponentModal(on_close: EventHandler, on_created: EventHandler) -> Element
                             oninput: move |evt| positions.set(evt.value()),
                         }
                         label { class: "label",
-                            span { class: "label-text-alt text-base-content/50",
+                            span { class: "label-text-alt text-slate-500",
                                 "Enter as JSON object or plain text"
                             }
                         }
@@ -347,8 +347,8 @@ pub fn OpponentDetailPage(id: String) -> Element {
                     }
 
                     // Profile card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             div { class: "flex items-start justify-between",
                                 div {
                                     h1 { class: "text-2xl font-bold", "{opp.name}" }
@@ -372,18 +372,18 @@ pub fn OpponentDetailPage(id: String) -> Element {
                     }
 
                     // Policy positions card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Policy Positions" }
                             PolicyPositionsDisplay { positions: opp.policy_positions.clone() }
                         }
                     }
 
                     // Briefing generation card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Debate Briefing" }
-                            p { class: "text-sm text-base-content/60 mb-3",
+                            p { class: "text-sm text-slate-400 mb-3",
                                 "Generate an AI-powered debate briefing based on this opponent's profile and positions."
                             }
                             div { class: "grid grid-cols-1 md:grid-cols-2 gap-3",
@@ -439,10 +439,10 @@ pub fn OpponentDetailPage(id: String) -> Element {
                     }
 
                     // Contradictions card
-                    div { class: "card bg-base-100 shadow-sm",
-                        div { class: "card-body",
+                    div { class: "glass-card gradient-border",
+                        div { class: "p-6",
                             h2 { class: "card-title text-lg", "Contradiction Analysis" }
-                            p { class: "text-sm text-base-content/60 mb-3",
+                            p { class: "text-sm text-slate-400 mb-3",
                                 "Use AI to scan policy positions for contradictions, flip-flops, and inconsistencies."
                             }
                             button {
@@ -509,10 +509,10 @@ fn PolicyPositionsDisplay(positions: serde_json::Value) -> Element {
             }
         },
         serde_json::Value::String(ref s) if !s.is_empty() => rsx! {
-            p { class: "text-base-content/70 whitespace-pre-wrap", "{s}" }
+            p { class: "text-slate-400 whitespace-pre-wrap", "{s}" }
         },
         _ => rsx! {
-            p { class: "text-base-content/50 italic", "No policy positions recorded." }
+            p { class: "text-slate-500 italic", "No policy positions recorded." }
         },
     }
 }
@@ -536,12 +536,12 @@ fn BriefingDisplay(briefing: DebateBriefing) -> Element {
 
             if sections.is_empty() {
                 // Fallback: render as a single block
-                div { class: "bg-base-200 rounded-lg p-4 text-sm whitespace-pre-wrap",
+                div { class: "bg-slate-800/30 rounded-lg p-4 text-sm whitespace-pre-wrap",
                     "{briefing.content}"
                 }
             } else {
                 for (title, body) in sections.iter() {
-                    div { class: "collapse collapse-arrow bg-base-200",
+                    div { class: "collapse collapse-arrow bg-slate-800/30",
                         input { r#type: "checkbox", checked: true }
                         div { class: "collapse-title font-medium", "{title}" }
                         div { class: "collapse-content",
@@ -606,7 +606,7 @@ fn ContradictionsList(contradictions: Vec<Contradiction>) -> Element {
                 "Found {contradictions.len()} contradiction(s)"
             }
             for (idx, c) in contradictions.iter().enumerate() {
-                div { class: "card bg-base-200 shadow-sm",
+                div { class: "card bg-slate-800/30 shadow-sm",
                     div { class: "card-body p-4",
                         div { class: "flex items-center justify-between mb-2",
                             span { class: "font-medium text-sm", "#{idx + 1}: {c.topic}" }
@@ -614,7 +614,7 @@ fn ContradictionsList(contradictions: Vec<Contradiction>) -> Element {
                         }
                         div { class: "grid grid-cols-1 md:grid-cols-2 gap-3",
                             div { class: "bg-base-100 rounded-lg p-3",
-                                p { class: "text-xs font-semibold text-base-content/50 mb-1 uppercase",
+                                p { class: "text-xs font-semibold text-slate-500 mb-1 uppercase",
                                     "Statement A"
                                 }
                                 p { class: "text-sm", "{c.statement_a}" }
@@ -625,7 +625,7 @@ fn ContradictionsList(contradictions: Vec<Contradiction>) -> Element {
                                 }
                             }
                             div { class: "bg-base-100 rounded-lg p-3",
-                                p { class: "text-xs font-semibold text-base-content/50 mb-1 uppercase",
+                                p { class: "text-xs font-semibold text-slate-500 mb-1 uppercase",
                                     "Statement B"
                                 }
                                 p { class: "text-sm", "{c.statement_b}" }

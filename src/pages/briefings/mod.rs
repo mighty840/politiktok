@@ -52,11 +52,11 @@ pub fn BriefingsPage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Candidate Briefings" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Auto-generated briefing documents for candidates covering events, meetings, and media appearances."
                 }
             }
@@ -78,7 +78,7 @@ pub fn BriefingsPage() -> Element {
 
                 // Left: Input form
                 div { class: "w-full lg:w-1/3",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Generate Briefing" }
 
@@ -101,7 +101,7 @@ pub fn BriefingsPage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Topics" }
-                                    span { class: "label-text-alt text-base-content/50", "One per line" }
+                                    span { class: "label-text-alt text-slate-500", "One per line" }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -159,24 +159,24 @@ pub fn BriefingsPage() -> Element {
                 // Right: Output panel
                 div { class: "w-full lg:w-2/3",
                     if *is_generating.read() {
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center space-y-4",
                                     LoadingSpinner {}
-                                    p { class: "text-base-content/60", "Generating briefing document..." }
+                                    p { class: "text-slate-400", "Generating briefing document..." }
                                 }
                             }
                         }
                     } else if let Some(ref b) = *briefing.read() {
                         div { class: "space-y-4",
                             // Briefing header
-                            div { class: "card bg-base-100 shadow-sm",
+                            div { class: "glass-card gradient-border",
                                 div { class: "card-body py-4",
                                     div { class: "flex items-center justify-between",
                                         div {
                                             h2 { class: "text-xl font-bold", "{b.title}" }
                                             if let Some(ref created) = b.created_at {
-                                                p { class: "text-sm text-base-content/50", "Generated: {created}" }
+                                                p { class: "text-sm text-slate-500", "Generated: {created}" }
                                             }
                                         }
                                         div { class: "badge badge-primary", "{b.sections.len()} sections" }
@@ -228,10 +228,10 @@ pub fn BriefingsPage() -> Element {
                         }
                     } else {
                         // Empty state
-                        div { class: "card bg-base-100 shadow-sm min-h-[400px]",
+                        div { class: "glass-card gradient-border min-h-[400px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No briefing generated yet"
                                     }
                                     p { class: "text-sm text-base-content/40",

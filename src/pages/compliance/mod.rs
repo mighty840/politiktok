@@ -76,11 +76,11 @@ pub fn CompliancePage() -> Element {
     };
 
     rsx! {
-        div { class: "p-6 space-y-6",
+        div { class: "p-6 space-y-6 animate-fade-in",
             // Page header
             div {
                 h1 { class: "text-3xl font-bold", "Compliance Reporting" }
-                p { class: "text-base-content/70",
+                p { class: "text-slate-400",
                     "Generate electoral compliance reports and check campaign actions against regulatory requirements."
                 }
             }
@@ -89,7 +89,7 @@ pub fn CompliancePage() -> Element {
 
                 // Left: Report Generation Form
                 div { class: "w-full lg:w-1/2",
-                    div { class: "card bg-base-100 shadow-sm",
+                    div { class: "glass-card gradient-border",
                         div { class: "card-body space-y-4",
                             h2 { class: "card-title text-lg", "Generate Compliance Report" }
 
@@ -126,7 +126,7 @@ pub fn CompliancePage() -> Element {
                             div { class: "form-control",
                                 label { class: "label",
                                     span { class: "label-text font-medium", "Campaign Data" }
-                                    span { class: "label-text-alt text-base-content/50", "Paste financial data, activities, etc." }
+                                    span { class: "label-text-alt text-slate-500", "Paste financial data, activities, etc." }
                                 }
                                 textarea {
                                     class: "textarea textarea-bordered w-full",
@@ -165,10 +165,10 @@ pub fn CompliancePage() -> Element {
                     if let Some(report) = report_result() {
                         ReportDisplay { report: report }
                     } else {
-                        div { class: "card bg-base-100 shadow-sm min-h-[300px]",
+                        div { class: "glass-card gradient-border min-h-[300px]",
                             div { class: "card-body flex items-center justify-center",
                                 div { class: "text-center",
-                                    p { class: "text-lg font-medium text-base-content/50 mb-2",
+                                    p { class: "text-lg font-medium text-slate-500 mb-2",
                                         "No report generated yet"
                                     }
                                     p { class: "text-sm text-base-content/40",
@@ -184,10 +184,10 @@ pub fn CompliancePage() -> Element {
             // Compliance Checker Section
             div { class: "divider", "Compliance Checker" }
 
-            div { class: "card bg-base-100 shadow-sm",
+            div { class: "glass-card gradient-border",
                 div { class: "card-body space-y-4",
                     h2 { class: "card-title text-lg", "Check Action Compliance" }
-                    p { class: "text-base-content/70 text-sm",
+                    p { class: "text-slate-400 text-sm",
                         "Describe a campaign action to check whether it complies with electoral law."
                     }
 
@@ -245,14 +245,14 @@ fn ReportDisplay(report: ComplianceReport) -> Element {
     };
 
     rsx! {
-        div { class: "card bg-base-100 shadow-sm",
+        div { class: "glass-card gradient-border",
             div { class: "card-body space-y-4",
                 div { class: "flex items-center justify-between",
                     h2 { class: "card-title text-lg", "{report.report_type}" }
                     span { class: "{status_class} badge-lg", "{status_label}" }
                 }
 
-                div { class: "flex gap-4 text-sm text-base-content/60",
+                div { class: "flex gap-4 text-sm text-slate-400",
                     span { "Period: {report.period}" }
                     span { "Generated: {report.created_at}" }
                 }
@@ -275,7 +275,7 @@ fn ReportDisplay(report: ComplianceReport) -> Element {
                                 "{section.content}"
                             }
                             if !section.notes.is_empty() {
-                                div { class: "bg-base-200 rounded p-2 text-sm",
+                                div { class: "bg-slate-800/30 rounded p-2 text-sm",
                                     span { class: "font-medium", "Notes: " }
                                     "{section.notes}"
                                 }
@@ -299,7 +299,7 @@ fn ComplianceCheckDisplay(result: ComplianceCheckResult) -> Element {
                 } else {
                     span { class: "badge badge-error badge-lg", "Non-Compliant" }
                 }
-                span { class: "text-sm text-base-content/60 italic", "\"{result.action}\"" }
+                span { class: "text-sm text-slate-400 italic", "\"{result.action}\"" }
             }
 
             p { class: "text-sm whitespace-pre-wrap", "{result.explanation}" }
