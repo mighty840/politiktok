@@ -127,7 +127,10 @@ fn DashboardStat(label: &'static str, value: &'static str, color: &'static str) 
 }
 
 #[component]
-fn ModuleCategory(title: &'static str, modules: Vec<(&'static str, &'static str, Route)>) -> Element {
+fn ModuleCategory(
+    title: &'static str,
+    modules: Vec<(&'static str, &'static str, Route)>,
+) -> Element {
     rsx! {
         div { class: "space-y-3",
             h2 { class: "text-lg font-semibold text-slate-300 flex items-center gap-2",

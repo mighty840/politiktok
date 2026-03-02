@@ -2,31 +2,60 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'PolitikTok',
-  description: 'AI-powered campaign intelligence platform',
+  description: 'AI-powered campaign intelligence platform — documentation',
 
   themeConfig: {
     siteTitle: 'PolitikTok',
 
     nav: [
-      { text: 'Getting Started', link: '/getting-started/installation' },
-      { text: 'Architecture', link: '/architecture/overview' },
-      { text: 'Modules', link: '/modules/volunteer-matching' },
-      { text: 'Development', link: '/development/contributing' },
+      { text: 'Guide', link: '/guide/introduction' },
+      { text: 'Self-Hosting', link: '/self-hosting/overview' },
+      {
+        text: 'More',
+        items: [
+          { text: 'Configuration', link: '/configuration/environment-variables' },
+          { text: 'Architecture', link: '/architecture/overview' },
+          { text: 'API', link: '/api/overview' },
+          { text: 'Modules', link: '/modules/volunteer-matching' },
+          { text: 'Deployment', link: '/deployment/docker' },
+          { text: 'Contributing', link: '/contributing/development-setup' },
+        ],
+      },
     ],
 
     sidebar: [
       {
-        text: 'Introduction',
+        text: 'Guide',
         items: [
-          { text: 'Introduction', link: '/introduction' },
+          { text: 'Introduction', link: '/guide/introduction' },
+          { text: 'Requirements', link: '/guide/requirements' },
+          { text: 'Install with Docker', link: '/guide/docker' },
+          { text: 'Install Manually', link: '/guide/installation' },
+          { text: 'Quick Start', link: '/guide/quick-start' },
         ],
       },
       {
-        text: 'Getting Started',
+        text: 'Self-Hosting',
         items: [
-          { text: 'Installation', link: '/getting-started/installation' },
-          { text: 'Configuration', link: '/getting-started/configuration' },
-          { text: 'Docker Setup', link: '/getting-started/docker' },
+          { text: 'Overview', link: '/self-hosting/overview' },
+          { text: 'Server Setup', link: '/self-hosting/server-setup' },
+          { text: 'Docker Compose Production', link: '/self-hosting/docker-compose' },
+          { text: 'Domain & DNS', link: '/self-hosting/domain-dns' },
+          { text: 'Reverse Proxy & SSL', link: '/self-hosting/reverse-proxy-ssl' },
+          { text: 'Backups', link: '/self-hosting/backups' },
+          { text: 'Maintenance', link: '/self-hosting/maintenance' },
+        ],
+      },
+      {
+        text: 'Configuration',
+        items: [
+          { text: 'Environment Variables', link: '/configuration/environment-variables' },
+          { text: 'Database', link: '/configuration/database' },
+          { text: 'Authentication', link: '/configuration/authentication' },
+          { text: 'LLM Integration', link: '/configuration/llm-integration' },
+          { text: 'Theming', link: '/configuration/theming' },
+          { text: 'Internationalization', link: '/configuration/i18n' },
+          { text: 'CORS & Security', link: '/configuration/cors-security' },
         ],
       },
       {
@@ -35,14 +64,18 @@ export default defineConfig({
           { text: 'Overview', link: '/architecture/overview' },
           { text: 'Tech Stack', link: '/architecture/tech-stack' },
           { text: 'Project Structure', link: '/architecture/project-structure' },
-          { text: 'Authentication', link: '/architecture/authentication' },
-          { text: 'LLM Integration', link: '/architecture/llm-integration' },
           { text: 'RAG Pipeline', link: '/architecture/rag-pipeline' },
         ],
       },
       {
+        text: 'API',
+        items: [
+          { text: 'Overview', link: '/api/overview' },
+        ],
+      },
+      {
         text: 'Modules',
-        collapsed: false,
+        collapsed: true,
         items: [
           { text: 'F01 — Volunteer Matching', link: '/modules/volunteer-matching' },
           { text: 'F02 — Policy Chatbot', link: '/modules/policy-chatbot' },
@@ -73,11 +106,21 @@ export default defineConfig({
         ],
       },
       {
-        text: 'Development',
+        text: 'Deployment',
         items: [
-          { text: 'Contributing', link: '/development/contributing' },
-          { text: 'CI/CD', link: '/development/ci-cd' },
-          { text: 'Testing', link: '/development/testing' },
+          { text: 'Docker', link: '/deployment/docker' },
+          { text: 'Manual', link: '/deployment/manual' },
+          { text: 'CI/CD', link: '/deployment/ci-cd' },
+          { text: 'Scaling', link: '/deployment/scaling' },
+        ],
+      },
+      {
+        text: 'Contributing',
+        items: [
+          { text: 'Development Setup', link: '/contributing/development-setup' },
+          { text: 'Testing', link: '/contributing/testing' },
+          { text: 'Code Style', link: '/contributing/code-style' },
+          { text: 'Pull Requests', link: '/contributing/pull-requests' },
         ],
       },
     ],

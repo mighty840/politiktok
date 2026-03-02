@@ -256,7 +256,11 @@ pub fn PolicyChatPage() -> Element {
 #[component]
 fn MessageBubble(message: ChatMessage, is_streaming: bool) -> Element {
     let is_user = message.role == "user";
-    let chat_class = if is_user { "chat chat-end" } else { "chat chat-start" };
+    let chat_class = if is_user {
+        "chat chat-end"
+    } else {
+        "chat chat-start"
+    };
     let bubble_class = if is_user {
         "chat-bubble chat-bubble-primary"
     } else {

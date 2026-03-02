@@ -136,14 +136,8 @@ Generate 10 anticipated voter questions for this event."
                 .as_str()
                 .unwrap_or("Unknown question")
                 .to_string(),
-            likelihood: q["likelihood"]
-                .as_str()
-                .unwrap_or("medium")
-                .to_string(),
-            topic: q["topic"]
-                .as_str()
-                .unwrap_or("General")
-                .to_string(),
+            likelihood: q["likelihood"].as_str().unwrap_or("medium").to_string(),
+            topic: q["topic"].as_str().unwrap_or("General").to_string(),
             suggested_answer: q["suggested_answer"]
                 .as_str()
                 .unwrap_or("No suggested answer available")
@@ -263,10 +257,7 @@ Format the checklist as plain text with clear headings and bullet points.";
     )
     .await;
 
-    tracing::info!(
-        latency_ms = latency_ms,
-        "Preparation checklist generated"
-    );
+    tracing::info!(latency_ms = latency_ms, "Preparation checklist generated");
 
     Ok(response.content)
 }

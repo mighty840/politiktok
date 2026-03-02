@@ -46,9 +46,10 @@ impl axum::response::IntoResponse for Error {
             Error::NotFound(msg) => (StatusCode::NOT_FOUND, msg.clone()),
             Error::ValidationError(msg) => (StatusCode::BAD_REQUEST, msg.clone()),
             Error::LlmError(_) => (StatusCode::BAD_GATEWAY, "LLM service unavailable".into()),
-            Error::EmbeddingError(_) => {
-                (StatusCode::BAD_GATEWAY, "Embedding service unavailable".into())
-            }
+            Error::EmbeddingError(_) => (
+                StatusCode::BAD_GATEWAY,
+                "Embedding service unavailable".into(),
+            ),
             Error::VectorStoreError(_) => {
                 (StatusCode::BAD_GATEWAY, "Vector store unavailable".into())
             }

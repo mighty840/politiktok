@@ -17,9 +17,8 @@ pub fn CoalitionPage() -> Element {
     let mut analysis = use_signal(|| Option::<TensionAnalysis>::None);
 
     // Fetch default segments on mount
-    let segments_resource = use_resource(|| async move {
-        get_default_segments().await.unwrap_or_default()
-    });
+    let segments_resource =
+        use_resource(|| async move { get_default_segments().await.unwrap_or_default() });
 
     // Toggle a segment in the selected list
     let mut toggle_segment = move |segment: CoalitionSegment| {

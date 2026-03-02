@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 
 use crate::components::LoadingSpinner;
 use crate::modules::multilingual::{
-    adapt_messaging, get_supported_languages, translate_content, AdaptedMessaging, SupportedLanguage,
-    Translation,
+    adapt_messaging, get_supported_languages, translate_content, AdaptedMessaging,
+    SupportedLanguage, Translation,
 };
 
 /// Fallback languages used when the server call has not resolved yet.

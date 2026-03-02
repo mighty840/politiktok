@@ -183,12 +183,14 @@ Respond ONLY with the JSON object.",
 }
 
 /// Parse the LLM JSON response for a persona reaction.
-fn parse_persona_reaction(
-    persona: &Persona,
-    raw: &str,
-) -> PersonaReaction {
+fn parse_persona_reaction(persona: &Persona, raw: &str) -> PersonaReaction {
     // Try to parse JSON; fall back gracefully if the LLM returns imperfect JSON.
-    let cleaned = raw.trim().trim_start_matches("```json").trim_start_matches("```").trim_end_matches("```").trim();
+    let cleaned = raw
+        .trim()
+        .trim_start_matches("```json")
+        .trim_start_matches("```")
+        .trim_end_matches("```")
+        .trim();
 
     if let Ok(json) = serde_json::from_str::<serde_json::Value>(cleaned) {
         PersonaReaction {
@@ -197,10 +199,7 @@ fn parse_persona_reaction(
                 .as_str()
                 .unwrap_or("No reaction generated.")
                 .to_string(),
-            sentiment: json["sentiment"]
-                .as_str()
-                .unwrap_or("neutral")
-                .to_string(),
+            sentiment: json["sentiment"].as_str().unwrap_or("neutral").to_string(),
             key_concerns: json["key_concerns"]
                 .as_array()
                 .map(|arr| {
@@ -277,13 +276,19 @@ fn extract_red_flags(reactions: &[PersonaReaction]) -> Vec<String> {
     }
 
     // Flag strongly negative sentiments
-    let negative_count = reactions.iter().filter(|r| r.sentiment == "negative").count();
+    let negative_count = reactions
+        .iter()
+        .filter(|r| r.sentiment == "negative")
+        .count();
     if negative_count > reactions.len() / 2 {
-        flags.push("Majority of personas reacted negatively -- consider revising messaging".to_string());
+        flags.push(
+            "Majority of personas reacted negatively -- consider revising messaging".to_string(),
+        );
     }
 
     // Find concerns that appear across multiple personas
-    let mut concern_counts: std::collections::HashMap<String, usize> = std::collections::HashMap::new();
+    let mut concern_counts: std::collections::HashMap<String, usize> =
+        std::collections::HashMap::new();
     for r in reactions {
         for c in &r.key_concerns {
             let normalized = c.to_lowercase();
@@ -311,8 +316,8 @@ pub async fn simulate_reactions(
     policy_text: String,
     personas: Vec<Persona>,
 ) -> Result<SimulationResult, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -362,10 +367,7 @@ pub async fn simulate_reactions(
             .generate(&messages, None, Some(0.7), Some(512))
             .await
             .map_err(|e| {
-                ServerFnError::new(format!(
-                    "LLM error for persona '{}': {e}",
-                    persona.name
-                ))
+                ServerFnError::new(format!("LLM error for persona '{}': {e}", persona.name))
             })?;
 
         let latency_ms = start.elapsed().as_millis() as i32;

@@ -44,7 +44,9 @@ pub fn SentimentDashboardPage() -> Element {
         let window = selected_window();
         async move {
             let _ = refresh_tick();
-            get_sentiment_summary(topic, window).await.unwrap_or_default()
+            get_sentiment_summary(topic, window)
+                .await
+                .unwrap_or_default()
         }
     });
 
@@ -164,10 +166,7 @@ fn FilterTopicSelector(
 }
 
 #[component]
-fn FilterWindowSelector(
-    selected_window: String,
-    on_change: EventHandler<String>,
-) -> Element {
+fn FilterWindowSelector(selected_window: String, on_change: EventHandler<String>) -> Element {
     rsx! {
         div { class: "join",
             for (value, label) in TIME_WINDOWS {
@@ -298,10 +297,7 @@ fn SentimentBarChart(summaries: Resource<Vec<SentimentSummary>>) -> Element {
         .iter()
         .take(15)
         .map(|s| {
-            let label = format!(
-                "{} (+{}/-{})",
-                s.topic, s.positive_count, s.negative_count
-            );
+            let label = format!("{} (+{}/-{})", s.topic, s.positive_count, s.negative_count);
             (label, s.total_count as f64)
         })
         .collect();

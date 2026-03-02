@@ -50,8 +50,7 @@ pub fn CampaignCopyPage() -> Element {
     let mut key_messages_text = use_signal(String::new);
     let mut audience = use_signal(|| "General Public".to_string());
     let mut tone = use_signal(|| "Professional".to_string());
-    let mut selected_formats =
-        use_signal(|| vec!["email".to_string(), "social_post".to_string()]);
+    let mut selected_formats = use_signal(|| vec!["email".to_string(), "social_post".to_string()]);
 
     // Generation state
     let mut is_generating = use_signal(|| false);

@@ -38,7 +38,11 @@ pub fn VolunteersPage() -> Element {
             } else {
                 Some(status)
             };
-            let search_opt = if search.is_empty() { None } else { Some(search) };
+            let search_opt = if search.is_empty() {
+                None
+            } else {
+                Some(search)
+            };
             list_volunteers(search_opt, status_opt, None)
                 .await
                 .unwrap_or_default()
@@ -335,9 +339,17 @@ fn AddVolunteerModal(on_close: EventHandler, on_success: EventHandler) -> Elemen
         error_msg.set(None);
 
         spawn(async move {
-            let v_phone_opt = if v_phone.is_empty() { None } else { Some(v_phone) };
+            let v_phone_opt = if v_phone.is_empty() {
+                None
+            } else {
+                Some(v_phone)
+            };
             let v_availability_json = serde_json::Value::String(v_availability);
-            let v_location_opt = if v_location.is_empty() { None } else { Some(serde_json::Value::String(v_location)) };
+            let v_location_opt = if v_location.is_empty() {
+                None
+            } else {
+                Some(serde_json::Value::String(v_location))
+            };
             let v_bio_opt = if v_bio.is_empty() { None } else { Some(v_bio) };
             match create_volunteer(
                 v_name,
@@ -694,7 +706,11 @@ pub fn TasksPage() -> Element {
             } else {
                 Some(status)
             };
-            let search_opt = if search.is_empty() { None } else { Some(search) };
+            let search_opt = if search.is_empty() {
+                None
+            } else {
+                Some(search)
+            };
             list_tasks(status_opt, search_opt).await.unwrap_or_default()
         }
     });
@@ -876,10 +892,28 @@ fn CreateTaskModal(on_close: EventHandler, on_success: EventHandler) -> Element 
         error_msg.set(None);
 
         spawn(async move {
-            let t_location_opt = if t_location.is_empty() { None } else { Some(serde_json::Value::String(t_location)) };
-            let t_start_opt = if t_start.is_empty() { None } else { Some(t_start) };
+            let t_location_opt = if t_location.is_empty() {
+                None
+            } else {
+                Some(serde_json::Value::String(t_location))
+            };
+            let t_start_opt = if t_start.is_empty() {
+                None
+            } else {
+                Some(t_start)
+            };
             let t_end_opt = if t_end.is_empty() { None } else { Some(t_end) };
-            match create_task(t_title, t_desc, t_skills, t_location_opt, t_start_opt, t_end_opt, t_max).await {
+            match create_task(
+                t_title,
+                t_desc,
+                t_skills,
+                t_location_opt,
+                t_start_opt,
+                t_end_opt,
+                t_max,
+            )
+            .await
+            {
                 Ok(_) => {
                     on_success.call(());
                 }

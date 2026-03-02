@@ -5,7 +5,14 @@ use crate::modules::knowledge_base::{
 };
 
 /// Category options for filtering and tagging documents.
-const CATEGORIES: &[&str] = &["All", "General", "Policy", "Operations", "Legal", "Training"];
+const CATEGORIES: &[&str] = &[
+    "All",
+    "General",
+    "Policy",
+    "Operations",
+    "Legal",
+    "Training",
+];
 
 /// Categories for document ingestion (excludes "All").
 const INGEST_CATEGORIES: &[&str] = &["General", "Policy", "Operations", "Legal", "Training"];

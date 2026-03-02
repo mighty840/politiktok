@@ -1,7 +1,7 @@
+use axum::extract::Extension;
 use axum::http::Request;
 use axum::middleware::Next;
 use axum::response::Response;
-use axum::extract::Extension;
 use tower_sessions::Session;
 
 use crate::infrastructure::{ServerState, UserSessionState, LOGGED_IN_USER_SESS_KEY};

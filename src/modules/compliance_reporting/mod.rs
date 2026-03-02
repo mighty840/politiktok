@@ -82,8 +82,8 @@ pub async fn generate_compliance_report(
     period: String,
     campaign_data: String,
 ) -> Result<ComplianceReport, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -158,9 +158,8 @@ pub async fn generate_compliance_report(
         raw
     };
 
-    let parsed: serde_json::Value = serde_json::from_str(json_str).map_err(|e| {
-        ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}"))
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(json_str)
+        .map_err(|e| ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}")))?;
 
     let sections: Vec<ComplianceSection> = parsed
         .get("sections")
@@ -226,8 +225,8 @@ pub async fn list_compliance_reports() -> Result<Vec<ComplianceReport>, ServerFn
 pub async fn check_compliance(
     action_description: String,
 ) -> Result<ComplianceCheckResult, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -294,9 +293,8 @@ pub async fn check_compliance(
         raw
     };
 
-    let parsed: serde_json::Value = serde_json::from_str(json_str).map_err(|e| {
-        ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}"))
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(json_str)
+        .map_err(|e| ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}")))?;
 
     let compliant = parsed
         .get("compliant")

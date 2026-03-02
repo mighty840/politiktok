@@ -83,8 +83,8 @@ pub async fn generate_script(
     candidate_name: String,
     key_asks: Vec<String>,
 ) -> Result<CanvassingScript, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -249,9 +249,7 @@ pub async fn export_script_text(script: CanvassingScript) -> Result<String, Serv
 
         output.push_str(&format!(
             "[{}] {}\n\n{}\n\n",
-            section_label,
-            section.title,
-            section.content,
+            section_label, section.title, section.content,
         ));
 
         if !section.talking_points.is_empty() {

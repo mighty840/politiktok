@@ -14,11 +14,8 @@ const MODE_OPTIONS: &[(&str, &str)] = &[
 ];
 
 /// Available difficulty levels.
-const DIFFICULTY_OPTIONS: &[(&str, &str)] = &[
-    ("easy", "Easy"),
-    ("medium", "Medium"),
-    ("hard", "Hard"),
-];
+const DIFFICULTY_OPTIONS: &[(&str, &str)] =
+    &[("easy", "Easy"), ("medium", "Medium"), ("hard", "Hard")];
 
 #[component]
 pub fn CoachingPage() -> Element {

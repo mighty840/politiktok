@@ -28,9 +28,16 @@ pub fn DataTable(
     if let Some(col) = *sort_col.read() {
         let asc = *sort_asc.read();
         filtered.sort_by(|(_, a), (_, b)| {
-            let cmp = a.get(col).map(String::as_str).unwrap_or("")
+            let cmp = a
+                .get(col)
+                .map(String::as_str)
+                .unwrap_or("")
                 .cmp(b.get(col).map(String::as_str).unwrap_or(""));
-            if asc { cmp } else { cmp.reverse() }
+            if asc {
+                cmp
+            } else {
+                cmp.reverse()
+            }
         });
     }
 

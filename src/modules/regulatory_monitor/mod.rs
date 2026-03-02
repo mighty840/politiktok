@@ -140,8 +140,8 @@ pub async fn analyze_regulatory_impact(
     update_text: String,
     context: String,
 ) -> Result<RegulatoryUpdate, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -166,9 +166,8 @@ pub async fn analyze_regulatory_impact(
         format!("\n\nAdditional context:\n{context}")
     };
 
-    let user_prompt = format!(
-        "Analyze the following regulatory update:\n\n{update_text}{context_section}"
-    );
+    let user_prompt =
+        format!("Analyze the following regulatory update:\n\n{update_text}{context_section}");
 
     let messages = vec![
         LlmMessage {
@@ -253,8 +252,8 @@ pub async fn analyze_regulatory_impact(
 pub async fn generate_regulatory_brief(
     update_ids: Vec<String>,
 ) -> Result<RegulatoryBrief, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 

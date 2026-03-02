@@ -1,10 +1,9 @@
 use dioxus::prelude::*;
 use dioxus_free_icons::icons::bs_icons::{
     BsBarChartLine, BsBriefcase, BsBullseye, BsCardChecklist, BsChatDots, BsChevronDown,
-    BsClipboardData, BsCpu, BsDiagram3, BsEnvelopePaper, BsExclamationTriangle,
-    BsFileEarmarkText, BsFlag, BsFunnel, BsGear, BsGlobe, BsGraphUp, BsHouseDoor, BsJournalText,
-    BsMap, BsMegaphone, BsPeople, BsPersonCheck, BsQuestionCircle, BsSearch, BsShieldCheck,
-    BsTelephone,
+    BsClipboardData, BsCpu, BsDiagram3, BsEnvelopePaper, BsExclamationTriangle, BsFileEarmarkText,
+    BsFlag, BsFunnel, BsGear, BsGlobe, BsGraphUp, BsHouseDoor, BsJournalText, BsMap, BsMegaphone,
+    BsPeople, BsPersonCheck, BsQuestionCircle, BsSearch, BsShieldCheck, BsTelephone,
 };
 use dioxus_free_icons::Icon;
 
@@ -223,10 +222,7 @@ fn CollapsibleNavGroup(
 /// Application sidebar with grouped navigation links, theme toggle, and
 /// mobile collapsibility.
 #[component]
-pub fn Sidebar(
-    #[props(default = false)] open: bool,
-    on_nav: EventHandler<()>,
-) -> Element {
+pub fn Sidebar(#[props(default = false)] open: bool, on_nav: EventHandler<()>) -> Element {
     let route = use_route::<crate::app::Route>();
     let mut is_dark = use_signal(|| true);
 

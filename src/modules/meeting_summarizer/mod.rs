@@ -70,8 +70,8 @@ pub async fn summarize_meeting(
     transcript: String,
     attendees: Vec<String>,
 ) -> Result<MeetingSummary, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -148,9 +148,8 @@ pub async fn summarize_meeting(
         raw
     };
 
-    let parsed: serde_json::Value = serde_json::from_str(json_str).map_err(|e| {
-        ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}"))
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(json_str)
+        .map_err(|e| ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}")))?;
 
     let summary = parsed
         .get("summary")
@@ -182,14 +181,8 @@ pub async fn summarize_meeting(
                         .as_str()
                         .unwrap_or("Unassigned")
                         .to_string(),
-                    deadline: item["deadline"]
-                        .as_str()
-                        .unwrap_or("TBD")
-                        .to_string(),
-                    status: item["status"]
-                        .as_str()
-                        .unwrap_or("pending")
-                        .to_string(),
+                    deadline: item["deadline"].as_str().unwrap_or("TBD").to_string(),
+                    status: item["status"].as_str().unwrap_or("pending").to_string(),
                 })
                 .collect()
         })

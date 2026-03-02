@@ -208,9 +208,10 @@ pub async fn logout(
     Extension(state): Extension<ServerState>,
     session: Session,
 ) -> Result<Redirect, Error> {
-    session.flush().await.map_err(|e| {
-        Error::AuthError(format!("Session flush failed: {e}"))
-    })?;
+    session
+        .flush()
+        .await
+        .map_err(|e| Error::AuthError(format!("Session flush failed: {e}")))?;
 
     let logout_url = format!(
         "{}?client_id={}&post_logout_redirect_uri={}",
@@ -239,10 +240,7 @@ fn extract_role_from_token(token: &str) -> Option<String> {
     // Check realm_access.roles for our app roles
     let roles = claims["realm_access"]["roles"].as_array()?;
     for role_name in &["admin", "staff", "volunteer", "readonly"] {
-        if roles
-            .iter()
-            .any(|r| r.as_str() == Some(role_name))
-        {
+        if roles.iter().any(|r| r.as_str() == Some(role_name)) {
             return Some(role_name.to_string());
         }
     }

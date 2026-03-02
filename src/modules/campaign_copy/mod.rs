@@ -36,7 +36,8 @@ pub struct CopyJob {
 /// Build the system prompt for copy generation.
 fn build_system_prompt(format: &str, tone: &str, audience: &str) -> String {
     let format_guidance = match format {
-        "email" => "\
+        "email" => {
+            "\
 You are an expert political campaign copywriter specializing in email communications. \
 Write a professional campaign email that includes:\n\
 - A compelling subject line (on its own line, prefixed with \"Subject: \")\n\
@@ -45,9 +46,11 @@ Write a professional campaign email that includes:\n\
 - A strong call-to-action (donate, volunteer, share, attend, etc.)\n\
 - A professional sign-off\n\
 \n\
-The email should feel personal and direct, as if written to a single supporter.",
+The email should feel personal and direct, as if written to a single supporter."
+        }
 
-        "social_post" => "\
+        "social_post" => {
+            "\
 You are an expert political campaign copywriter specializing in social media. \
 Write social media posts for the campaign. Provide TWO versions:\n\
 \n\
@@ -57,9 +60,11 @@ Include a relevant hashtag.\n\
 2. **Facebook/Instagram version** (max 500 words): Longer form, more detailed, \
 emotionally engaging. Include a call-to-action and relevant hashtags.\n\
 \n\
-Label each version clearly.",
+Label each version clearly."
+        }
 
-        "press_release" => "\
+        "press_release" => {
+            "\
 You are an expert political communications professional specializing in press releases. \
 Write a formal press release that includes:\n\
 - A strong headline in ALL CAPS\n\
@@ -71,9 +76,11 @@ Write a formal press release that includes:\n\
 - A boilerplate \"About\" paragraph at the end\n\
 - End with \"###\" centered\n\
 \n\
-Follow AP style guidelines.",
+Follow AP style guidelines."
+        }
 
-        "speech" => "\
+        "speech" => {
+            "\
 You are an expert political speechwriter. Write a speech excerpt that includes:\n\
 - A powerful opening hook that grabs the audience's attention\n\
 - Clear articulation of the key messages using rhetorical devices \
@@ -83,7 +90,8 @@ You are an expert political speechwriter. Write a speech excerpt that includes:\
 - A memorable closing that inspires action\n\
 \n\
 Use short sentences for emphasis. Write for the ear, not the eye. \
-Include stage directions in [brackets] where appropriate.",
+Include stage directions in [brackets] where appropriate."
+        }
 
         other => &format!(
             "You are an expert political campaign copywriter. \
@@ -153,8 +161,8 @@ pub async fn generate_copy(
     formats: Vec<String>,
     word_limits: Option<serde_json::Value>,
 ) -> Result<CopyJob, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -272,8 +280,8 @@ pub async fn regenerate_variant(
     tone: String,
     feedback: Option<String>,
 ) -> Result<GeneratedCopy, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

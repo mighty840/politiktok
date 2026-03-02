@@ -129,9 +129,7 @@ Return ONLY the JSON object, no markdown fences or extra text.";
                 .collect()
         })
         .unwrap_or_default();
-    let caller_satisfaction = parsed["caller_satisfaction"]
-        .as_f64()
-        .unwrap_or(0.5);
+    let caller_satisfaction = parsed["caller_satisfaction"].as_f64().unwrap_or(0.5);
 
     tracing::info!(
         id = %id,

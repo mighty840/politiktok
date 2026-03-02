@@ -212,8 +212,8 @@ pub async fn generate_briefing(
     topics: String,
     focus: String,
 ) -> Result<DebateBriefing, ServerFnError> {
-    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
@@ -336,8 +336,8 @@ pub async fn generate_briefing(
 pub async fn detect_contradictions(
     opponent_id: String,
 ) -> Result<Vec<Contradiction>, ServerFnError> {
-    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 

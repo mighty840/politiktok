@@ -122,9 +122,8 @@ pub async fn translate_content(
     .await;
 
     // Parse the JSON response
-    let parsed: serde_json::Value = serde_json::from_str(&response.content).map_err(|_| {
-        ServerFnError::new("Failed to parse translation response as JSON")
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(&response.content)
+        .map_err(|_| ServerFnError::new("Failed to parse translation response as JSON"))?;
 
     let translated_text = parsed
         .get("translated_text")
@@ -167,16 +166,46 @@ pub async fn translate_content(
 #[server(endpoint = "multilingual/languages")]
 pub async fn get_supported_languages() -> Result<Vec<SupportedLanguage>, ServerFnError> {
     let languages = vec![
-        SupportedLanguage { code: "en".to_string(), name: "English".to_string() },
-        SupportedLanguage { code: "es".to_string(), name: "Spanish".to_string() },
-        SupportedLanguage { code: "fr".to_string(), name: "French".to_string() },
-        SupportedLanguage { code: "zh".to_string(), name: "Mandarin".to_string() },
-        SupportedLanguage { code: "ar".to_string(), name: "Arabic".to_string() },
-        SupportedLanguage { code: "hi".to_string(), name: "Hindi".to_string() },
-        SupportedLanguage { code: "pt".to_string(), name: "Portuguese".to_string() },
-        SupportedLanguage { code: "de".to_string(), name: "German".to_string() },
-        SupportedLanguage { code: "ja".to_string(), name: "Japanese".to_string() },
-        SupportedLanguage { code: "ko".to_string(), name: "Korean".to_string() },
+        SupportedLanguage {
+            code: "en".to_string(),
+            name: "English".to_string(),
+        },
+        SupportedLanguage {
+            code: "es".to_string(),
+            name: "Spanish".to_string(),
+        },
+        SupportedLanguage {
+            code: "fr".to_string(),
+            name: "French".to_string(),
+        },
+        SupportedLanguage {
+            code: "zh".to_string(),
+            name: "Mandarin".to_string(),
+        },
+        SupportedLanguage {
+            code: "ar".to_string(),
+            name: "Arabic".to_string(),
+        },
+        SupportedLanguage {
+            code: "hi".to_string(),
+            name: "Hindi".to_string(),
+        },
+        SupportedLanguage {
+            code: "pt".to_string(),
+            name: "Portuguese".to_string(),
+        },
+        SupportedLanguage {
+            code: "de".to_string(),
+            name: "German".to_string(),
+        },
+        SupportedLanguage {
+            code: "ja".to_string(),
+            name: "Japanese".to_string(),
+        },
+        SupportedLanguage {
+            code: "ko".to_string(),
+            name: "Korean".to_string(),
+        },
     ];
     Ok(languages)
 }
@@ -266,9 +295,8 @@ pub async fn adapt_messaging(
     )
     .await;
 
-    let parsed: serde_json::Value = serde_json::from_str(&response.content).map_err(|_| {
-        ServerFnError::new("Failed to parse adaptation response as JSON")
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(&response.content)
+        .map_err(|_| ServerFnError::new("Failed to parse adaptation response as JSON"))?;
 
     let adapted_text = parsed
         .get("adapted_text")

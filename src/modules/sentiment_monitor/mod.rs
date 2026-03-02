@@ -39,12 +39,15 @@ pub async fn get_sentiment_summary(
     let pool = state.db.pool();
     let interval = window_to_interval(&window);
 
-    let rows = sqlx::query_as::<_, (
-        String,        // topic
-        Option<String>, // sentiment
-        i64,           // cnt
-        Option<f64>,   // avg_score
-    )>(
+    let rows = sqlx::query_as::<
+        _,
+        (
+            String,         // topic
+            Option<String>, // sentiment
+            i64,            // cnt
+            Option<f64>,    // avg_score
+        ),
+    >(
         r#"
         SELECT
             unnest(topics) AS topic,
@@ -73,16 +76,18 @@ pub async fn get_sentiment_summary(
         std::collections::HashMap::new();
 
     for (tp, sentiment, cnt, avg_score) in filtered {
-        let entry = summaries.entry(tp.clone()).or_insert_with(|| SentimentSummary {
-            topic: tp,
-            window: window.clone(),
-            positive_count: 0,
-            negative_count: 0,
-            neutral_count: 0,
-            total_count: 0,
-            avg_score: 0.0,
-            trend: 0.0,
-        });
+        let entry = summaries
+            .entry(tp.clone())
+            .or_insert_with(|| SentimentSummary {
+                topic: tp,
+                window: window.clone(),
+                positive_count: 0,
+                negative_count: 0,
+                neutral_count: 0,
+                total_count: 0,
+                avg_score: 0.0,
+                trend: 0.0,
+            });
 
         match sentiment.as_deref() {
             Some("positive") => entry.positive_count += cnt,
@@ -95,9 +100,8 @@ pub async fn get_sentiment_summary(
             // Running weighted average approximation.
             let prev_total = entry.total_count - cnt;
             if entry.total_count > 0 {
-                entry.avg_score =
-                    (entry.avg_score * prev_total as f64 + score * cnt as f64)
-                        / entry.total_count as f64;
+                entry.avg_score = (entry.avg_score * prev_total as f64 + score * cnt as f64)
+                    / entry.total_count as f64;
             }
         }
     }
@@ -107,8 +111,8 @@ pub async fn get_sentiment_summary(
         .into_values()
         .map(|mut s| {
             if s.total_count > 0 {
-                s.trend = (s.positive_count as f64 - s.negative_count as f64)
-                    / s.total_count as f64;
+                s.trend =
+                    (s.positive_count as f64 - s.negative_count as f64) / s.total_count as f64;
             }
             s
         })
@@ -130,20 +134,23 @@ pub async fn get_sentiment_feed(
         dioxus::fullstack::FullstackContext::extract().await?;
     let pool = state.db.pool();
 
-    let rows = sqlx::query_as::<_, (
-        String,         // id
-        String,         // source_platform
-        Option<String>, // external_id
-        String,         // text
-        Option<String>, // author_hash
-        Option<String>, // posted_at
-        Option<String>, // fetched_at
-        Option<String>, // sentiment
-        Option<f64>,    // sentiment_score
-        Vec<String>,    // topics
-        Option<serde_json::Value>, // location
-        Option<serde_json::Value>, // coordination_flags
-    )>(
+    let rows = sqlx::query_as::<
+        _,
+        (
+            String,                    // id
+            String,                    // source_platform
+            Option<String>,            // external_id
+            String,                    // text
+            Option<String>,            // author_hash
+            Option<String>,            // posted_at
+            Option<String>,            // fetched_at
+            Option<String>,            // sentiment
+            Option<f64>,               // sentiment_score
+            Vec<String>,               // topics
+            Option<serde_json::Value>, // location
+            Option<serde_json::Value>, // coordination_flags
+        ),
+    >(
         r#"
         SELECT
             id::text,
@@ -176,7 +183,20 @@ pub async fn get_sentiment_feed(
     let posts = rows
         .into_iter()
         .map(
-            |(id, source_platform, external_id, text, author_hash, posted_at, fetched_at, sentiment, sentiment_score, topics, location, coordination_flags)| {
+            |(
+                id,
+                source_platform,
+                external_id,
+                text,
+                author_hash,
+                posted_at,
+                fetched_at,
+                sentiment,
+                sentiment_score,
+                topics,
+                location,
+                coordination_flags,
+            )| {
                 SocialPost {
                     id,
                     source_platform,
@@ -222,14 +242,17 @@ pub async fn get_spike_log() -> Result<Vec<SentimentSpike>, ServerFnError> {
         dioxus::fullstack::FullstackContext::extract().await?;
     let pool = state.db.pool();
 
-    let rows = sqlx::query_as::<_, (
-        String,         // id
-        String,         // topic
-        String,         // sentiment
-        f64,            // spike_magnitude
-        Vec<String>,    // sample_posts
-        String,         // detected_at
-    )>(
+    let rows = sqlx::query_as::<
+        _,
+        (
+            String,      // id
+            String,      // topic
+            String,      // sentiment
+            f64,         // spike_magnitude
+            Vec<String>, // sample_posts
+            String,      // detected_at
+        ),
+    >(
         r#"
         SELECT
             id::text,
@@ -249,16 +272,16 @@ pub async fn get_spike_log() -> Result<Vec<SentimentSpike>, ServerFnError> {
 
     let spikes = rows
         .into_iter()
-        .map(|(id, topic, sentiment, spike_magnitude, sample_posts, detected_at)| {
-            SentimentSpike {
+        .map(
+            |(id, topic, sentiment, spike_magnitude, sample_posts, detected_at)| SentimentSpike {
                 id,
                 topic,
                 sentiment,
                 spike_magnitude,
                 sample_posts,
                 detected_at,
-            }
-        })
+            },
+        )
         .collect();
 
     Ok(spikes)
@@ -357,20 +380,23 @@ pub async fn classify_post(post_id: String) -> Result<SocialPost, ServerFnError>
     .map_err(|e| ServerFnError::new(format!("Failed to update post: {e}")))?;
 
     // Return the updated post.
-    let row = sqlx::query_as::<_, (
-        String,
-        String,
-        Option<String>,
-        String,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<String>,
-        Option<f64>,
-        Vec<String>,
-        Option<serde_json::Value>,
-        Option<serde_json::Value>,
-    )>(
+    let row = sqlx::query_as::<
+        _,
+        (
+            String,
+            String,
+            Option<String>,
+            String,
+            Option<String>,
+            Option<String>,
+            Option<String>,
+            Option<String>,
+            Option<f64>,
+            Vec<String>,
+            Option<serde_json::Value>,
+            Option<serde_json::Value>,
+        ),
+    >(
         r#"
         SELECT
             id::text, source_platform, external_id, text, author_hash,
@@ -556,11 +582,7 @@ pub async fn detect_spikes(
 
 /// Determine the dominant sentiment for a topic within a time interval.
 #[cfg(feature = "server")]
-async fn determine_dominant_sentiment(
-    pool: &sqlx::PgPool,
-    topic: &str,
-    interval: &str,
-) -> String {
+async fn determine_dominant_sentiment(pool: &sqlx::PgPool, topic: &str, interval: &str) -> String {
     let result = sqlx::query_as::<_, (Option<String>,)>(
         r#"
         SELECT sentiment

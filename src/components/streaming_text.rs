@@ -5,10 +5,7 @@ use dioxus::prelude::*;
 /// While content is actively streaming (indicated by `streaming` prop),
 /// a blinking cursor animation is appended.
 #[component]
-pub fn StreamingText(
-    content: String,
-    #[props(default = false)] streaming: bool,
-) -> Element {
+pub fn StreamingText(content: String, #[props(default = false)] streaming: bool) -> Element {
     let html = use_memo(move || {
         let parser = pulldown_cmark::Parser::new(&content);
         let mut html_output = String::new();

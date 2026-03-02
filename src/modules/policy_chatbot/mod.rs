@@ -50,19 +50,25 @@ pub async fn ingest_document(
     content: String,
     collection: String,
 ) -> Result<String, ServerFnError> {
+    use crate::infrastructure::vector_store::VectorPoint;
     use crate::infrastructure::{
         chunk_text, content_hash, require_user, EmbeddingClient, ServerState, VectorStoreClient,
     };
-    use crate::infrastructure::vector_store::VectorPoint;
     use dioxus::fullstack::FullstackContext;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
 
     let pool = state.db.pool();
-    let collection = if collection.is_empty() { COLLECTION_NAME.to_string() } else { collection };
+    let collection = if collection.is_empty() {
+        COLLECTION_NAME.to_string()
+    } else {
+        collection
+    };
     let hash = content_hash(&content);
 
     // Check for duplicate content
@@ -84,7 +90,9 @@ pub async fn ingest_document(
     let chunk_count = chunks.len() as i32;
 
     if chunks.is_empty() {
-        return Err(ServerFnError::new("Document content is empty or too short to chunk"));
+        return Err(ServerFnError::new(
+            "Document content is empty or too short to chunk",
+        ));
     }
 
     // Embed all chunks
@@ -170,7 +178,11 @@ pub async fn list_documents(collection: String) -> Result<Vec<Document>, ServerF
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
 
     let pool = state.db.pool();
-    let collection = if collection.is_empty() { COLLECTION_NAME.to_string() } else { collection };
+    let collection = if collection.is_empty() {
+        COLLECTION_NAME.to_string()
+    } else {
+        collection
+    };
 
     let rows = sqlx::query(
         r#"SELECT
@@ -217,7 +229,9 @@ pub async fn delete_document(doc_id: String) -> Result<(), ServerFnError> {
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -225,14 +239,12 @@ pub async fn delete_document(doc_id: String) -> Result<(), ServerFnError> {
     let pool = state.db.pool();
 
     // Fetch document to get collection and chunk count
-    let doc = sqlx::query(
-        "SELECT collection_name, chunk_count FROM documents WHERE id::text = $1",
-    )
-    .bind(&doc_id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
-    .ok_or_else(|| ServerFnError::new("Document not found"))?;
+    let doc = sqlx::query("SELECT collection_name, chunk_count FROM documents WHERE id::text = $1")
+        .bind(&doc_id)
+        .fetch_optional(pool)
+        .await
+        .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
+        .ok_or_else(|| ServerFnError::new("Document not found"))?;
 
     let collection_name: String = doc.get("collection_name");
     let chunk_count: i32 = doc.get("chunk_count");
@@ -267,19 +279,25 @@ pub async fn chat(
     session_id: String,
     collection: String,
 ) -> Result<ChatMessage, ServerFnError> {
+    use crate::infrastructure::llm::LlmMessage;
     use crate::infrastructure::{
         require_user, EmbeddingClient, LlmClient, ServerState, VectorStoreClient,
     };
-    use crate::infrastructure::llm::LlmMessage;
     use dioxus::fullstack::FullstackContext;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
 
     let pool = state.db.pool();
-    let collection = if collection.is_empty() { COLLECTION_NAME.to_string() } else { collection };
+    let collection = if collection.is_empty() {
+        COLLECTION_NAME.to_string()
+    } else {
+        collection
+    };
 
     // Save user question
     let user_msg_id = uuid::Uuid::new_v4().to_string();
@@ -321,7 +339,9 @@ pub async fn chat(
         let chunk_text = result.payload["chunk_text"].as_str().unwrap_or("");
         let score = result.score;
 
-        context_parts.push(format!("[Source: {title} (relevance: {score:.2})]\n{chunk_text}"));
+        context_parts.push(format!(
+            "[Source: {title} (relevance: {score:.2})]\n{chunk_text}"
+        ));
         sources.push(serde_json::json!({
             "title": title,
             "score": score,
@@ -337,9 +357,8 @@ pub async fn chat(
     };
 
     // Build LLM messages
-    let user_prompt = format!(
-        "Context from policy documents:\n\n{context}\n\n---\n\nQuestion: {question}"
-    );
+    let user_prompt =
+        format!("Context from policy documents:\n\n{context}\n\n---\n\nQuestion: {question}");
 
     let messages = vec![
         LlmMessage {
@@ -381,8 +400,7 @@ pub async fn chat(
 
     // Save assistant response
     let assistant_msg_id = uuid::Uuid::new_v4().to_string();
-    let sources_json = serde_json::to_value(&sources)
-        .unwrap_or_else(|_| serde_json::Value::Null);
+    let sources_json = serde_json::to_value(&sources).unwrap_or_else(|_| serde_json::Value::Null);
 
     sqlx::query(
         "INSERT INTO chat_messages (id, session_id, role, content, sources)
@@ -419,7 +437,9 @@ pub async fn create_chat_session() -> Result<ChatSession, ServerFnError> {
     use crate::infrastructure::{require_user, ServerState};
     use dioxus::fullstack::FullstackContext;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -454,7 +474,9 @@ pub async fn list_chat_sessions() -> Result<Vec<ChatSession>, ServerFnError> {
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -500,7 +522,9 @@ pub async fn get_chat_messages(session_id: String) -> Result<Vec<ChatMessage>, S
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;

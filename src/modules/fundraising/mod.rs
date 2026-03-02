@@ -60,7 +60,9 @@ pub async fn create_donor(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -222,7 +224,9 @@ pub async fn record_donation(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -253,14 +257,13 @@ pub async fn record_donation(
 
     // Recalculate engagement_score from the updated donation_history.
     // We pull the full history, compute the score, and write it back.
-    let row = sqlx::query(
-        r#"SELECT donation_history, last_contact FROM donors WHERE id::text = $1"#,
-    )
-    .bind(&donor_id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
-    .ok_or_else(|| ServerFnError::new("Donor not found"))?;
+    let row =
+        sqlx::query(r#"SELECT donation_history, last_contact FROM donors WHERE id::text = $1"#)
+            .bind(&donor_id)
+            .fetch_optional(pool)
+            .await
+            .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
+            .ok_or_else(|| ServerFnError::new("Donor not found"))?;
 
     let history: serde_json::Value = row.get("donation_history");
     let entries = history.as_array().cloned().unwrap_or_default();
@@ -281,8 +284,12 @@ pub async fn record_donation(
             if let Some(d) = entry.get("date").and_then(|v| v.as_str()) {
                 if let Ok(parsed) = chrono::NaiveDate::parse_from_str(d, "%Y-%m-%d") {
                     let dt = parsed.and_hms_opt(0, 0, 0).unwrap();
-                    let days = (now - chrono::DateTime::<chrono::Utc>::from_naive_utc_and_offset(dt, chrono::Utc))
-                        .num_days() as f64;
+                    let days = (now
+                        - chrono::DateTime::<chrono::Utc>::from_naive_utc_and_offset(
+                            dt,
+                            chrono::Utc,
+                        ))
+                    .num_days() as f64;
                     if days < most_recent_days {
                         most_recent_days = days;
                     }
@@ -402,11 +409,13 @@ pub async fn draft_solicitation(
     campaign_context: String,
     ask_amount: f64,
 ) -> Result<String, ServerFnError> {
-    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{require_user, LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -416,7 +425,10 @@ pub async fn draft_solicitation(
     // Fetch donor details
     let donor = get_donor(donor_id).await?;
 
-    let donor_name = donor.encrypted_name.as_deref().unwrap_or("Valued Supporter");
+    let donor_name = donor
+        .encrypted_name
+        .as_deref()
+        .unwrap_or("Valued Supporter");
     let history = donor.donation_history;
     let entries = history.as_array().cloned().unwrap_or_default();
     let total_given: f64 = entries

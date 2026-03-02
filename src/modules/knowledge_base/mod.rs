@@ -78,10 +78,8 @@ pub async fn ask_knowledge_base(
     question: String,
     category: String,
 ) -> Result<KBAnswer, ServerFnError> {
-    use crate::infrastructure::{
-        EmbeddingClient, LlmClient, ServerState, VectorStoreClient,
-    };
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{EmbeddingClient, LlmClient, ServerState, VectorStoreClient};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -108,7 +106,12 @@ pub async fn ask_knowledge_base(
     // Search for relevant chunks in Qdrant
     let vs = VectorStoreClient::new(&state.vector_store_config.url);
     let results = vs
-        .search(COLLECTION_NAME, query_embedding, TOP_K, Some(SCORE_THRESHOLD))
+        .search(
+            COLLECTION_NAME,
+            query_embedding,
+            TOP_K,
+            Some(SCORE_THRESHOLD),
+        )
         .await
         .map_err(|e| ServerFnError::new(e.to_string()))?;
 
@@ -212,9 +215,8 @@ pub async fn ask_knowledge_base(
         raw
     };
 
-    let parsed: serde_json::Value = serde_json::from_str(json_str).map_err(|e| {
-        ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}"))
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(json_str)
+        .map_err(|e| ServerFnError::new(format!("Failed to parse LLM response as JSON: {e}")))?;
 
     let answer = parsed
         .get("answer")
@@ -232,11 +234,13 @@ pub async fn ask_knowledge_base(
         })
         .unwrap_or(source_titles);
 
-    let confidence = parsed
-        .get("confidence")
-        .and_then(|v| v.as_f64())
-        .unwrap_or(if filtered_results.is_empty() { 0.1 } else { 0.7 })
-        as f32;
+    let confidence = parsed.get("confidence").and_then(|v| v.as_f64()).unwrap_or(
+        if filtered_results.is_empty() {
+            0.1
+        } else {
+            0.7
+        },
+    ) as f32;
 
     let answer_id = uuid::Uuid::new_v4().to_string();
     let now = chrono::Utc::now().format("%Y-%m-%d %H:%M:%S").to_string();
@@ -269,10 +273,10 @@ pub async fn ingest_kb_document(
     content: String,
     category: String,
 ) -> Result<String, ServerFnError> {
+    use crate::infrastructure::vector_store::VectorPoint;
     use crate::infrastructure::{
         chunk_text, content_hash, EmbeddingClient, ServerState, VectorStoreClient,
     };
-    use crate::infrastructure::vector_store::VectorPoint;
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

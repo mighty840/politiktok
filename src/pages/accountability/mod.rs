@@ -26,7 +26,11 @@ pub fn AccountabilityPage() -> Element {
         let status = status_filter();
         async move {
             let t = if topic.is_empty() { None } else { Some(topic) };
-            let s = if status.is_empty() { None } else { Some(status) };
+            let s = if status.is_empty() {
+                None
+            } else {
+                Some(status)
+            };
             list_commitments(t, s).await.unwrap_or_default()
         }
     });

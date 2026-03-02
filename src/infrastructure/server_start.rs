@@ -6,9 +6,10 @@ use tower_sessions::cookie::SameSite;
 use tower_sessions::{cookie::Key, MemoryStore, SessionManagerLayer};
 
 use crate::infrastructure::{
-    auth_callback, auth_login, logout,
+    auth_callback, auth_login,
     config::{AppConfig, EmbeddingConfig, KeycloakConfig, LlmConfig, VectorStoreConfig},
     db::Database,
+    logout,
     middleware::auth::require_auth,
     state::{ServerState, ServerStateInner},
     PendingOAuthStore,

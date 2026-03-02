@@ -565,11 +565,7 @@ fn parse_briefing_sections(content: &str) -> Vec<(&str, &str)> {
         if trimmed.starts_with("## ") {
             // Save previous section
             if let (Some(title), Some(start)) = (current_title, current_start) {
-                let body_end = content
-                    .lines()
-                    .take(i)
-                    .map(|l| l.len() + 1)
-                    .sum::<usize>();
+                let body_end = content.lines().take(i).map(|l| l.len() + 1).sum::<usize>();
                 let body = content[start..body_end].trim();
                 if !body.is_empty() {
                     sections.push((title, body));
@@ -577,11 +573,7 @@ fn parse_briefing_sections(content: &str) -> Vec<(&str, &str)> {
             }
             current_title = Some(trimmed.trim_start_matches("## ").trim());
             // Body starts after this line
-            let header_end: usize = content
-                .lines()
-                .take(i + 1)
-                .map(|l| l.len() + 1)
-                .sum();
+            let header_end: usize = content.lines().take(i + 1).map(|l| l.len() + 1).sum();
             current_start = Some(header_end);
         }
     }

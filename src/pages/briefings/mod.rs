@@ -4,12 +4,7 @@ use crate::components::LoadingSpinner;
 use crate::modules::candidate_briefing::{generate_briefing, Briefing};
 
 /// Available event types for briefing generation.
-const EVENT_TYPE_OPTIONS: &[&str] = &[
-    "Speech",
-    "Town Hall",
-    "Press Conference",
-    "Debate",
-];
+const EVENT_TYPE_OPTIONS: &[&str] = &["Speech", "Town Hall", "Press Conference", "Debate"];
 
 #[component]
 pub fn BriefingsPage() -> Element {

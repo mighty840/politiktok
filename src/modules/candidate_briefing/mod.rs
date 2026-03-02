@@ -34,8 +34,8 @@ pub async fn generate_briefing(
     audience: String,
     context: String,
 ) -> Result<Briefing, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

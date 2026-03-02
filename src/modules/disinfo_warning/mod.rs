@@ -83,8 +83,8 @@ pub async fn analyze_disinfo(
     content: String,
     source_context: String,
 ) -> Result<DisinfoAnalysis, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -194,8 +194,8 @@ pub async fn generate_response(
     disinfo_content: String,
     target_audience: String,
 ) -> Result<CounterResponse, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

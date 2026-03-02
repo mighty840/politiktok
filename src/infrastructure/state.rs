@@ -1,7 +1,9 @@
 use std::ops::Deref;
 use std::sync::Arc;
 
-use crate::infrastructure::{AppConfig, Database, EmbeddingConfig, KeycloakConfig, LlmConfig, VectorStoreConfig};
+use crate::infrastructure::{
+    AppConfig, Database, EmbeddingConfig, KeycloakConfig, LlmConfig, VectorStoreConfig,
+};
 
 /// Server-side application state, cheaply cloneable via Arc.
 #[derive(Clone, Debug)]

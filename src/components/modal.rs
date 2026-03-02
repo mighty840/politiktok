@@ -2,12 +2,7 @@ use dioxus::prelude::*;
 
 /// Modal dialog with blurred backdrop.
 #[component]
-pub fn Modal(
-    open: bool,
-    on_close: EventHandler<()>,
-    title: String,
-    children: Element,
-) -> Element {
+pub fn Modal(open: bool, on_close: EventHandler<()>, title: String, children: Element) -> Element {
     if !open {
         return rsx! {};
     }

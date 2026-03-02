@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 
 use crate::components::LoadingSpinner;
 use crate::modules::regulatory_monitor::{
-    analyze_regulatory_impact, generate_regulatory_brief, list_regulatory_updates,
-    RegulatoryBrief, RegulatoryUpdate,
+    analyze_regulatory_impact, generate_regulatory_brief, list_regulatory_updates, RegulatoryBrief,
+    RegulatoryUpdate,
 };
 
 /// Badge class for urgency level.
@@ -40,11 +40,7 @@ pub fn RegulatoryPage() -> Element {
 
     let load_updates = move |_| {
         let filter = urgency_filter().clone();
-        let filter_opt = if filter == "all" {
-            None
-        } else {
-            Some(filter)
-        };
+        let filter_opt = if filter == "all" { None } else { Some(filter) };
 
         is_loading.set(true);
         error_msg.set(None);
@@ -74,7 +70,9 @@ pub fn RegulatoryPage() -> Element {
     let on_generate_brief = move |_| {
         let ids = selected_ids().clone();
         if ids.is_empty() {
-            error_msg.set(Some("Select at least one update for the brief.".to_string()));
+            error_msg.set(Some(
+                "Select at least one update for the brief.".to_string(),
+            ));
             return;
         }
 

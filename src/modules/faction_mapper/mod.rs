@@ -71,8 +71,8 @@ pub async fn analyze_factions(
     party_context: String,
     known_figures: String,
 ) -> Result<FactionAnalysis, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -183,8 +183,8 @@ pub async fn map_consensus(
     factions_json: String,
     policy_proposal: String,
 ) -> Result<ConsensusMap, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
+use crate::models::donor::Donor;
 use crate::modules::fundraising::{
     create_donor, draft_solicitation, get_fundraising_summary, list_donors, record_donation,
     FundraisingSummary,
 };
-use crate::models::donor::Donor;
 
 /// Helper: compute total donated from a donor's donation_history JSONB value.
 fn total_donated(donor: &Donor) -> f64 {
@@ -66,8 +66,16 @@ pub fn FundraisingPage() -> Element {
         let min_score = min_score_filter();
         async move {
             let _ = donors_refresh();
-            let s = if search.is_empty() { None } else { Some(search) };
-            let ms = if min_score <= 0.0 { None } else { Some(min_score) };
+            let s = if search.is_empty() {
+                None
+            } else {
+                Some(search)
+            };
+            let ms = if min_score <= 0.0 {
+                None
+            } else {
+                Some(min_score)
+            };
             list_donors(s, ms).await.unwrap_or_default()
         }
     });

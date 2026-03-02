@@ -211,10 +211,7 @@ pub async fn analyze_tensions(
                         segment_a: v["segment_a"].as_str()?.to_string(),
                         segment_b: v["segment_b"].as_str()?.to_string(),
                         issue: v["issue"].as_str()?.to_string(),
-                        severity: v["severity"]
-                            .as_str()
-                            .unwrap_or("medium")
-                            .to_string(),
+                        severity: v["severity"].as_str().unwrap_or("medium").to_string(),
                         explanation: v["explanation"].as_str()?.to_string(),
                     })
                 })

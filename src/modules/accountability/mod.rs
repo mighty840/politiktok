@@ -84,8 +84,8 @@ pub async fn extract_commitments(
     document_text: String,
     document_title: String,
 ) -> Result<Vec<Commitment>, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
@@ -384,8 +384,8 @@ pub async fn add_evidence(
     commitment_id: String,
     evidence_text: String,
 ) -> Result<Evidence, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
@@ -410,9 +410,7 @@ pub async fn add_evidence(
     let commitment_text: String = commitment_row.get("text");
 
     // Send to LLM for classification
-    let user_prompt = format!(
-        "Commitment: \"{commitment_text}\"\n\nEvidence: \"{evidence_text}\""
-    );
+    let user_prompt = format!("Commitment: \"{commitment_text}\"\n\nEvidence: \"{evidence_text}\"");
 
     let messages = vec![
         LlmMessage {
@@ -470,9 +468,7 @@ pub async fn add_evidence(
         .unwrap_or("unrelated")
         .to_string();
     let confidence = parsed["confidence"].as_f64().unwrap_or(0.5);
-    let explanation = parsed["explanation"]
-        .as_str()
-        .map(|s| s.to_string());
+    let explanation = parsed["explanation"].as_str().map(|s| s.to_string());
 
     // Store evidence
     let evidence_id = uuid::Uuid::new_v4().to_string();

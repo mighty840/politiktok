@@ -90,9 +90,11 @@ impl LlmClient {
                             .unwrap_or_default()
                             .to_string();
 
-                        let prompt_tokens = json["usage"]["prompt_tokens"].as_i64().map(|v| v as i32);
-                        let completion_tokens =
-                            json["usage"]["completion_tokens"].as_i64().map(|v| v as i32);
+                        let prompt_tokens =
+                            json["usage"]["prompt_tokens"].as_i64().map(|v| v as i32);
+                        let completion_tokens = json["usage"]["completion_tokens"]
+                            .as_i64()
+                            .map(|v| v as i32);
 
                         return Ok(LlmResponse {
                             content,

@@ -48,8 +48,8 @@ pub async fn diff_policies(
     doc_b_text: String,
     doc_b_title: String,
 ) -> Result<PolicyDiff, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

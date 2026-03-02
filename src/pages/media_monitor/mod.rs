@@ -32,10 +32,12 @@ pub fn MediaMonitorPage() -> Element {
 
     // Comparison state
     let mut compare_topic = use_signal(String::new);
-    let mut compare_articles = use_signal(|| vec![
-        ("".to_string(), "".to_string()),
-        ("".to_string(), "".to_string()),
-    ]);
+    let mut compare_articles = use_signal(|| {
+        vec![
+            ("".to_string(), "".to_string()),
+            ("".to_string(), "".to_string()),
+        ]
+    });
     let mut is_comparing = use_signal(|| false);
     let mut comparison_result = use_signal(|| Option::<CoverageComparison>::None);
 
@@ -77,7 +79,9 @@ pub fn MediaMonitorPage() -> Element {
             return;
         }
         if articles.len() < 2 {
-            error_msg.set(Some("At least two articles with sources are needed for comparison.".to_string()));
+            error_msg.set(Some(
+                "At least two articles with sources are needed for comparison.".to_string(),
+            ));
             return;
         }
 

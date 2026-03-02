@@ -72,8 +72,8 @@ pub async fn analyze_media(
     article_text: String,
     source_name: String,
 ) -> Result<MediaAnalysis, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -98,9 +98,8 @@ pub async fn analyze_media(
         source_name.clone()
     };
 
-    let user_prompt = format!(
-        "Analyze the following article from {source_label}:\n\n{article_text}"
-    );
+    let user_prompt =
+        format!("Analyze the following article from {source_label}:\n\n{article_text}");
 
     let messages = vec![
         LlmMessage {
@@ -187,8 +186,8 @@ pub async fn compare_coverage(
     topic: String,
     articles: Vec<(String, String)>,
 ) -> Result<CoverageComparison, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -215,15 +214,12 @@ pub async fn compare_coverage(
     let articles_text = articles
         .iter()
         .enumerate()
-        .map(|(i, (source, text))| {
-            format!("--- Source #{}: {} ---\n{}", i + 1, source, text)
-        })
+        .map(|(i, (source, text))| format!("--- Source #{}: {} ---\n{}", i + 1, source, text))
         .collect::<Vec<_>>()
         .join("\n\n");
 
-    let user_prompt = format!(
-        "Compare how these sources cover the topic \"{topic}\":\n\n{articles_text}"
-    );
+    let user_prompt =
+        format!("Compare how these sources cover the topic \"{topic}\":\n\n{articles_text}");
 
     let messages = vec![
         LlmMessage {

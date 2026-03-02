@@ -23,7 +23,9 @@ pub async fn create_volunteer(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -106,7 +108,9 @@ pub async fn update_volunteer(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let _user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let _user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -114,13 +118,12 @@ pub async fn update_volunteer(
     let pool = state.db.pool();
 
     // Verify volunteer exists
-    let exists: Option<String> = sqlx::query_scalar(
-        "SELECT id::text FROM volunteers WHERE id::text = $1",
-    )
-    .bind(&id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
+    let exists: Option<String> =
+        sqlx::query_scalar("SELECT id::text FROM volunteers WHERE id::text = $1")
+            .bind(&id)
+            .fetch_optional(pool)
+            .await
+            .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
     if exists.is_none() {
         return Err(ServerFnError::new("Volunteer not found"));
@@ -358,7 +361,9 @@ pub async fn create_task(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -545,14 +550,12 @@ pub async fn match_task(
     let limit = top_n.unwrap_or(10);
 
     // Fetch the task to get required_skills
-    let task_row = sqlx::query(
-        "SELECT required_skills FROM tasks WHERE id::text = $1",
-    )
-    .bind(&task_id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
-    .ok_or_else(|| ServerFnError::new("Task not found"))?;
+    let task_row = sqlx::query("SELECT required_skills FROM tasks WHERE id::text = $1")
+        .bind(&task_id)
+        .fetch_optional(pool)
+        .await
+        .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?
+        .ok_or_else(|| ServerFnError::new("Task not found"))?;
 
     let required_skills: Vec<String> = task_row.get::<Vec<String>, _>("required_skills");
     let skill_count = required_skills.len().max(1) as f64;
@@ -622,7 +625,11 @@ pub async fn match_task(
     // Re-sort by composite score descending (SQL sorts by matching_skill_count but
     // the composite score also includes availability)
     let mut matches = matches;
-    matches.sort_by(|a, b| b.score.partial_cmp(&a.score).unwrap_or(std::cmp::Ordering::Equal));
+    matches.sort_by(|a, b| {
+        b.score
+            .partial_cmp(&a.score)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
     Ok(matches)
 }
@@ -637,7 +644,9 @@ pub async fn assign_volunteer(
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
-    let user = require_user().await.map_err(|e| ServerFnError::new(e.to_string()))?;
+    let user = require_user()
+        .await
+        .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
         .await
         .map_err(|e| ServerFnError::new(format!("{e:?}")))?;
@@ -645,26 +654,24 @@ pub async fn assign_volunteer(
     let pool = state.db.pool();
 
     // Verify task exists
-    let task_exists: Option<String> = sqlx::query_scalar(
-        "SELECT id::text FROM tasks WHERE id::text = $1",
-    )
-    .bind(&task_id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
+    let task_exists: Option<String> =
+        sqlx::query_scalar("SELECT id::text FROM tasks WHERE id::text = $1")
+            .bind(&task_id)
+            .fetch_optional(pool)
+            .await
+            .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
     if task_exists.is_none() {
         return Err(ServerFnError::new("Task not found"));
     }
 
     // Verify volunteer exists
-    let vol_exists: Option<String> = sqlx::query_scalar(
-        "SELECT id::text FROM volunteers WHERE id::text = $1",
-    )
-    .bind(&volunteer_id)
-    .fetch_optional(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
+    let vol_exists: Option<String> =
+        sqlx::query_scalar("SELECT id::text FROM volunteers WHERE id::text = $1")
+            .bind(&volunteer_id)
+            .fetch_optional(pool)
+            .await
+            .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
     if vol_exists.is_none() {
         return Err(ServerFnError::new("Volunteer not found"));
@@ -681,7 +688,9 @@ pub async fn assign_volunteer(
     .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
     if dup.is_some() {
-        return Err(ServerFnError::new("Volunteer is already assigned to this task"));
+        return Err(ServerFnError::new(
+            "Volunteer is already assigned to this task",
+        ));
     }
 
     // Check if task has room
@@ -693,16 +702,16 @@ pub async fn assign_volunteer(
     .await
     .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
-    let max_vol: i32 = sqlx::query_scalar(
-        "SELECT max_volunteers FROM tasks WHERE id::text = $1",
-    )
-    .bind(&task_id)
-    .fetch_one(pool)
-    .await
-    .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
+    let max_vol: i32 = sqlx::query_scalar("SELECT max_volunteers FROM tasks WHERE id::text = $1")
+        .bind(&task_id)
+        .fetch_one(pool)
+        .await
+        .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
 
     if assigned_count >= max_vol as i64 {
-        return Err(ServerFnError::new("Task has reached maximum volunteer capacity"));
+        return Err(ServerFnError::new(
+            "Task has reached maximum volunteer capacity",
+        ));
     }
 
     let id = uuid::Uuid::new_v4().to_string();
@@ -770,8 +779,8 @@ pub async fn draft_message(
     message_type: String,
     task_id: Option<String>,
 ) -> Result<String, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
     use sqlx::Row;
 
@@ -856,9 +865,11 @@ pub async fn draft_message(
             "its impact. The tone should be warm and genuinely grateful. ",
             "The message should be 2-3 short paragraphs."
         ),
-        _ => return Err(ServerFnError::new(
-            "Invalid message_type. Must be one of: outreach, retention, thanks"
-        )),
+        _ => {
+            return Err(ServerFnError::new(
+                "Invalid message_type. Must be one of: outreach, retention, thanks",
+            ))
+        }
     };
 
     let user_prompt = format!(

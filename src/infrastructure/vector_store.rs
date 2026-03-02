@@ -30,11 +30,7 @@ impl VectorStoreClient {
     }
 
     /// Create a collection if it doesn't exist.
-    pub async fn ensure_collection(
-        &self,
-        name: &str,
-        vector_size: u64,
-    ) -> Result<(), Error> {
+    pub async fn ensure_collection(&self, name: &str, vector_size: u64) -> Result<(), Error> {
         // Check if collection exists
         let resp = self
             .http
@@ -75,11 +71,7 @@ impl VectorStoreClient {
     }
 
     /// Upsert points into a collection.
-    pub async fn upsert(
-        &self,
-        collection: &str,
-        points: Vec<VectorPoint>,
-    ) -> Result<(), Error> {
+    pub async fn upsert(&self, collection: &str, points: Vec<VectorPoint>) -> Result<(), Error> {
         let points_json: Vec<serde_json::Value> = points
             .into_iter()
             .map(|p| {
@@ -95,10 +87,7 @@ impl VectorStoreClient {
 
         let resp = self
             .http
-            .put(format!(
-                "{}/collections/{collection}/points",
-                self.base_url
-            ))
+            .put(format!("{}/collections/{collection}/points", self.base_url))
             .json(&body)
             .send()
             .await
@@ -150,9 +139,10 @@ impl VectorStoreClient {
             )));
         }
 
-        let json: serde_json::Value = resp.json().await.map_err(|e| {
-            Error::VectorStoreError(format!("Invalid search response: {e}"))
-        })?;
+        let json: serde_json::Value = resp
+            .json()
+            .await
+            .map_err(|e| Error::VectorStoreError(format!("Invalid search response: {e}")))?;
 
         let results = json["result"]
             .as_array()
@@ -169,11 +159,7 @@ impl VectorStoreClient {
     }
 
     /// Delete points by IDs from a collection.
-    pub async fn delete(
-        &self,
-        collection: &str,
-        ids: &[String],
-    ) -> Result<(), Error> {
+    pub async fn delete(&self, collection: &str, ids: &[String]) -> Result<(), Error> {
         let body = serde_json::json!({
             "points": ids,
         });

@@ -131,9 +131,8 @@ Do NOT include any text outside the JSON object."
     )
     .await;
 
-    let parsed: serde_json::Value = serde_json::from_str(&response.content).map_err(|_| {
-        ServerFnError::new("Failed to parse local issues response as JSON")
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(&response.content)
+        .map_err(|_| ServerFnError::new("Failed to parse local issues response as JSON"))?;
 
     let issues: Vec<LocalIssue> = parsed
         .get("issues")
@@ -254,9 +253,8 @@ Do NOT include any text outside the JSON object."
     )
     .await;
 
-    let parsed: serde_json::Value = serde_json::from_str(&response.content).map_err(|_| {
-        ServerFnError::new("Failed to parse talking points response as JSON")
-    })?;
+    let parsed: serde_json::Value = serde_json::from_str(&response.content)
+        .map_err(|_| ServerFnError::new("Failed to parse talking points response as JSON"))?;
 
     let points: Vec<String> = parsed
         .get("points")

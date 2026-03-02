@@ -89,9 +89,7 @@ impl LlmConfig {
         Ok(Self {
             base_url: required_env("LLM_BASE_URL")?,
             model: required_env("LLM_MODEL")?,
-            timeout_secs: optional_env("LLM_TIMEOUT_SECS")
-                .parse()
-                .unwrap_or(120),
+            timeout_secs: optional_env("LLM_TIMEOUT_SECS").parse().unwrap_or(120),
             max_retries: optional_env("LLM_MAX_RETRIES").parse().unwrap_or(3),
         })
     }

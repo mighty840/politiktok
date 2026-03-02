@@ -12,9 +12,9 @@ use dioxus::prelude::*;
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct CoachingSession {
     pub id: String,
-    pub mode: String,       // "journalist", "debate", "townhall"
+    pub mode: String, // "journalist", "debate", "townhall"
     pub topics: Vec<String>,
-    pub difficulty: String,  // "easy", "medium", "hard"
+    pub difficulty: String, // "easy", "medium", "hard"
     pub messages: Vec<CoachingMessage>,
     pub created_at: Option<String>,
 }
@@ -38,34 +38,48 @@ pub struct CoachingFeedback {
 /// Build the system prompt for coaching based on mode and difficulty.
 fn build_coaching_system_prompt(mode: &str, topics: &[String], difficulty: &str) -> String {
     let persona = match mode {
-        "journalist" => "\
+        "journalist" => {
+            "\
 You are a seasoned political journalist conducting a tough but fair press interview. \
 Ask probing follow-up questions, challenge vague answers, and press for specifics. \
-You should ask about policy details, past voting records, and controversial positions.",
+You should ask about policy details, past voting records, and controversial positions."
+        }
 
-        "debate" => "\
+        "debate" => {
+            "\
 You are a skilled debate opponent in a political debate. \
 Challenge the candidate's positions with counterarguments, point out inconsistencies, \
-and press them to defend their stance. Use rhetorical techniques to test their composure.",
+and press them to defend their stance. Use rhetorical techniques to test their composure."
+        }
 
-        "townhall" => "\
+        "townhall" => {
+            "\
 You are a concerned citizen at a town hall meeting. \
 Ask questions that real voters would ask — about local issues, cost of living, \
 healthcare, education, and community safety. Be emotional and personal in your questions. \
-Follow up if the candidate gives a generic answer.",
+Follow up if the candidate gives a generic answer."
+        }
 
-        _ => "\
-You are a political interviewer. Ask tough but fair questions and follow up on vague answers.",
+        _ => {
+            "\
+You are a political interviewer. Ask tough but fair questions and follow up on vague answers."
+        }
     };
 
     let difficulty_instruction = match difficulty {
-        "easy" => "Be relatively friendly and give the candidate time to explain. \
-Accept reasonable answers without too much pushback.",
-        "hard" => "Be very aggressive in your questioning. Interrupt with follow-ups, \
+        "easy" => {
+            "Be relatively friendly and give the candidate time to explain. \
+Accept reasonable answers without too much pushback."
+        }
+        "hard" => {
+            "Be very aggressive in your questioning. Interrupt with follow-ups, \
 point out contradictions immediately, and do not let the candidate deflect. \
-Use loaded questions and create pressure.",
-        _ => "Be moderately challenging. Push back on vague answers but give credit \
-for substantive responses. Ask clarifying questions when needed.",
+Use loaded questions and create pressure."
+        }
+        _ => {
+            "Be moderately challenging. Push back on vague answers but give credit \
+for substantive responses. Ask clarifying questions when needed."
+        }
     };
 
     let topics_str = if topics.is_empty() {
@@ -97,8 +111,8 @@ pub async fn start_coaching_session(
     topics: Vec<String>,
     difficulty: String,
 ) -> Result<CoachingSession, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -183,8 +197,8 @@ pub async fn respond_to_coaching(
     messages: Vec<CoachingMessage>,
     candidate_response: String,
 ) -> Result<Vec<CoachingMessage>, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()
@@ -286,8 +300,8 @@ pub async fn get_coaching_feedback(
     messages: Vec<CoachingMessage>,
     mode: String,
 ) -> Result<CoachingFeedback, ServerFnError> {
-    use crate::infrastructure::{LlmClient, ServerState};
     use crate::infrastructure::llm::LlmMessage;
+    use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
 
     let state: ServerState = FullstackContext::extract()

@@ -55,7 +55,9 @@ pub fn FactionMapperPage() -> Element {
         };
 
         if proposal.is_empty() {
-            error_msg.set(Some("Policy proposal is required for consensus mapping.".to_string()));
+            error_msg.set(Some(
+                "Policy proposal is required for consensus mapping.".to_string(),
+            ));
             return;
         }
 

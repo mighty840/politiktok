@@ -33,7 +33,9 @@ pub fn CallIntelPage() -> Element {
         let transcript_val = transcript().trim().to_string();
 
         if transcript_val.is_empty() {
-            error_msg.set(Some("Please enter a call transcript to analyze.".to_string()));
+            error_msg.set(Some(
+                "Please enter a call transcript to analyze.".to_string(),
+            ));
             return;
         }
 
