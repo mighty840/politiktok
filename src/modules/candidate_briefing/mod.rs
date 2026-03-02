@@ -66,20 +66,20 @@ pub async fn generate_briefing(
         context.clone()
     };
 
-    let system_prompt = format!(
+    let system_prompt =
         "You are an expert political strategist and briefing writer. Your job is to produce \
 concise, actionable briefing documents for political candidates before their events.\n\n\
 You MUST respond with valid JSON in exactly this format:\n\
-{{\n\
+{\n\
   \"title\": \"Briefing title\",\n\
   \"sections\": [\n\
-    {{\n\
+    {\n\
       \"heading\": \"Section heading\",\n\
       \"content\": \"Section content with key points, talking points, and advice.\",\n\
       \"priority\": \"high\"\n\
-    }}\n\
+    }\n\
   ]\n\
-}}\n\n\
+}\n\n\
 Priority levels: \"high\" (must read), \"medium\" (should read), \"low\" (nice to know).\n\n\
 Generate 5-8 sections covering:\n\
 - Key talking points for the event\n\
@@ -90,7 +90,7 @@ Generate 5-8 sections covering:\n\
 - Background data or statistics to reference\n\
 - Suggested opening and closing remarks\n\n\
 Each section should be 2-4 paragraphs. Be specific and actionable."
-    );
+            .to_string();
 
     let user_prompt = format!(
         "Generate a candidate briefing for the following event:\n\n\

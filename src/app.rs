@@ -1,4 +1,4 @@
-use crate::{components::*, pages::*};
+use crate::pages::*;
 use dioxus::prelude::*;
 
 const MAIN_CSS: Asset = asset!("/assets/main.css");

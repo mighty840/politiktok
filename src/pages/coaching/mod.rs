@@ -1,6 +1,5 @@
 use dioxus::prelude::*;
 
-use crate::components::LoadingSpinner;
 use crate::modules::coaching::{
     get_coaching_feedback, respond_to_coaching, start_coaching_session, CoachingFeedback,
     CoachingMessage, CoachingSession,

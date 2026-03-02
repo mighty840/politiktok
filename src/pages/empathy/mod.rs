@@ -32,7 +32,7 @@ pub fn EmpathyPage() -> Element {
     let personas_resource = use_resource(|| async { get_default_personas().await });
 
     // Selected persona IDs
-    let mut selected_ids = use_signal(|| Vec::<String>::new());
+    let mut selected_ids = use_signal(Vec::<String>::new);
 
     // Policy text input
     let mut policy_text = use_signal(String::new);

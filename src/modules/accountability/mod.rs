@@ -87,7 +87,6 @@ pub async fn extract_commitments(
     use crate::infrastructure::llm::LlmMessage;
     use crate::infrastructure::{LlmClient, ServerState};
     use dioxus::fullstack::FullstackContext;
-    use sqlx::Row;
 
     let state: ServerState = FullstackContext::extract()
         .await
@@ -107,7 +106,7 @@ pub async fn extract_commitments(
     )
     .bind(&doc_id)
     .bind(&document_title)
-    .bind(&crate::infrastructure::content_hash(&document_text))
+    .bind(crate::infrastructure::content_hash(&document_text))
     .execute(pool)
     .await
     .map_err(|e| ServerFnError::new(format!("Database error: {e}")))?;
@@ -261,7 +260,8 @@ pub async fn list_commitments(
     if let Some(ref status) = status_filter {
         if !status.is_empty() {
             query.push_str(&format!(" AND c.status = ${bind_idx}"));
-            bind_idx += 1;
+            // bind_idx is not used after this point in the function
+            let _ = bind_idx;
             binds.push(status.clone());
         }
     }

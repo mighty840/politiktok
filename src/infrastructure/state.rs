@@ -51,20 +51,18 @@ where
 {
     type Rejection = crate::infrastructure::Error;
 
-    fn from_request_parts(
+    async fn from_request_parts(
         parts: &mut axum::http::request::Parts,
         _state: &S,
-    ) -> impl std::future::Future<Output = Result<Self, Self::Rejection>> + Send {
-        async {
-            parts
-                .extensions
-                .get::<ServerState>()
-                .cloned()
-                .ok_or_else(|| {
-                    crate::infrastructure::Error::InternalError(
-                        "ServerState not found in extensions".into(),
-                    )
-                })
-        }
+    ) -> Result<Self, Self::Rejection> {
+        parts
+            .extensions
+            .get::<ServerState>()
+            .cloned()
+            .ok_or_else(|| {
+                crate::infrastructure::Error::InternalError(
+                    "ServerState not found in extensions".into(),
+                )
+            })
     }
 }

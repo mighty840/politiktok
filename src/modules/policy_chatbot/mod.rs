@@ -56,7 +56,7 @@ pub async fn ingest_document(
     };
     use dioxus::fullstack::FullstackContext;
 
-    let user = require_user()
+    let _user = require_user()
         .await
         .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
@@ -285,7 +285,7 @@ pub async fn chat(
     };
     use dioxus::fullstack::FullstackContext;
 
-    let user = require_user()
+    let _user = require_user()
         .await
         .map_err(|e| ServerFnError::new(e.to_string()))?;
     let state: ServerState = FullstackContext::extract()
@@ -400,7 +400,7 @@ pub async fn chat(
 
     // Save assistant response
     let assistant_msg_id = uuid::Uuid::new_v4().to_string();
-    let sources_json = serde_json::to_value(&sources).unwrap_or_else(|_| serde_json::Value::Null);
+    let sources_json = serde_json::to_value(&sources).unwrap_or(serde_json::Value::Null);
 
     sqlx::query(
         "INSERT INTO chat_messages (id, session_id, role, content, sources)

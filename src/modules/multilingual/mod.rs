@@ -243,8 +243,7 @@ pub async fn adapt_messaging(
         state.llm_config.max_retries,
     );
 
-    let system_prompt = format!(
-        "You are an expert in cross-cultural political communication. You adapt \
+    let system_prompt = "You are an expert in cross-cultural political communication. You adapt \
          political messaging to resonate with specific cultural communities while \
          maintaining the core message.\n\n\
          Your response MUST be valid JSON with exactly two keys:\n\
@@ -252,7 +251,7 @@ pub async fn adapt_messaging(
          - \"adaptation_notes\": an array of strings explaining each cultural \
            adaptation made (e.g., value framing, communication style, references).\n\n\
          Do NOT include any text outside the JSON object."
-    );
+        .to_string();
 
     let user_prompt = format!(
         "Adapt the following political messaging for the {target_culture} cultural context.\n\

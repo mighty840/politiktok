@@ -1,7 +1,8 @@
 /// Application roles mapped from Keycloak realm roles.
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Default, PartialEq, serde::Serialize, serde::Deserialize)]
 pub enum Role {
     Admin,
+    #[default]
     Staff,
     Volunteer,
     ReadOnly,
@@ -26,12 +27,6 @@ impl Role {
             Role::Volunteer => "volunteer",
             Role::ReadOnly => "readonly",
         }
-    }
-}
-
-impl Default for Role {
-    fn default() -> Self {
-        Role::Staff
     }
 }
 

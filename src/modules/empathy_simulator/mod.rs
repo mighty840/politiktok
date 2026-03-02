@@ -233,15 +233,12 @@ fn compute_aggregate_sentiment(reactions: &[PersonaReaction]) -> String {
 
     let mut positive = 0;
     let mut negative = 0;
-    let mut neutral = 0;
-    let mut mixed = 0;
 
     for r in reactions {
         match r.sentiment.as_str() {
             "positive" => positive += 1,
             "negative" => negative += 1,
-            "mixed" => mixed += 1,
-            _ => neutral += 1,
+            _ => {}
         }
     }
 
@@ -250,8 +247,6 @@ fn compute_aggregate_sentiment(reactions: &[PersonaReaction]) -> String {
         "positive".to_string()
     } else if negative > total / 2 {
         "negative".to_string()
-    } else if mixed + neutral >= positive.max(negative) {
-        "mixed".to_string()
     } else {
         "mixed".to_string()
     }

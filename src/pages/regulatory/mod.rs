@@ -20,12 +20,12 @@ fn urgency_badge(urgency: &str) -> &'static str {
 pub fn RegulatoryPage() -> Element {
     // Updates list state
     let mut urgency_filter = use_signal(|| "all".to_string());
-    let mut updates = use_signal(|| Vec::<RegulatoryUpdate>::new());
+    let mut updates = use_signal(Vec::<RegulatoryUpdate>::new);
     let mut is_loading = use_signal(|| false);
     let mut error_msg = use_signal(|| Option::<String>::None);
 
     // Selected updates for brief generation
-    let mut selected_ids = use_signal(|| Vec::<String>::new());
+    let mut selected_ids = use_signal(Vec::<String>::new);
     let mut is_generating_brief = use_signal(|| false);
     let mut brief_result = use_signal(|| Option::<RegulatoryBrief>::None);
 

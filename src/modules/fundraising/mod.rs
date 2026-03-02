@@ -436,10 +436,10 @@ pub async fn draft_solicitation(
         .filter_map(|e| e.get("amount").and_then(|a| a.as_f64()))
         .sum();
     let num_donations = entries.len();
-    let last_donation = entries.last().and_then(|e| {
+    let last_donation = entries.last().map(|e| {
         let amt = e.get("amount").and_then(|a| a.as_f64()).unwrap_or(0.0);
         let date = e.get("date").and_then(|d| d.as_str()).unwrap_or("unknown");
-        Some(format!("${amt:.2} on {date}"))
+        format!("${amt:.2} on {date}")
     });
 
     let tags_str = donor.tags.join(", ");

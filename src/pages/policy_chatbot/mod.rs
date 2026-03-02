@@ -37,7 +37,7 @@ pub fn PolicyChatPage() -> Element {
     });
 
     // Load messages when session changes
-    let _ = use_resource(move || {
+    let _msgs_loader = use_resource(move || {
         let session_id = active_session_id().clone();
         async move {
             if let Some(sid) = session_id {
@@ -391,7 +391,7 @@ fn DocumentPanel(documents: Vec<Document>, on_refresh: EventHandler) -> Element 
             for doc in documents.iter() {
                 {
                     let doc_id = doc.id.clone();
-                    let on_refresh = on_refresh.clone();
+                    let on_refresh = on_refresh;
                     rsx! {
                         div { class: "card card-compact bg-base-100 shadow-sm",
                             div { class: "card-body p-2",
@@ -407,7 +407,7 @@ fn DocumentPanel(documents: Vec<Document>, on_refresh: EventHandler) -> Element 
                                         title: "Delete document",
                                         onclick: move |_| {
                                             let did = doc_id.clone();
-                                            let on_refresh = on_refresh.clone();
+                                            let on_refresh = on_refresh;
                                             spawn(async move {
                                                 if let Err(e) = delete_document(did).await {
                                                     tracing::error!("Failed to delete: {e}");

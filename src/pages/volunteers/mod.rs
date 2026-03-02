@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 
 use crate::app::Route;
 use crate::components::LoadingSpinner;
-use crate::models::task::{Assignment, Task, TaskSummary};
-use crate::models::volunteer::{Volunteer, VolunteerMatch, VolunteerSummary};
+use crate::models::task::TaskSummary;
+use crate::models::volunteer::{VolunteerMatch, VolunteerSummary};
 use crate::modules::volunteer_matching::{
     assign_volunteer, create_task, create_volunteer, draft_message, get_at_risk_volunteers,
     get_task, get_volunteer, list_tasks, list_volunteers, match_task,
@@ -22,7 +22,7 @@ enum VolunteerTab {
 #[component]
 pub fn VolunteersPage() -> Element {
     let mut search_text = use_signal(String::new);
-    let mut status_filter = use_signal(|| String::new());
+    let mut status_filter = use_signal(String::new);
     let mut active_tab = use_signal(|| VolunteerTab::All);
     let mut show_add_modal = use_signal(|| false);
     let mut refresh_tick = use_signal(|| 0_u32);
@@ -1046,7 +1046,7 @@ pub fn TaskDetailPage(id: String) -> Element {
         async move { get_task(tid).await.ok() }
     });
 
-    let mut matches = use_signal(|| Vec::<VolunteerMatch>::new());
+    let mut matches = use_signal(Vec::<VolunteerMatch>::new);
     let mut is_matching = use_signal(|| false);
     let mut match_error = use_signal(|| Option::<String>::None);
     let mut assign_error = use_signal(|| Option::<String>::None);

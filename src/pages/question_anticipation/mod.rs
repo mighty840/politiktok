@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::components::LoadingSpinner;
 use crate::modules::question_anticipation::{
-    anticipate_questions, generate_preparation_checklist, AnticipatedQuestion, QuestionReport,
+    anticipate_questions, generate_preparation_checklist, QuestionReport,
 };
 
 /// Event type options for the dropdown.
@@ -41,7 +41,7 @@ pub fn QuestionAnticipationPage() -> Element {
     let mut checklist = use_signal(|| Option::<String>::None);
 
     // Collapsible answer state: track which questions have expanded answers
-    let mut expanded = use_signal(|| Vec::<usize>::new());
+    let mut expanded = use_signal(Vec::<usize>::new);
 
     let mut toggle_expanded = move |idx: usize| {
         let mut items = expanded.write();

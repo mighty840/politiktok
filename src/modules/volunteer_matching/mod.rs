@@ -3,6 +3,8 @@
 //! Matches volunteers to campaign tasks based on skills, availability, and
 //! location. Tracks engagement to improve retention over time.
 
+#![allow(clippy::too_many_arguments)]
+
 use dioxus::prelude::*;
 
 use crate::models::{Assignment, Task, TaskSummary, Volunteer, VolunteerMatch, VolunteerSummary};

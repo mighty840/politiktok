@@ -18,7 +18,7 @@ pub fn Pagination(
                 class: "px-3 py-1.5 text-sm rounded-lg bg-slate-800/50 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed",
                 disabled: current_page == 1,
                 onclick: {
-                    let on_page_change = on_page_change.clone();
+                    let on_page_change = on_page_change;
                     move |_| {
                         if current_page > 1 {
                             on_page_change.call(current_page - 1);
@@ -36,7 +36,7 @@ pub fn Pagination(
                     } else {
                         ("bg-slate-800/50", "text-slate-400")
                     };
-                    let on_page_change = on_page_change.clone();
+                    let on_page_change = on_page_change;
                     rsx! {
                         button {
                             class: "w-8 h-8 text-sm rounded-lg {bg} {text} hover:bg-indigo-500/80 hover:text-white transition-colors",

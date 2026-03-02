@@ -9,7 +9,7 @@ pub fn DataTable(
 ) -> Element {
     let mut sort_col = use_signal(|| None::<usize>);
     let mut sort_asc = use_signal(|| true);
-    let mut filter_text = use_signal(|| String::new());
+    let mut filter_text = use_signal(String::new);
 
     // Filter rows by search text
     let filter = filter_text.read().to_lowercase();
@@ -95,7 +95,7 @@ pub fn DataTable(
                                 } else {
                                     "border-b border-slate-800/50"
                                 };
-                                let handler = on_row_click.clone();
+                                let handler = on_row_click;
                                 rsx! {
                                     tr {
                                         class: "{row_class}",
