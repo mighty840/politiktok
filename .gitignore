@@ -24,5 +24,7 @@ Thumbs.db
 # Docs build output
 /docs/book
 
+*.docx
+
 # Node (if any)
 node_modules/
