@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F23: Electoral Compliance Reporting Agent
 //!
 //! Automates electoral compliance reporting by tracking expenditures,

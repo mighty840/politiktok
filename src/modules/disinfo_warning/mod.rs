@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F22: Disinformation Early Warning
 //!
 //! Detects emerging disinformation campaigns targeting candidates or

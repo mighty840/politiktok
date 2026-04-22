@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F08: Manifesto Accountability Engine
 //!
 //! Tracks elected officials' actions against their campaign promises and

@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F02: Policy Chatbot for Citizens
 //!
 //! Provides an interactive chatbot that explains policy positions to citizens

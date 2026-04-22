@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F19: Internal Faction & Consensus Mapper
 //!
 //! Maps internal party factions and identifies consensus opportunities

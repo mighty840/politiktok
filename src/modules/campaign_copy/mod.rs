@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F04: Campaign Copy Generator
 //!
 //! Generates campaign messaging, ad copy, and communications materials

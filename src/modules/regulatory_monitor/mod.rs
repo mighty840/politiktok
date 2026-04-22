@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F20: Regulatory Plain-Language Monitor
 //!
 //! Monitors regulatory changes and translates dense legal and regulatory

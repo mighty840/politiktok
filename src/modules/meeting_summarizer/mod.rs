@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F24: Meeting Summarizer & Action Tracker
 //!
 //! Summarizes political meetings, committee sessions, and strategy calls,

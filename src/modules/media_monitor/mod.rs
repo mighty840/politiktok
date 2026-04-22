@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F21: Media Bias & Coverage Monitor
 //!
 //! Tracks media coverage across outlets, detecting bias patterns and

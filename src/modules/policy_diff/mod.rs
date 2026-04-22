@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F18: Policy Diff
 //!
 //! Compares two policy documents side-by-side, identifying changes in language,
