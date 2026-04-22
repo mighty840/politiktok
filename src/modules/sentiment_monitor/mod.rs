@@ -118,7 +118,7 @@ pub async fn get_sentiment_summary(
         })
         .collect();
 
-    result.sort_by(|a, b| b.total_count.cmp(&a.total_count));
+    result.sort_by_key(|b| std::cmp::Reverse(b.total_count));
     Ok(result)
 }
 
