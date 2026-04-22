@@ -138,5 +138,10 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+
+    footer: {
+      message: '<a href="/politiktok/legal/privacy-policy">Privacy Policy</a> · <a href="/politiktok/legal/impressum">Impressum</a>',
+      copyright: 'Copyright 2025-present Sharang Parnerkar',
+    },
   },
 })
