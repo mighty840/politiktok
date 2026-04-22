@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F03: Social Sentiment Monitor
 //!
 //! Monitors social media and public discourse to track sentiment trends

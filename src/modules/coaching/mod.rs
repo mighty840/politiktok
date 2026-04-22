@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F14: Candidate Coaching & Debate Rehearsal
 //!
 //! Provides AI-driven coaching for candidates including debate rehearsal,

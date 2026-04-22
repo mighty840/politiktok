@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F07: Intelligent Fundraising Assistant
 //!
 //! Optimizes fundraising strategy by analyzing donor patterns, suggesting

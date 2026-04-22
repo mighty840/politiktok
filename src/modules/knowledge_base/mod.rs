@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F25: Internal Knowledge Base Q&A
 //!
 //! Provides a searchable internal knowledge base with AI-powered Q&A

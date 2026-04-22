@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F06: Canvassing Script Generator
 //!
 //! Creates dynamic canvassing scripts adapted to neighborhood demographics,

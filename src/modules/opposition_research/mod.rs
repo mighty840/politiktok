@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F05: Opposition Research & Debate Briefing
 //!
 //! Compiles and analyzes opposition records, statements, and positions

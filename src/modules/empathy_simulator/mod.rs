@@ -1,3 +1,4 @@
+#![cfg_attr(not(feature = "server"), allow(dead_code))]
 //! F09: Audience Empathy Simulator
 //!
 //! Simulates how different audience segments would perceive and react to
